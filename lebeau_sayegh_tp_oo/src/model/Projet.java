@@ -5,7 +5,7 @@ import utils.Utilitaire;
 import java.util.Date;
 
 public class Projet {
-    private static int projetId;
+
     private String description;
     private int scrumMasterId;
     private Date dateDebut;
@@ -15,8 +15,8 @@ public class Projet {
     public Projet() {
     }
 
-    public Projet(int projetId, String description, int scrumMasterId, Date dateFin, int dureeSprint) {
-        projetId++;
+    public Projet(String description/* ,int scrumMasterId*/, Date dateFin, int dureeSprint) {
+
         this.description = description;
       //  this.scrumMasterId = scrumMasterId;
         this.dateDebut = Utilitaire.getTodayDate();
@@ -70,12 +70,11 @@ public class Projet {
 
     @Override
     public String toString() {
-        return "Projet{" +
-                "description='" + description + '\'' +
-                ", scrumMasterId=" + scrumMasterId +
-                ", dateDebut=" + dateDebut +
-                ", dateFin=" + dateFin +
-                ", dureeSprint=" + dureeSprint +
-                '}';
+        return "Projet\n--------\n" +
+                description + "\n" +
+                "ScrumMaster: " + scrumMasterId +
+                "\nDebut Projet: " + dateDebut +
+                "\nFin Projet: " + dateFin +
+                "\n Duree des Sprint: " + dureeSprint;
     }
 }

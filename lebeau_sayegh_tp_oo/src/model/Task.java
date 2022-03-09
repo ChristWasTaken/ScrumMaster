@@ -11,6 +11,7 @@ public class Task {
 
     public Task(int taskPriority, String description, int employeID) {
         this.taskPriority = taskPriority;
+
         Description = description;
         this.employeID = employeID;
     }
