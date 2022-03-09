@@ -1,6 +1,6 @@
 package model;
 
-import utilitaire.EmployeDejaPresentException;
+import utils.EmployeDejaPresentException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,8 +8,8 @@ import java.util.Iterator;
 public class RegistreEmploye {
     private ArrayList<Employe> registreEmp;
 
-    public RegistreEmploye(ArrayList<Employe> registreEmp) {
-        this.registreEmp = registreEmp;
+    public RegistreEmploye() {
+        this.registreEmp = new ArrayList<>();
     }
 
     public void ajouterEmploye(Employe emp) throws EmployeDejaPresentException {

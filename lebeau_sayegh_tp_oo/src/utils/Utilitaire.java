@@ -1,9 +1,9 @@
-package utilitaire;
+package utils;
 
 
 import java.sql.Date;
 
-public class Utils {
+public class Utilitaire {
 
     public static Date getTodayDate() {
         long miliseconds = System.currentTimeMillis();

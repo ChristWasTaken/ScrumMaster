@@ -1,6 +1,6 @@
 package model;
 
-import utilitaire.TaskDejaExistException;
+import utils.TaskDejaExistException;
 
 import java.util.ArrayList;
 

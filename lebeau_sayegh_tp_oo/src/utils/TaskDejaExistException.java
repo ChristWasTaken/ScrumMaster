@@ -1,4 +1,4 @@
-package utilitaire;
+package utils;
 
 import model.Task;
 

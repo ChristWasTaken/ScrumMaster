@@ -1,6 +1,6 @@
 package model;
 
-import utilitaire.Utils;
+import utils.Utilitaire;
 
 import java.util.Date;
 
@@ -18,8 +18,8 @@ public class Projet {
     public Projet(int projetId, String description, int scrumMasterId, Date dateFin, int dureeSprint) {
         projetId++;
         this.description = description;
-        this.scrumMasterId = scrumMasterId;
-        this.dateDebut = Utils.getTodayDate();
+      //  this.scrumMasterId = scrumMasterId;
+        this.dateDebut = Utilitaire.getTodayDate();
         this.dateFin = dateFin;
         this.dureeSprint = dureeSprint;
     }

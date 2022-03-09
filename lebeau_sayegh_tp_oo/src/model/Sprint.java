@@ -1,10 +1,13 @@
 package model;
 
 
+import utils.Utilitaire;
+
 import java.util.Date;
 
 public class Sprint {
-    private int interationId;
+
+
     private int[] taskID;
     private Date dateDebut;
     private Date dateFin;
@@ -13,10 +16,9 @@ public class Sprint {
     public Sprint() {
     }
 
-    public Sprint(int[] taskID, Date dateDebut, Date dateFin, boolean progres) {
-        Iteration++;
+    public Sprint(int[] taskID,  Date dateFin, boolean progres) {
         this.taskID = taskID;
-        this.dateDebut = dateDebut;
+        this.dateDebut = Utilitaire.getTodayDate();
         this.dateFin = dateFin;
         this.progres = progres;
     }
@@ -54,5 +56,13 @@ public class Sprint {
         this.progres = progres;
     }
 
+    @Override
+    public String toString() {
+        return "Sprint: " +
+                "dateDebut= " + dateDebut +
+                ", dateFin= " + dateFin +
+                ", progres= " + progres
 
+               ;
+    }
 }
