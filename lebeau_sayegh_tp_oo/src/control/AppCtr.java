@@ -7,6 +7,8 @@ import utils.TaskDejaExistException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class AppCtr {
     public static void main(String[] args) {
@@ -26,8 +28,18 @@ public class AppCtr {
         try {
             Date projFin = sdf.parse("2022-07-26");
 
-        Projet proj = new Projet("blabla",projFin,4);
-            System.out.println(proj);
+            Projet proj = new Projet("bibi", "blabla",projFin,4);
+            Projet proj2 = new Projet("Flouflou", "teletubies",projFin,2);
+
+            Map<Integer, Projet> listeProjet = new TreeMap<>();
+            listeProjet.put(1, proj);
+            listeProjet.put(4, proj2);
+            for (int key : listeProjet.keySet()) {
+                System.out.println(key);
+                System.out.println(listeProjet.get(key));
+            }
+
+
             Task t1 = new Task(1,"blabl1",6);
             Task t2 = new Task(1,"blabl2",6);
             Task t3= new Task(1,"blabl3",6);
