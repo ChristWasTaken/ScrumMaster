@@ -5,15 +5,25 @@ public class Task {
     private int taskPriority;
     private String Description;
     private int employeID;
+    private static int nbrTask = 0;
 
     public Task() {
     }
 
     public Task(int taskPriority, String description, int employeID) {
+        this.taskID = nbrTask;
+        nbrTask++;
         this.taskPriority = taskPriority;
-
-        Description = description;
+        this.Description = description;
         this.employeID = employeID;
+    }
+
+    public int getTaskID() {
+        return taskID;
+    }
+
+    public void setTaskID(int taskID) {
+        this.taskID = taskID;
     }
 
     public int getTaskPriority() {
@@ -42,9 +52,11 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Tache\n------\n" +
-                "Priorité: " + taskPriority +
-                "Description: " + Description + '\'' +
-                "Employe: " + employeID ;
+        return "Task{" +
+                "taskID=" + taskID +
+                ", taskPriority=" + taskPriority +
+                ", Description='" + Description + '\'' +
+                ", employeID=" + employeID +
+                '}';
     }
 }
