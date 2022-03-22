@@ -1,6 +1,9 @@
 package model;
 
-public class Task {
+
+import java.io.Serializable;
+
+public class Task implements Serializable {
     private int taskID;
     private int taskPriority;
     private String Description;
@@ -15,6 +18,14 @@ public class Task {
         nbrTask++;
         this.taskPriority = taskPriority;
         this.Description = description;
+        this.employeID = employeID;
+    }
+
+    public Task(int taskID, int taskPriority, String description, int employeID) {
+        this.taskID = taskID;
+        nbrTask=taskID;
+        this.taskPriority = taskPriority;
+        Description = description;
         this.employeID = employeID;
     }
 
@@ -59,4 +70,8 @@ public class Task {
                 ", employeID=" + employeID +
                 '}';
     }
+
 }
+
+
+

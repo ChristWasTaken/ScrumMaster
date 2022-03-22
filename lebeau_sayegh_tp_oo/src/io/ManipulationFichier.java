@@ -1,9 +1,11 @@
 package io;
 
-import model.Employe;
-import model.Notes;
-import model.Projet;
-import model.Sprint;
+import com.jgoodies.common.collect.ArrayListModel;
+import model.*;
+import utils.EmployeDejaPresentException;
+import utils.ProjetDejaPresentException;
+import utils.SprintDejaPresentException;
+import utils.TaskDejaExistException;
 
 import java.io.*;
 import java.text.ParseException;
@@ -13,33 +15,66 @@ import java.util.Date;
 
 public class ManipulationFichier {
 
-    public static void lire(String fichier, ArrayList registre) {
-        //lire du fichier
+    public static void lire(String fichier, Object registre, int index) {
+        //lire du fichier binaire
         File file = new File(fichier);
 
-        FileReader fr = null;
-        BufferedReader br = null;
+        FileInputStream fr = null;
+        BufferedInputStream br = null;
+        ObjectInputStream ois = null;
 
         try {
-            fr = new FileReader(file);
-            br = new BufferedReader(fr);
+            fr = new FileInputStream(file);
+            br = new BufferedInputStream(fr);
+            ois = new ObjectInputStream(br);
 
-            //lecture du fichier
-            String c;
-            while ((c = br.readLine()) != null) {
-                //System.out.println(c);
-                Article article = parseArticle(c);
-                //Ajouter objet dans registre
-                registre.ajouterArticle(article);
+            //lire le size
+            int taille = ois.readInt();
+            //Parcourir le fichier selon le size qui a été lu
+            switch (index) {
+                case 0 -> {
+                    for (int i = 0; i < taille; i++) {
+                        RegistreEmploye regEmp = (RegistreEmploye) registre;
+                        Employe emp = (Employe) ois.readObject();
+                        regEmp.ajouterEmp(emp);
+                    }
+                }
+                case 1 -> {
+                    for (int i = 0; i < taille; i++) {
+                        RegistreProjet regPro = (RegistreProjet) registre;
+                        Projet projet = (Projet) ois.readObject();
+                        regPro.ajouterProjet(projet);
+                    }
+                }
+                case 2 -> {
+                    for (int i = 0; i < taille; i++) {
+                        RegistreTask regTask = (RegistreTask) registre;
+                        Task task = (Task) ois.readObject();
+                        regTask.ajouterTask(task);
+                    }
+                }
+                case 3 -> {
+                    for (int i = 0; i < taille; i++) {
+                        RegistreSprint regSpri = (RegistreSprint) registre;
+                        Sprint sprint = (Sprint) ois.readObject();
+                        regSpri.ajouterSprint(sprint);
+                    }
+                }
+                case 4 -> {
+                    for (int i = 0; i < taille; i++) {
+                        RegistreNotes regNotes = (RegistreNotes) registre;
+                        Notes note = (Notes) ois.readObject();
+                        regNotes.ajouterNotes(note);
+                    }
+                }
+
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException | EmployeDejaPresentException | ProjetDejaPresentException | TaskDejaExistException | SprintDejaPresentException e) {
             e.printStackTrace();
         } finally {
-            if (br != null) {
+            if (ois != null) {
                 try {
-                    br.close();
+                    ois.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -49,60 +84,60 @@ public class ManipulationFichier {
 
     }
 
-    public static Object parseObject(String s, int type) throws ParseException {
-        //deserialisation
-        String[] token = s.split("|");
-        switch (type) {
-            case '1':
-                return new Employe(token[0], token[1], token[2]);
-            break;
-            case '2':
-                int taskID = Integer.parseInt(token[2]);
-                return new Notes(token[0], token[1], taskID);
-            break;
-            case '3':
-                int scrumMasterId = Integer.parseInt(token[2]);
-                Date dateDebut = new SimpleDateFormat("dd/MM/yyyy").parse(token[3]);
-                Date dateFin = new SimpleDateFormat("dd/MM/yyyy").parse(token[4]);
-                int dureeSprint = Integer.parseInt(token[5]);
-                return new Projet(token[0], token[1],scrumMasterId,dateDebut,dateFin, dureeSprint );
-            break;
-            case '4':
-                String [] task = token[0].split("/");
-                int size = task.length;
-                int [] taskId = new int [size];
-                for(int i=0; i<size; i++) {
-                    taskId[i] = Integer.parseInt(task[i]);
-                }
-
-                return new Sprint(taskID,);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + type);
-        }
-
-
-    }
-
-    private static String formerLigne(Object objet) {
-        //Serialisation
-        return objet.toString();
-    }
-
-
-    public static void ecrire(String fichier, ArrayList registre) {
+    public static void ecrire(String fichier, Registre reg, int index) {
         //ecrire dans un fichier
         File file = new File(fichier);
-        FileWriter fw = null;
-        BufferedWriter bw = null;
-        String contenu;
+        FileOutputStream fw = null;
+        BufferedOutputStream bw = null;
+        ObjectOutputStream oos = null;
+
         try {
-            fw = new FileWriter(file);
-            bw = new BufferedWriter(fw);
-            for (Object objet : registre.getListing()) {
-                contenu = formerLigne(objet);
-                bw.write(contenu);
-                bw.newLine();
+            fw = new FileOutputStream(file);
+            bw = new BufferedOutputStream(fw);
+            oos = new ObjectOutputStream(bw);
+
+            switch (index) {
+                case 0:
+                    RegistreEmploye regEmp = (RegistreEmploye) reg;
+                    oos.writeInt(regEmp.getRegistreEmp().size());
+                    for (Object objet : regEmp.getRegistreEmp()) {
+                        oos.writeObject(objet);
+                    }
+                    break;
+
+                case 1:
+                    RegistreProjet regPro = (RegistreProjet) reg;
+                    oos.writeInt(regPro.getRegistrePro().size());//ecrire la taille de la collection
+                    for (Object objet : regPro.getRegistrePro()) {
+                        oos.writeObject(objet);
+                    }
+                    break;
+                case 2:
+
+                    RegistreTask regTask = (RegistreTask) reg;
+                    oos.writeInt(regTask.getRegistreTasks().size());
+                    System.out.println("oui");//ecrire la taille de la collection
+                    for (Object objet : regTask.getRegistreTasks()) {
+                        oos.writeObject(objet);
+                    }
+
+                    break;
+                case 3:
+                    RegistreSprint regSpri = (RegistreSprint) reg;
+                    oos.writeInt(regSpri.getRegSprint().size());//ecrire la taille de la collection
+                    for (Object objet : regSpri.getRegSprint()) {
+                        oos.writeObject(objet);
+
+                    }
+                    break;
+                case 4:
+                    RegistreNotes regNotes = (RegistreNotes) reg;
+                    oos.writeInt(regNotes.getRegistreNotes().size());//ecrire la taille de la collection
+                    for (Object objet : regNotes.getRegistreNotes()) {
+                        oos.writeObject(objet);
+                    }
+                    break;
+
             }
 
 
@@ -119,5 +154,6 @@ public class ManipulationFichier {
         }
 
     }
+
 
 }

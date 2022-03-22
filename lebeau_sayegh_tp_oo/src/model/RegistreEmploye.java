@@ -1,16 +1,18 @@
 package model;
 
+
 import utils.EmployeDejaPresentException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class RegistreEmploye {
+public class RegistreEmploye extends Registre {
     private ArrayList<Employe> registreEmp;
 
     public RegistreEmploye() { this.registreEmp = new ArrayList<>(); }
 
-    public void ajouterEmploye(Employe emp) throws EmployeDejaPresentException {
+
+    public void ajouterEmp(Employe emp) throws EmployeDejaPresentException {
         if (this.verifierDoublon(emp)) {
             throw new EmployeDejaPresentException("Doublon trouvé!!", emp);
         } else {
@@ -33,7 +35,7 @@ public class RegistreEmploye {
         return true;
     }
 
-    public ArrayList<Employe> getRegistre() {
-        return this.registreEmp;
+    public ArrayList<Employe> getRegistreEmp() {
+        return registreEmp;
     }
 }
