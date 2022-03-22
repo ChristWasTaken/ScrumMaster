@@ -3,6 +3,7 @@ package io;
 import model.Employe;
 import model.Notes;
 import model.Projet;
+import model.Sprint;
 
 import java.io.*;
 import java.text.ParseException;
@@ -66,6 +67,16 @@ public class ManipulationFichier {
                 int dureeSprint = Integer.parseInt(token[5]);
                 return new Projet(token[0], token[1],scrumMasterId,dateDebut,dateFin, dureeSprint );
             break;
+            case '4':
+                String [] task = token[0].split("/");
+                int size = task.length;
+                int [] taskId = new int [size];
+                for(int i=0; i<size; i++) {
+                    taskId[i] = Integer.parseInt(task[i]);
+                }
+
+                return new Sprint(taskID,);
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
         }

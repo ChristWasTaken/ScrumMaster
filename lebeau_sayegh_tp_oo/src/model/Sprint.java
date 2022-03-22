@@ -23,6 +23,12 @@ public class Sprint {
         this.progres = progres;
     }
 
+    public Sprint(int[] taskID, Date dateDebut, Date dateFin, boolean progres) {
+        this.taskID = taskID;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.progres = progres;
+    }
 
     public int[] getTaskID() {
         return taskID;
