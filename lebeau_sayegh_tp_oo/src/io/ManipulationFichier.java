@@ -1,9 +1,7 @@
 package io;
 
-import model.Employe;
-import model.Notes;
-import model.Projet;
-import model.Sprint;
+import com.jgoodies.common.collect.ArrayListModel;
+import model.*;
 
 import java.io.*;
 import java.text.ParseException;
@@ -13,33 +11,37 @@ import java.util.Date;
 
 public class ManipulationFichier {
 
-    public static void lire(String fichier, ArrayList registre) {
-        //lire du fichier
+    public static void lire(String fichier, Object registre) {
+        //lire du fichier binaire
         File file = new File(fichier);
 
-        FileReader fr = null;
-        BufferedReader br = null;
+        FileInputStream fr = null;
+        BufferedInputStream br = null;
+        ObjectInputStream ois = null;
 
         try {
-            fr = new FileReader(file);
-            br = new BufferedReader(fr);
+            fr = new FileInputStream(file);
+            br = new BufferedInputStream(fr);
+            ois = new ObjectInputStream(br);
 
-            //lecture du fichier
-            String c;
-            while ((c = br.readLine()) != null) {
-                //System.out.println(c);
-                Article article = parseArticle(c);
-                //Ajouter objet dans registre
+
+
+            //lire le size
+            int taille = ois.readInt();
+            //Parcourir le fichier selon le size qui a été lu
+            for (int i=0;i<taille;i++){
+                Article article = (Article)ois.readObject();
                 registre.ajouterArticle(article);
             }
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
-            if (br != null) {
+            if (ois != null) {
                 try {
-                    br.close();
+                    ois.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -49,62 +51,40 @@ public class ManipulationFichier {
 
     }
 
-    public static Object parseObject(String s, int type) throws ParseException {
-        //deserialisation
-        String[] token = s.split("|");
-        switch (type) {
-            case '1':
-                return new Employe(token[0], token[1], token[2]);
-            break;
-            case '2':
-                int taskID = Integer.parseInt(token[2]);
-                return new Notes(token[0], token[1], taskID);
-            break;
-            case '3':
-                int scrumMasterId = Integer.parseInt(token[2]);
-                Date dateDebut = new SimpleDateFormat("dd/MM/yyyy").parse(token[3]);
-                Date dateFin = new SimpleDateFormat("dd/MM/yyyy").parse(token[4]);
-                int dureeSprint = Integer.parseInt(token[5]);
-                return new Projet(token[0], token[1],scrumMasterId,dateDebut,dateFin, dureeSprint );
-            break;
-            case '4':
-                String [] task = token[0].split("/");
-                int size = task.length;
-                int [] taskId = new int [size];
-                for(int i=0; i<size; i++) {
-                    taskId[i] = Integer.parseInt(task[i]);
-                }
-
-                return new Sprint(taskID,);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + type);
-        }
-
-
-    }
-
-    private static String formerLigne(Object objet) {
-        //Serialisation
-        return objet.toString();
-    }
-
-
-    public static void ecrire(String fichier, ArrayList registre) {
+    public static void ecrire(String fichier, Object reg, int type) {
         //ecrire dans un fichier
         File file = new File(fichier);
-        FileWriter fw = null;
-        BufferedWriter bw = null;
+        FileOutputStream fw = null;
+        BufferedOutputStream bw = null;
+        ObjectOutputStream oos = null;
         String contenu;
         try {
-            fw = new FileWriter(file);
-            bw = new BufferedWriter(fw);
-            for (Object objet : registre.getListing()) {
-                contenu = formerLigne(objet);
-                bw.write(contenu);
-                bw.newLine();
-            }
+            fw = new FileOutputStream(file);
+            bw = new BufferedOutputStream(fw);
+            oos = new ObjectOutputStream(bw);
 
+            switch (type) {
+                case '1':
+                    RegistreEmploye regEmp = (RegistreEmploye) reg;
+                    break;
+                case '2':
+                    RegistreProjet regPro = (RegistreProjet) reg;
+                    break;
+                case '3':
+                    RegistreTask regTask = (RegistreTask) reg;
+                    break;
+                case '4':
+                    RegistreSprint regSpri = (RegistreSprint) reg;
+                    break;
+                case '5':
+                    RegistreNotes regNotes = (RegistreNotes) reg;
+                    break;
+
+                oos.writeInt(registre.getRegistre().size());//ecrire la taille de la collection
+                    for (Object objet : registre.getRegistre()) {
+                        oos.writeObject(objet);
+                    }
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -119,5 +99,7 @@ public class ManipulationFichier {
         }
 
     }
+
+
 
 }

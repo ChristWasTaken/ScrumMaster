@@ -1,11 +1,13 @@
 package model;
 
 import utils.EmployeDejaPresentException;
+import utils.MonInter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 
-public class RegistreEmploye {
+public class RegistreEmploye implements MonInter {
     private ArrayList<Employe> registreEmp;
 
     public RegistreEmploye() { this.registreEmp = new ArrayList<>(); }
@@ -32,8 +34,10 @@ public class RegistreEmploye {
 
         return true;
     }
-
+    @Override
     public ArrayList<Employe> getRegistre() {
         return this.registreEmp;
     }
+
+
 }
