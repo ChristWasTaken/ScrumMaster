@@ -68,17 +68,9 @@ public class FenProjet extends JFrame {
         lblTitre.setFont(MiseEnPage.F4);
         JLabel lblScrum = new JLabel("Scrum..Master");
         lblScrum.setFont(MiseEnPage.F3);
-//        JLabel lblDateDebut = new JLabel("Projet de Session: ");
-//        JLabel lblDateFin = new JLabel("Moyenne: ");
-//        JLabel lblResultat = new JLabel("Résultat: ");
-//        JLabel lblResult = new JLabel("passe");
 
         //initialisation des textfields
         JTextField txtProjet = new JTextField(20);
-//        JTextField txtIntra = new JTextField(10);
-//        JTextField txtFinal = new JTextField(10);
-//        JTextField txtTp = new JTextField(10);
-//        JTextField txtMoyenne = new JTextField("0", 4);
 
         //initiation menuBar
         JMenuBar menuBar = new JMenuBar();
@@ -88,11 +80,8 @@ public class FenProjet extends JFrame {
         JToolBar tbMenu = new JToolBar();
         tbMenu.setFloatable(false);
         tbMenu.setRollover(false);
-//        tbMenu.setBorder(brd);
 
         //initiation des icones de boutons
-
-
         ImageIcon icon1 = new ImageIcon("src/images/icon1.png");
 
         //initiation des boutons
@@ -132,7 +121,6 @@ public class FenProjet extends JFrame {
         mnuEdit.add(miEditPaste);
 
         //****************************************************
-
         //panneau menu
         JPanel panButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panButton.add(tbMenu);
@@ -175,7 +163,7 @@ public class FenProjet extends JFrame {
         tempCol0 = colmod.getColumn(0);
         tempCol0.setPreferredWidth(150);
 
-                //Panneau d'affichage des sprints du projet
+        //Panneau d'affichage des sprints du projet
         JPanel panSprint = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         panSprint.add(lblSprint);
@@ -219,6 +207,5 @@ public class FenProjet extends JFrame {
         panGlobal.add(panProjet, BorderLayout.CENTER);
         panGlobal.add(panBasDePage, BorderLayout.SOUTH);
         this.setContentPane(panGlobal);
-
     }
 }
