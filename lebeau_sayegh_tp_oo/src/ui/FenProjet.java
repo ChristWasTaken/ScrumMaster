@@ -1,8 +1,13 @@
 package ui;
 
+import utils.MiseEnPage;
+import utils.Utilitaire;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 
 
@@ -11,36 +16,32 @@ public class FenProjet extends JFrame {
     private FenProjet fenetre;
 
 
-    private String nomColonnes[] = {"Nom", "Description", "ScrumMaster", "dateDebut", "dateFin"};
-    private String [][] tableTest = {
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"},
-            {"Bibi", "Flouflou", "Scrummaster", "05-06-10", "09-12-11"}
+    String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin"};
+    String[][] tableTest = {
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" }
     };
 
 
     private Border brd;
-    private double moyenne = 0;
-    private Font f1 = new Font(Font.SANS_SERIF, Font.BOLD, 25);
 
+    public FenProjet() {
 
-    public FenProjet(String title) {
-
-        super(title);
-        setSize(800, 800);
+        setSize(800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(true);
+        setResizable(false);
         setWidget();
         //setListeners();
     }
@@ -53,10 +54,20 @@ public class FenProjet extends JFrame {
         // Initialisation des objets de la fenetre.
 
         //initialisation des Labels
-        JLabel lblProjet = new JLabel("Projet en cours");
-//        JLabel lblNomProj= new JLabel("                    Nom: ");
-//        JLabel lblDescProj = new JLabel("       Examen Intra: ");
-//        JLabel lblScrumMaster = new JLabel("       Examen Final: ");
+        JLabel lblProjet = new JLabel("Projets en cours");
+        lblProjet.setFont(MiseEnPage.F1);
+        JLabel lblSprint = new JLabel("Sprints restant au projet");
+        lblSprint.setFont(MiseEnPage.F2);
+        JLabel lblTasks = new JLabel("Taches restantes au projet");
+        lblTasks.setFont(MiseEnPage.F2);
+        JLabel lblConsigneSprint = new JLabel(" - Affichage du projet sélectionné.");
+        lblConsigneSprint.setFont(MiseEnPage.F3);
+        JLabel lblConsigneTask = new JLabel(" - Affichage du projet sélectionné.");
+        lblConsigneTask.setFont(MiseEnPage.F3);
+        JLabel lblTitre = new JLabel("Tous droit Réservé. ®");
+        lblTitre.setFont(MiseEnPage.F4);
+        JLabel lblScrum = new JLabel("Scrum..Master");
+        lblScrum.setFont(MiseEnPage.F3);
 //        JLabel lblDateDebut = new JLabel("Projet de Session: ");
 //        JLabel lblDateFin = new JLabel("Moyenne: ");
 //        JLabel lblResultat = new JLabel("Résultat: ");
@@ -77,10 +88,12 @@ public class FenProjet extends JFrame {
         JToolBar tbMenu = new JToolBar();
         tbMenu.setFloatable(false);
         tbMenu.setRollover(false);
-        tbMenu.setBorder(brd);
+//        tbMenu.setBorder(brd);
 
         //initiation des icones de boutons
-        ImageIcon icon1 = new ImageIcon("lebeau_sayegh_tp_oo/images/icon1.png");
+
+
+        ImageIcon icon1 = new ImageIcon("src/images/icon1.png");
 
         //initiation des boutons
         JButton btn1 = new JButton(icon1);
@@ -88,14 +101,6 @@ public class FenProjet extends JFrame {
         JButton btn3 = new JButton(icon1);
         JButton btn4 = new JButton(icon1);
         JButton btn5 = new JButton(icon1);
-
-        JTable tblProjet = new JTable(tableTest, nomColonnes);
-        tblProjet.setBounds(0, 0, 100, 50);
-
-        JScrollPane scPaneProjet = new JScrollPane();
-        tblProjet.add(scPaneProjet);
-        tblProjet.setSize(50,50);
-
 
         //*****************************************
         //initiation item du menu principal
@@ -127,6 +132,7 @@ public class FenProjet extends JFrame {
         mnuEdit.add(miEditPaste);
 
         //****************************************************
+
         //panneau menu
         JPanel panButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panButton.add(tbMenu);
@@ -137,68 +143,82 @@ public class FenProjet extends JFrame {
         tbMenu.add(btn4);
         tbMenu.add(btn5);
 
-        //**************************************************************************************//
+        //initiation des tables
+        JTable tblProjet = new JTable(tableTest, nomColonnes);
+        JTable tblSprint = new JTable(tableTest, nomColonnes);
+        JTable tblTask = new JTable(tableTest, nomColonnes);
 
-        //Panneau d'affichage du projet en cours
-        JPanel panProjet = new JPanel(new BorderLayout());
-        panProjet.setBorder(brd);
-        JPanel panProjetCourrant = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panProjetCourrant.setBorder(brd);
-        JPanel panProjetSelection = new JPanel(new FlowLayout());
-        panProjetSelection.setBorder(brd);
 
-        panProjet.add(panProjetCourrant, BorderLayout.NORTH);
-        panProjet.add(panProjetSelection, BorderLayout.SOUTH);
+        //initiation des scrollpanes
+        JScrollPane scPaneProjet = new JScrollPane(tblProjet);
+        JScrollPane scPaneSprint = new JScrollPane(tblSprint);
+        JScrollPane scPaneTask = new JScrollPane(tblTask);
 
-        panProjetCourrant.add(tblProjet);
+        scPaneProjet.setPreferredSize(new Dimension(765, 125));
+        TableColumnModel colmod = tblProjet.getColumnModel();
+        TableColumn tempCol1 = colmod.getColumn(1);
+        tempCol1.setPreferredWidth(350);
+        TableColumn tempCol0 = colmod.getColumn(0);
+        tempCol0.setPreferredWidth(150);
+
+        scPaneSprint.setPreferredSize(new Dimension(765,150));
+        colmod = tblSprint.getColumnModel();
+        tempCol1 = colmod.getColumn(1);
+        tempCol1.setPreferredWidth(350);
+        tempCol0 = colmod.getColumn(0);
+        tempCol0.setPreferredWidth(150);
+
+        scPaneTask.setPreferredSize(new Dimension(765,200));
+        colmod = tblTask.getColumnModel();
+        tempCol1 = colmod.getColumn(1);
+        tempCol1.setPreferredWidth(350);
+        tempCol0 = colmod.getColumn(0);
+        tempCol0.setPreferredWidth(150);
+
+                //Panneau d'affichage des sprints du projet
+        JPanel panSprint = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        panSprint.add(lblSprint);
+        panSprint.add(lblConsigneSprint);
+        panSprint.add(scPaneSprint);
+
+        //Panneau d'affichage des sprints du projet
+        JPanel panTask = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        panTask.add(lblTasks);
+        panTask.add(lblConsigneTask);
+        panTask.add(scPaneTask);
+
+        //Panneau d'affichage du projet selectionné
+        JPanel panProjetSelection = new JPanel(new BorderLayout());
+
+        panProjetSelection.add(panSprint, BorderLayout.NORTH);
+        panProjetSelection.add(panTask);
+
+        //Panneau d'affichage des projets en cours
+        JPanel panProjetCourrant = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         panProjetCourrant.add(lblProjet);
+        panProjetCourrant.add(scPaneProjet);
 
-        String[][] data = {
-                { "Kundan Kumar Jha", "4031", "CSE" },
-                { "Anand Jha", "6014", "IT" }
-        };
+        JPanel panProjet = new JPanel(new BorderLayout());
+        panProjet.setBorder(brd);
 
-        // Column Names
-        String[] columnNames = { "Name", "Roll Number", "Department" };
+        panProjet.add(panProjetCourrant, BorderLayout.NORTH);
+        panProjet.add(panProjetSelection, BorderLayout.CENTER);
 
-        // Initializing the JTable
-        JTable j = new JTable(data, columnNames);
-        j.setBounds(30, 40, 200, 300);
-
-        // adding it to JScrollPane
-        JScrollPane sp = new JScrollPane(j);
-
+        JPanel panBasDePage = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panBasDePage.add(lblTitre);
+        panBasDePage.add(lblScrum);
 
         //panneau Global
         JPanel panGlobal = new JPanel(new BorderLayout());
         panGlobal.setBorder(brd);
-        panGlobal.add(j, BorderLayout.SOUTH);
+
         panGlobal.add(panButton, BorderLayout.NORTH);
         panGlobal.add(panProjet, BorderLayout.CENTER);
+        panGlobal.add(panBasDePage, BorderLayout.SOUTH);
         this.setContentPane(panGlobal);
 
-
-//        JPanel panSaisie = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//        panSaisie.setPreferredSize(new Dimension(400, 170));
-//        panSaisie.add(panNom);
-//        panSaisie.add(panIntra);
-//        panSaisie.add(panFinal);
-//        panSaisie.add(panProjet);
-//        panSaisie.setBorder(brd);
-
-//        //panneau des résultats
-//        JPanel panResultat = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//        panResultat.setPreferredSize(new Dimension(400, 125));
-//        panResultat.add(lblMoyenne);
-//        panResultat.add(txtMoyenne);
-//        panResultat.add(lblResultat);
-//        panResultat.add(lblResult);
-//        panResultat.setBorder(brd);
-
-//        //panneau Main (saisie + résultats)
-//        JPanel panMain = new JPanel();
-//        panMain.add(panSaisie);
-//        panMain.add(panResultat);
     }
 }

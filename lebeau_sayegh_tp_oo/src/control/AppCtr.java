@@ -45,7 +45,7 @@ public class AppCtr {
 //            regTask.ajouterTask(t4);
 //            regTask.ajouterTask(t5);
 //            regTask.ajouterTask(t6);
-            ManipulationFichier.lire(Constante.type[2],regTask,2 );
+//            ManipulationFichier.lire(Constante.type[2],regTask,2 );
             for(Task tmp: regTask.getRegistreTasks()){
                 System.out.println(tmp);
             }
@@ -77,8 +77,8 @@ public class AppCtr {
 //            f.printStackTrace();
 //        }
 //
-//        FenProjet fenetreProjet = new FenProjet("Création et modification de projets");
-//        fenetreProjet.setVisible(true);
+        FenProjet fenetreProjet = new FenProjet();
+        fenetreProjet.setVisible(true);
 
 
     }
