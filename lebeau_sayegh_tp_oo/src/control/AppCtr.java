@@ -1,10 +1,13 @@
 package control;
 
 import model.*;
+import ui.FenProjet;
 import utils.SprintDejaPresentException;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrastIJTheme;
 import utils.TaskDejaExistException;
 
 
+import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,24 +16,18 @@ import java.util.TreeMap;
 
 public class AppCtr {
     public static void main(String[] args) {
-      /*  try {
-            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme");
+        try {
+            UIManager.setLookAndFeel( new FlatGitHubContrastIJTheme() );
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        FenGui fenetre = new FenGui();
-        fenetre.setSize(400,300);
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.setLocationRelativeTo(null);
-        fenetre.setResizable(false);
 
-        fenetre.setVisible(true);*/
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date projFin = sdf.parse("2022-07-26");
 
-            Projet proj = new Projet("bibi", "blabla",projFin,4);
-            Projet proj2 = new Projet("Flouflou", "teletubies",projFin,2);
+            Projet proj = new Projet("bibi", "blabla", 1,projFin,4);
+            Projet proj2 = new Projet("Flouflou", "teletubies",1,projFin,2);
 
             Map<Integer, Projet> listeProjet = new TreeMap<>();
             listeProjet.put(1, proj);
@@ -82,6 +79,9 @@ public class AppCtr {
         } catch(SprintDejaPresentException f){
             f.printStackTrace();
         }
+
+        FenProjet fenetreProjet = new FenProjet("Création et modification de projets");
+        fenetreProjet.setVisible(true);
 
 
     }
