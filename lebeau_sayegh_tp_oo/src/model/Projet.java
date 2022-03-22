@@ -26,6 +26,15 @@ public class Projet {
         this.dureeSprint = dureeSprint;
     }
 
+    public Projet(String nomProjet, String description, int scrumMasterId, Date dateDebut, Date dateFin, int dureeSprint) {
+        this.nomProjet = nomProjet;
+        this.description = description;
+        this.scrumMasterId = scrumMasterId;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.dureeSprint = dureeSprint;
+    }
+
     public String getNomProjet() {
         return nomProjet;
     }
