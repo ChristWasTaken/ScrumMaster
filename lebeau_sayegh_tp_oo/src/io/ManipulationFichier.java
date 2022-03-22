@@ -27,7 +27,7 @@ public class ManipulationFichier {
             fr = new FileInputStream(file);
             br = new BufferedInputStream(fr);
             ois = new ObjectInputStream(br);
-            System.out.println(index);
+
             //lire le size
             int taille = ois.readInt();
             //Parcourir le fichier selon le size qui a été lu
