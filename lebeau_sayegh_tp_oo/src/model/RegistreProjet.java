@@ -1,15 +1,15 @@
 package model;
 
+
 import utils.ProjetDejaPresentException;
-import utils.TaskDejaExistException;
 
 import java.util.ArrayList;
 
-public class RegistreProjet {
-    ArrayList<Projet> registre;
+public class RegistreProjet extends Registre {
+    ArrayList<Projet> registreProjet;
 
-    public RegistreProjet(ArrayList<Projet> registre) {
-        this.registre = new ArrayList<>();
+    public RegistreProjet(ArrayList<Projet> registreProjet) {
+        this.registreProjet = new ArrayList<>();
     }
 
     //ajouter Projet au registre
@@ -17,12 +17,12 @@ public class RegistreProjet {
         if (verifierDoublons(projet)) {
             throw new ProjetDejaPresentException("Doublons trouvé", projet);
         } else {
-            registre.add(projet);
+            registreProjet.add(projet);
         }
     }
 
     private boolean verifierDoublons(Projet projet) {
-        for (Projet tmp : registre) {
+        for (Projet tmp : registreProjet) {
             if (projet.getDescription().equals(tmp.getDescription())) {
                 return true;
             }
@@ -30,4 +30,7 @@ public class RegistreProjet {
         return false;
     }
 
+    public ArrayList<Projet> getRegistrePro() {
+        return registreProjet;
+    }
 }

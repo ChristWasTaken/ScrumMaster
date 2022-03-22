@@ -1,10 +1,12 @@
 package model;
 
+
 import utils.TaskDejaExistException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RegistreTask {
+public class RegistreTask extends Registre {
     private ArrayList<Task> registreTasks;
 
     //constructeur
@@ -44,4 +46,7 @@ public class RegistreTask {
     public void setRegistreTasks(ArrayList<Task> registreTasks) {
         this.registreTasks = registreTasks;
     }
+
+
+
 }

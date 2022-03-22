@@ -1,8 +1,9 @@
 package model;
 
-import utils.MonInter;
 
-public class Task implements MonInter {
+import java.io.Serializable;
+
+public class Task implements Serializable {
     private int taskID;
     private int taskPriority;
     private String Description;
@@ -70,5 +71,7 @@ public class Task implements MonInter {
                 '}';
     }
 
-
 }
+
+
+

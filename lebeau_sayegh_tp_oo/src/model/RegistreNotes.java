@@ -1,10 +1,10 @@
 package model;
 
-import utils.MonInter;
+
 
 import java.util.ArrayList;
 
-public class RegistreNotes implements MonInter {
+public class RegistreNotes extends Registre {
     private ArrayList<Notes> registreNotes;
 
     public RegistreNotes(ArrayList<Notes> registreNotes) {
@@ -16,8 +16,9 @@ public class RegistreNotes implements MonInter {
     public void ajouterNotes(Notes note) {
         this.registreNotes.add(note);
     }
-    @Override
-    public ArrayList<Notes> getRegistre() {
-        return this.registreNotes;
+
+    public ArrayList<Notes> getRegistreNotes() {
+        return registreNotes;
     }
+
 }

@@ -1,11 +1,12 @@
 package model;
 
+
 import utils.SprintDejaPresentException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class RegistreSprint {
+public class RegistreSprint extends Registre {
     private ArrayList<Sprint> regSprint;
 
     public RegistreSprint() {
@@ -37,4 +38,6 @@ public class RegistreSprint {
     public ArrayList<Sprint> getRegSprint() {
         return regSprint;
     }
+
+
 }
