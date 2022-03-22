@@ -16,11 +16,11 @@ public class Projet {
     public Projet() {
     }
 
-    public Projet(String nomProjet, String description/* ,int scrumMasterId*/, Date dateFin, int dureeSprint) {
+    public Projet(String nomProjet, String description ,int scrumMasterId, Date dateFin, int dureeSprint) {
 
         this.nomProjet = nomProjet;
         this.description = description;
-      //  this.scrumMasterId = scrumMasterId;
+        this.scrumMasterId = scrumMasterId;
         this.dateDebut = Utilitaire.getTodayDate();
         this.dateFin = dateFin;
         this.dureeSprint = dureeSprint;
