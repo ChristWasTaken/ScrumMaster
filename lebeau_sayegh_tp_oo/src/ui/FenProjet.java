@@ -18,7 +18,7 @@ public class FenProjet extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
-
+        //
 //        Container ControlHost = getContentPane();
 //        ControlHost.setLayout(new BorderLayout());
 

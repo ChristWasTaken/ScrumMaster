@@ -21,7 +21,7 @@ public class AppCtr {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+        //
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date projFin = sdf.parse("2022-07-26");
