@@ -8,9 +8,7 @@ import java.util.Iterator;
 public class RegistreEmploye {
     private ArrayList<Employe> registreEmp;
 
-    public RegistreEmploye() {
-        this.registreEmp = new ArrayList<>();
-    }
+    public RegistreEmploye() { this.registreEmp = new ArrayList<>(); }
 
     public void ajouterEmploye(Employe emp) throws EmployeDejaPresentException {
         if (this.verifierDoublon(emp)) {

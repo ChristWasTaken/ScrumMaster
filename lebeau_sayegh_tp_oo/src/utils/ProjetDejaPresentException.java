@@ -1,6 +1,5 @@
 package utils;
 
-import model.Employe;
 import model.Projet;
 
 public class ProjetDejaPresentException extends Exception {

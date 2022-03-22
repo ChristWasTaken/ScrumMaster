@@ -1,6 +1,7 @@
 package control;
 
 import model.*;
+import utils.SprintDejaPresentException;
 import utils.TaskDejaExistException;
 
 
@@ -56,24 +57,30 @@ public class AppCtr {
             for(Task tmp: regTask.getRegistreTasks()){
                 System.out.println(tmp);
             }
-            int[] taskID = {1,2,3,4};
-            int[] taskID2 = {5, 6};
+            int[] taskID = {1,2,3,0};
+            int[] taskID2 = {5,4};
 
             Sprint spt = new Sprint(taskID,projFin,false);
-            Sprint spt1 = new Sprint(taskID2,projFin,false);
+            Sprint spt1 = new Sprint(taskID,projFin,true);
+            Sprint sp2 = new Sprint(taskID,projFin,false);
+            Sprint spt3 = new Sprint(taskID,projFin,true);
 
             RegistreSprint regSprint = new RegistreSprint();
             regSprint.ajouterSprint(spt);
             regSprint.ajouterSprint(spt1);
+
             for(Sprint tmp: regSprint.getRegSprint()){
                 System.out.println(tmp);
-                for (int j : taskID) {
+                for (int j : tmp.getTaskID()) {
                     Task temp = regTask.getRegistreTasks().get(j);
+                    System.out.println(temp);
                 }
             }
 
         } catch (ParseException | TaskDejaExistException e) {
             e.printStackTrace();
+        } catch(SprintDejaPresentException f){
+            f.printStackTrace();
         }
 
 
