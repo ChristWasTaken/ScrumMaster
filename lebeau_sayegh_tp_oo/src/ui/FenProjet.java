@@ -101,7 +101,7 @@ public class FenProjet extends JFrame {
         lblTitre.setFont(Constante.F4);
         lblScrum = new JLabel("Scrum..Master");
         lblScrum.setFont(Constante.F3);
-        new SimpleDateFormat("yyyy-mm-dd");
+        new SimpleDateFormat("yyyy-MM-dd");
 
         //initialisation des textfields
         txtProjet = new JTextField(20);

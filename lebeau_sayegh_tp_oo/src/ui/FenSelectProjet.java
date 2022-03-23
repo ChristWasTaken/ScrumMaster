@@ -32,27 +32,15 @@ public class FenSelectProjet extends JFrame{
     TableColumnModel colmod;
 
     String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin"};
-    String[][] tableTest = {
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" }
-    };
+    String[][] tableProjet = {};
 
-
-    private Border brd;
-
-    public FenSelectProjet() {
+    public FenSelectProjet(RegistreProjet projet) {
 
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-//        this.projet
+//        this.projet;
 //        projet = ManipulationFichier.lire(Constante.PROJET_FOLDER, projet, 1);
 
         setWidget();
@@ -67,7 +55,7 @@ public class FenSelectProjet extends JFrame{
         // Initialisation des objets de la fenetre.
 
         //initialisation des Labels
-        lblProjet = new JLabel("Projets en cours");
+        lblProjet = new JLabel("                        Projets en cours");
         lblProjet.setFont(Constante.F1);
         lblTitre = new JLabel("Tous droit Réservé. ®");
         lblTitre.setFont(Constante.F4);
@@ -126,9 +114,10 @@ public class FenSelectProjet extends JFrame{
         tbMenu.add(btnNew);
         tbMenu.add(btnCharger);
         tbMenu.add(btnDelete);
+        tbMenu.add(lblProjet);
 
         //initiation des tables
-        tblProjet = new JTable(tableTest, nomColonnes);
+        tblProjet = new JTable(tableProjet, nomColonnes);
 
         //initiation des scrollpanes
         scPaneProjet = new JScrollPane(tblProjet);
@@ -143,7 +132,6 @@ public class FenSelectProjet extends JFrame{
         //Panneau d'affichage des projets en cours
         panProjetCourrant = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        panProjetCourrant.add(lblProjet);
         panProjetCourrant.add(scPaneProjet);
 
         panProjet = new JPanel(new BorderLayout());
