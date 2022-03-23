@@ -10,32 +10,31 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 
-
 public class FenProjet extends JFrame {
 
     private FenProjet fenetre;
 
-    JPanel panGlobal, panProjet, panProjetCourrant, panButton, panProjetForm, panSprint, panTask, panBasDePage;
+    private JPanel panGlobal, panProjet, panProjetCourrant, panButton, panProjetForm, panSprint, panTask, panBasDePage;
 
-    JLabel lblProjet, lblScrum, lblSprint, lblTasks, lblTitre, lblConsigneSprint,lblConsigneTask;
-    JTextField txtProjet;
+    private JLabel lblProjet, lblScrum, lblSprint, lblTasks, lblTitre, lblNomProjet, lblDescProjet, lblScrumId, lblDateDebut, lblDateFin, lblDureeSprint ;
+    private JTextField txtProjet, txtNomProjet, txtDescProjet, txtScrumId, txtDateDebut, txtDateFin, txtDureeSprint;
 
-    JToolBar tbMenu;
-    ImageIcon iconProjetSave, iconAjouterTask, iconModifierTask, iconDeleteTask, iconAjouterSprint, iconModifierSprint, iconDeleteSprint;
-    JButton btnProjetSave, btnAjouterTask, btnModifierTask, btnDeleteTask, btnAjouterSprint, btnModifierSprint, btnDeleteSprint;
+    private JToolBar tbMenu;
+    private ImageIcon iconProjetSave, iconAjouterTask, iconModifierTask, iconDeleteTask, iconAjouterSprint, iconModifierSprint, iconDeleteSprint;
+    private JButton btnProjetSave, btnAjouterTask, btnModifierTask, btnDeleteTask, btnAjouterSprint, btnModifierSprint, btnDeleteSprint;
 
-    JMenuBar menuBar;
-    JMenuItem miEnregistrerProj, miSortir, miAjouterTask, miModifierTask, miDeleteTask, miAjouterSprint, miModifierSprint, miDeleteSprint;
-    JMenu mnuProjet, mnuSprint, mnuTask;
-    JSeparator sep1;
+    private JMenuBar menuBar;
+    private JMenuItem miEnregistrerProj, miSortir, miAjouterTask, miModifierTask, miDeleteTask, miAjouterSprint, miModifierSprint, miDeleteSprint;
+    private JMenu mnuProjet, mnuSprint, mnuTask;
+    private JSeparator sep1, sepVertical, sepVertical2;
 
-    JTable tblSprint, tblTask;
-    TableColumnModel colmod;
-    TableColumn tempCol0, tempCol1;
-    JScrollPane scPaneSprint, scPaneTask;
+    private JTable tblSprint, tblTask;
+    private TableColumnModel colmod;
+    private TableColumn tempCol0, tempCol1;
+    private JScrollPane scPaneSprint, scPaneTask;
 
-    String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin"};
-    String[][] tableTest = {
+    private String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin"};
+    private String[][] tableTest = {
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
@@ -51,9 +50,6 @@ public class FenProjet extends JFrame {
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" }
     };
 
-
-    private Border brd;
-
     public FenProjet() {
 
         setSize(800, 700);
@@ -61,7 +57,7 @@ public class FenProjet extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setWidget();
-        setAlwaysOnTop(true);
+//        setAlwaysOnTop(true);
         //setListeners();
     }
 
@@ -74,15 +70,20 @@ public class FenProjet extends JFrame {
 
         //initialisation des Labels
         lblProjet = new JLabel("Projets en cours");
-        lblProjet.setFont(Constante.F1);
+        lblProjet.setFont(Constante.F2);
+        lblNomProjet = new JLabel("Nom du projet: ");
+        lblDescProjet = new JLabel("Description du projet: ");
+        lblScrumId = new JLabel("Charger de projet: ");
+        lblDateDebut = new JLabel("Début du projet: ");
+        lblDateFin = new JLabel("Fin du projet: ");
+        lblDureeSprint = new JLabel("Durée des sprints");
+
         lblSprint = new JLabel("Sprints restant au projet");
         lblSprint.setFont(Constante.F2);
+
         lblTasks = new JLabel("Taches restantes au projet");
         lblTasks.setFont(Constante.F2);
-        lblConsigneSprint = new JLabel(" - Affichage du projet sélectionné.");
-        lblConsigneSprint.setFont(Constante.F3);
-        lblConsigneTask = new JLabel(" - Affichage du projet sélectionné.");
-        lblConsigneTask.setFont(Constante.F3);
+
         lblTitre = new JLabel("Tous droit Réservé. ®");
         lblTitre.setFont(Constante.F4);
         lblScrum = new JLabel("Scrum..Master");
@@ -90,6 +91,7 @@ public class FenProjet extends JFrame {
 
         //initialisation des textfields
         txtProjet = new JTextField(20);
+
 
         //initiation menuBar
         menuBar = new JMenuBar();
@@ -101,22 +103,29 @@ public class FenProjet extends JFrame {
         tbMenu.setRollover(false);
 
         //initiation des icones de boutons
-        iconProjetSave = new ImageIcon("src/images/iconNew.png");
-        iconAjouterTask= new ImageIcon("src/images/iconNew.png");
-        iconModifierTask = new ImageIcon("src/images/icon1.png");
-        iconDeleteTask = new ImageIcon("src/images/iconDelete.png");
-        iconAjouterSprint = new ImageIcon("src/images/iconNew.png");
-        iconModifierSprint = new ImageIcon("src/images/icon1.png");
-        iconDeleteSprint = new ImageIcon("src/images/iconDelete.png");
+        iconProjetSave = new ImageIcon("src/images/iconNewProjet.png");
+        iconAjouterTask= new ImageIcon("src/images/iconNewTask.png");
+        iconModifierTask = new ImageIcon("src/images/iconChargerTask.png");
+        iconDeleteTask = new ImageIcon("src/images/iconDeleteTask.png");
+        iconAjouterSprint = new ImageIcon("src/images/iconNewSprint.png");
+        iconModifierSprint = new ImageIcon("src/images/iconChargerSprint.png");
+        iconDeleteSprint = new ImageIcon("src/images/iconDeleteSprint.png");
 
         //initiation des boutonss
         btnProjetSave = new JButton(iconProjetSave);
+        btnProjetSave.setToolTipText("Sauvegarder le projet..");
         btnAjouterTask = new JButton(iconAjouterTask);
+        btnAjouterTask.setToolTipText("Ajouter une tache..");
         btnModifierTask = new JButton(iconModifierTask);
+        btnModifierTask.setToolTipText("Modifier une tache..");
         btnDeleteTask = new JButton(iconDeleteTask);
+        btnDeleteTask.setToolTipText("Supprimer une tache..");
         btnAjouterSprint = new JButton(iconAjouterSprint);
+        btnAjouterSprint.setToolTipText("Ajouter un sprint..");
         btnModifierSprint = new JButton(iconModifierSprint);
+        btnModifierSprint.setToolTipText("Modifier un sprint..");
         btnDeleteSprint = new JButton(iconDeleteSprint);
+        btnDeleteSprint.setToolTipText("Supprimer un sprint..");
 
         //*****************************************
         //initiation item du menu principal
@@ -128,21 +137,26 @@ public class FenProjet extends JFrame {
         menuBar.add(mnuTask);
         menuBar.add(mnuSprint);
 
-        //initiation des items du menu Fichier
+        //initiation des items du menu Projet
         miEnregistrerProj = new JMenuItem("Enregistrer le Projet..");
         miSortir = new JMenuItem("Sortir");
-
-        miAjouterTask = new JMenuItem("Enregistrer le Projet..");
-        miModifierTask = new JMenuItem("Enregistrer le Projet..");
-        miDeleteTask = new JMenuItem("Enregistrer le Projet..");
-
-        miAjouterSprint = new JMenuItem("Enregistrer le Projet..");
-        miModifierSprint = new JMenuItem("Enregistrer le Projet..");
-        miDeleteSprint = new JMenuItem("Enregistrer le Projet..");
+        //initiation des items du menu Task
+        miAjouterTask = new JMenuItem("Ajouter une tache..");
+        miModifierTask = new JMenuItem("Modifier une tache..");
+        miDeleteTask = new JMenuItem("Supprimer une tache..");
+        //initiation des items du menu Sprint
+        miAjouterSprint = new JMenuItem("Ajouter un sprint..");
+        miModifierSprint = new JMenuItem("Modifier un sprint..");
+        miDeleteSprint = new JMenuItem("Supprimer un sprint..");
 
         //Séparateur de menu
         sep1 = new JSeparator();
         sep1.setForeground(Color.gray);
+        sepVertical = new JSeparator(SwingConstants.VERTICAL);
+        sepVertical.setForeground(Color.lightGray);
+        sepVertical2 = new JSeparator(SwingConstants.VERTICAL);
+        sepVertical2.setForeground(Color.lightGray);
+
 
         mnuProjet.add(miEnregistrerProj);
         mnuProjet.add(sep1);
@@ -157,14 +171,17 @@ public class FenProjet extends JFrame {
         mnuTask.add(miDeleteTask);
 
         //****************************************************
+
         //panneau menu
         panButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panButton.add(tbMenu);
-        //pammneau toolbar
+        //panneau toolbar
         tbMenu.add(btnProjetSave);
+        tbMenu.add(sepVertical);
         tbMenu.add(btnAjouterTask);
         tbMenu.add(btnModifierTask);
         tbMenu.add(btnDeleteTask);
+        tbMenu.add(sepVertical2);
         tbMenu.add(btnAjouterSprint);
         tbMenu.add(btnModifierSprint);
         tbMenu.add(btnDeleteSprint);
@@ -172,7 +189,6 @@ public class FenProjet extends JFrame {
         //initiation des tables
         tblSprint = new JTable(tableTest, nomColonnes);
         tblTask = new JTable(tableTest, nomColonnes);
-
 
         //initiation des scrollpanes
         scPaneSprint = new JScrollPane(tblSprint);
@@ -196,26 +212,24 @@ public class FenProjet extends JFrame {
         panSprint = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         panSprint.add(lblSprint);
-        panSprint.add(lblConsigneSprint);
         panSprint.add(scPaneSprint);
 
         //Panneau d'affichage des sprints du projet
         panTask = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         panTask.add(lblTasks);
-        panTask.add(lblConsigneTask);
         panTask.add(scPaneTask);
 
         //Panneau d'affichage du projet selectionné
         panProjetForm = new JPanel(new BorderLayout());
 
-        panProjetForm.add(panSprint, BorderLayout.NORTH);
-        panProjetForm.add(panTask);
-
         //Panneau d'affichage des projets en cours
-        panProjetCourrant = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panProjetCourrant = new JPanel(new BorderLayout());
 
         panProjetCourrant.add(lblProjet);
+        panProjetCourrant.add(panProjetForm, BorderLayout.NORTH);
+        panProjetCourrant.add(panSprint, BorderLayout.CENTER);
+        panProjetCourrant.add(panTask, BorderLayout.SOUTH);
 
         panProjet = new JPanel(new BorderLayout());
         panProjet.setBorder(brd);
