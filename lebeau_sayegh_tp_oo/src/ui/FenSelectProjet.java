@@ -118,7 +118,7 @@ public class FenSelectProjet extends JFrame{
         //initiation des scrollpanes
         JScrollPane scPaneProjet = new JScrollPane(tblProjet);
 
-        scPaneProjet.setPreferredSize(new Dimension(765, 75));
+        scPaneProjet.setPreferredSize(new Dimension(765, 150));
         TableColumnModel colmod = tblProjet.getColumnModel();
         TableColumn tempCol1 = colmod.getColumn(1);
         tempCol1.setPreferredWidth(350);
