@@ -116,8 +116,8 @@ public class ManipulationFichier {
 
                     RegistreTask regTask = (RegistreTask) reg;
                     oos.writeInt(regTask.getRegistreTasks().size());
-                    System.out.println("oui");//ecrire la taille de la collection
                     for (Object objet : regTask.getRegistreTasks()) {
+
                         oos.writeObject(objet);
                     }
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class RegistreNotes extends Registre {
     private ArrayList<Notes> registreNotes;
 
-    public RegistreNotes(ArrayList<Notes> registreNotes) {
+    public RegistreNotes() {
         this.registreNotes = new ArrayList<>();
     }
 
