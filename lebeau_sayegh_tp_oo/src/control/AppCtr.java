@@ -3,6 +3,7 @@ package control;
 import io.ManipulationFichier;
 import model.*;
 import ui.FenProjet;
+import ui.FenSelectProjet;
 import utils.Constante;
 import utils.SprintDejaPresentException;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrastIJTheme;
@@ -39,6 +40,7 @@ public class AppCtr {
 //            Task t5 = new Task(1,"blabl5",6);
 //            Task t6 = new Task(1,"blabl6",6);
             RegistreTask regTask = new RegistreTask();
+
 //            regTask.ajouterTask(t1);
 //            regTask.ajouterTask(t2);
 //            regTask.ajouterTask(t3);
@@ -77,8 +79,11 @@ public class AppCtr {
 //            f.printStackTrace();
 //        }
 //
-        FenProjet fenetreProjet = new FenProjet();
-        fenetreProjet.setVisible(true);
+//        FenProjet fenetreProjet = new FenProjet();
+//        fenetreProjet.setVisible(true);
+
+        FenSelectProjet fenetreSelect = new FenSelectProjet();
+        fenetreSelect.setVisible(true);
 
 
     }
