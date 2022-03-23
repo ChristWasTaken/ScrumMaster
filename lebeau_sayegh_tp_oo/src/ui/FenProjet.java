@@ -109,7 +109,7 @@ public class FenProjet extends JFrame {
         iconModifierSprint = new ImageIcon("src/images/icon1.png");
         iconDeleteSprint = new ImageIcon("src/images/iconDelete.png");
 
-        //initiation des boutons
+        //initiation des boutonss
         btnProjetSave = new JButton(iconProjetSave);
         btnAjouterTask = new JButton(iconAjouterTask);
         btnModifierTask = new JButton(iconModifierTask);

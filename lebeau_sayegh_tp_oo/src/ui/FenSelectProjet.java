@@ -102,7 +102,7 @@ public class FenSelectProjet extends JFrame{
 
         menuBar.add(mnuFile);
 
-        //initiation des items du menu Fichier
+        //initiation des items du menu Fichiers
         miNouveauProj = new JMenuItem("Nouveau Projet..");
         miChargerProj = new JMenuItem("Charger Projet..");
         miSupprimerProj = new JMenuItem("Supprimer Projet..");
