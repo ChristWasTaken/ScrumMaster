@@ -17,8 +17,9 @@ public class Sprint {
     public Sprint() {
     }
 
-    public Sprint(int[] taskID,  Date dateFin, boolean progres) {
+    public Sprint(int[] taskID,String description,  Date dateFin, boolean progres) {
         this.taskID = taskID;
+        this.description = description;
         this.dateDebut = Utilitaire.getTodayDate();
         this.dateFin = dateFin;
         this.progres = progres;
@@ -65,7 +66,7 @@ public class Sprint {
 
     @Override
     public String toString() {
-        return "Sprint: " +
+        return "Sprint: " + description +
                 "dateDebut= " + dateDebut +
                 ", dateFin= " + dateFin +
                 ", progres= " + progres
