@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class RegistreProjet extends Registre {
     ArrayList<Projet> registreProjet;
 
-    public RegistreProjet(ArrayList<Projet> registreProjet) {
-        this.registreProjet = new ArrayList<>();
+    public RegistreProjet() {
+        this.registreProjet= new ArrayList<>();
     }
 
     //ajouter Projet au registre
