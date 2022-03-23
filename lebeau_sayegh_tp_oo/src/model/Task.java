@@ -61,6 +61,10 @@ public class Task implements Serializable {
         this.employeID = employeID;
     }
 
+    public static void setNbrTask(int nbrTask) {
+        Task.nbrTask = nbrTask;
+    }
+
     @Override
     public String toString() {
         return "Task{" +

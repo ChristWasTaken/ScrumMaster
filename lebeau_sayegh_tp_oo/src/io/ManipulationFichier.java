@@ -80,6 +80,7 @@ public class ManipulationFichier {
                     for (int i = 0; i < taille; i++) {
                         RegistreTask regTask = (RegistreTask) registre;
                         Task task = (Task) ois.readObject();
+                        Task.setNbrTask(i+1);
                         regTask.ajouterTask(task);
                     }
                 }
