@@ -1,6 +1,8 @@
 package utils;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 
 public class Utilitaire {
@@ -9,4 +11,6 @@ public class Utilitaire {
         long miliseconds = System.currentTimeMillis();
         return new Date(miliseconds);
     }
+
+
 }

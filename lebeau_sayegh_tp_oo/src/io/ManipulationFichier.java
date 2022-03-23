@@ -2,10 +2,7 @@ package io;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import model.*;
-import utils.EmployeDejaPresentException;
-import utils.ProjetDejaPresentException;
-import utils.SprintDejaPresentException;
-import utils.TaskDejaExistException;
+import utils.*;
 
 import java.io.*;
 import java.text.ParseException;
@@ -14,6 +11,39 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ManipulationFichier {
+
+    public static void nouveauProjet(String projet) {
+        System.out.println(Constante.PROJET_FOLDER);
+        String dirName = Constante.PROJET_FOLDER+"\\"+projet;
+        File newFolder = new File(dirName);
+        if(newFolder.mkdir()){
+            System.out.println("créer");
+        }else{
+            System.out.println("echec");
+        }
+        try {
+            File newFile = new File( Constante.PROJET_FOLDER+"\\"+projet+"\\"+"tasks.txt");
+            if (newFile.createNewFile()) {
+                System.out.println("File created: " + newFile.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        try {
+            File newFile = new File( Constante.PROJET_FOLDER+"\\"+projet+"\\"+"sprints.txt");
+            if (newFile.createNewFile()) {
+                System.out.println("File created: " + newFile.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException f) {
+            System.out.println("An error occurred.");
+            f.printStackTrace();
+        }
+    }
 
     public static void lire(String fichier, Object registre, int index) {
         //lire du fichier binaire
