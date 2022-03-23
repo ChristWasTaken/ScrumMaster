@@ -17,22 +17,22 @@ public class FenSelectProjet extends JFrame{
     private FenSelectProjet fenetre;
     private RegistreProjet projet;
 
-    private JLabel lblProjet, lblTitre, lblScrum ;
-    private JMenuBar menuBar;
-    private JToolBar tbMenu;
-    private ImageIcon iconNew, iconDelete, iconCharger;
-    private JButton btnNew, btnCharger, btnDelete;
-    private JMenu mnuFile;
-    private JMenuItem miNouveauProj, miChargerProj, miSupprimerProj, miSortir;
-    private JSeparator sep1;
-    private JPanel panGlobal, panProjet, panButton, panProjetCourrant, panBasDePage;
-    private JTable tblProjet;
-    private JScrollPane scPaneProjet;
-    private TableColumn tempCol0, tempCol1;
-    private TableColumnModel colmod;
+    JLabel lblProjet, lblTitre, lblScrum ;
+    JMenuBar menuBar;
+    JToolBar tbMenu;
+    ImageIcon iconNew, iconDelete, iconCharger;
+    JButton btnNew, btnCharger, btnDelete;
+    JMenu mnuFile;
+    JMenuItem miNouveauProj, miChargerProj, miSupprimerProj, miSortir;
+    JSeparator sep1;
+    JPanel panGlobal, panProjet, panButton, panProjetCourrant, panBasDePage;
+    JTable tblProjet;
+    JScrollPane scPaneProjet;
+    TableColumn tempCol0, tempCol1;
+    TableColumnModel colmod;
 
-    private String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin"};
-    private String[][] tableTest = {
+    String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin"};
+    String[][] tableTest = {
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
@@ -42,6 +42,7 @@ public class FenSelectProjet extends JFrame{
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" }
     };
+
 
     private Border brd;
 

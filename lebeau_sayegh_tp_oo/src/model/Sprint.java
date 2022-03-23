@@ -9,6 +9,7 @@ public class Sprint {
 
 
     private int[] taskID;
+    private String description;
     private Date dateDebut;
     private Date dateFin;
     private boolean progres;
