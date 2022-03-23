@@ -21,12 +21,8 @@ public class Task implements Serializable {
         this.employeID = employeID;
     }
 
-    public Task(int taskID, int taskPriority, String description, int employeID) {
-        this.taskID = taskID;
-        nbrTask=taskID;
-        this.taskPriority = taskPriority;
-        Description = description;
-        this.employeID = employeID;
+    public static int getNbrTask() {
+        return nbrTask;
     }
 
     public int getTaskID() {

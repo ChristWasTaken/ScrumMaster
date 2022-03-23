@@ -48,11 +48,14 @@ public class ManipulationFichier {
     public static void lire(String fichier, Object registre, int index) {
         //lire du fichier binaire
         File file = new File(fichier);
-
-        FileInputStream fr = null;
-        BufferedInputStream br = null;
+        FileInputStream fr;
+        BufferedInputStream br;
         ObjectInputStream ois = null;
-
+        RegistreTask regTask;
+        RegistreEmploye regEmp;
+        RegistreProjet regPro;
+        RegistreSprint regSpri;
+        RegistreNotes regNotes;
         try {
             fr = new FileInputStream(file);
             br = new BufferedInputStream(fr);
@@ -64,36 +67,36 @@ public class ManipulationFichier {
             switch (index) {
                 case 0 -> {
                     for (int i = 0; i < taille; i++) {
-                        RegistreEmploye regEmp = (RegistreEmploye) registre;
+                        regEmp = (RegistreEmploye) registre;
                         Employe emp = (Employe) ois.readObject();
                         regEmp.ajouterEmp(emp);
                     }
                 }
                 case 1 -> {
                     for (int i = 0; i < taille; i++) {
-                        RegistreProjet regPro = (RegistreProjet) registre;
+                         regPro = (RegistreProjet) registre;
                         Projet projet = (Projet) ois.readObject();
                         regPro.ajouterProjet(projet);
                     }
                 }
                 case 2 -> {
                     for (int i = 0; i < taille; i++) {
-                        RegistreTask regTask = (RegistreTask) registre;
+                        regTask = (RegistreTask) registre;
                         Task task = (Task) ois.readObject();
-                        Task.setNbrTask(i+1);
                         regTask.ajouterTask(task);
+                        Task.setNbrTask(regTask.getRegistreTasks().size());
                     }
                 }
                 case 3 -> {
                     for (int i = 0; i < taille; i++) {
-                        RegistreSprint regSpri = (RegistreSprint) registre;
+                        regSpri = (RegistreSprint) registre;
                         Sprint sprint = (Sprint) ois.readObject();
                         regSpri.ajouterSprint(sprint);
                     }
                 }
                 case 4 -> {
                     for (int i = 0; i < taille; i++) {
-                        RegistreNotes regNotes = (RegistreNotes) registre;
+                        regNotes = (RegistreNotes) registre;
                         Notes note = (Notes) ois.readObject();
                         regNotes.ajouterNotes(note);
                     }
@@ -118,9 +121,9 @@ public class ManipulationFichier {
     public static void ecrire(String fichier, Registre reg, int index) {
         //ecrire dans un fichier
         File file = new File(fichier);
-        FileOutputStream fw = null;
+        FileOutputStream fw ;
         BufferedOutputStream bw = null;
-        ObjectOutputStream oos = null;
+        ObjectOutputStream oos ;
 
         try {
             fw = new FileOutputStream(file);
@@ -128,47 +131,43 @@ public class ManipulationFichier {
             oos = new ObjectOutputStream(bw);
 
             switch (index) {
-                case 0:
+                case 0 -> {
                     RegistreEmploye regEmp = (RegistreEmploye) reg;
                     oos.writeInt(regEmp.getRegistreEmp().size());
                     for (Object objet : regEmp.getRegistreEmp()) {
                         oos.writeObject(objet);
                     }
-                    break;
-
-                case 1:
+                }
+                case 1 -> {
                     RegistreProjet regPro = (RegistreProjet) reg;
                     oos.writeInt(regPro.getRegistrePro().size());//ecrire la taille de la collection
                     for (Object objet : regPro.getRegistrePro()) {
                         oos.writeObject(objet);
                     }
-                    break;
-                case 2:
-
+                }
+                case 2 -> {
                     RegistreTask regTask = (RegistreTask) reg;
                     oos.writeInt(regTask.getRegistreTasks().size());
                     for (Object objet : regTask.getRegistreTasks()) {
 
                         oos.writeObject(objet);
                     }
-
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     RegistreSprint regSpri = (RegistreSprint) reg;
                     oos.writeInt(regSpri.getRegSprint().size());//ecrire la taille de la collection
                     for (Object objet : regSpri.getRegSprint()) {
                         oos.writeObject(objet);
 
                     }
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     RegistreNotes regNotes = (RegistreNotes) reg;
                     oos.writeInt(regNotes.getRegistreNotes().size());//ecrire la taille de la collection
                     for (Object objet : regNotes.getRegistreNotes()) {
                         oos.writeObject(objet);
                     }
-                    break;
-
+                }
             }
 
 
