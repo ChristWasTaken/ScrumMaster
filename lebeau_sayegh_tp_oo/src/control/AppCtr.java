@@ -79,11 +79,11 @@ public class AppCtr {
 //            f.printStackTrace();
 //        }
 //
-//        FenProjet fenetreProjet = new FenProjet();
-//        fenetreProjet.setVisible(true);
+        FenProjet fenetreProjet = new FenProjet();
+        fenetreProjet.setVisible(true);
 
-        FenSelectProjet fenetreSelect = new FenSelectProjet();
-        fenetreSelect.setVisible(true);
+//        FenSelectProjet fenetreSelect = new FenSelectProjet();
+//        fenetreSelect.setVisible(true);
 
 
     }
