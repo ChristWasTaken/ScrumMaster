@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ManipulationFichier {
+public class ManipulationFichier{
 
     public static void nouveauProjet(String projet) {
         System.out.println(Constante.PROJET_FOLDER);
@@ -118,7 +118,7 @@ public class ManipulationFichier {
 
     }
 
-    public static void ecrire(String fichier, Registre reg, int index) {
+    public static void ecrire(String fichier, Object reg, int index) {
         //ecrire dans un fichier
         File file = new File(fichier);
         FileOutputStream fw ;
@@ -149,7 +149,6 @@ public class ManipulationFichier {
                     RegistreTask regTask = (RegistreTask) reg;
                     oos.writeInt(regTask.getRegistreTasks().size());
                     for (Object objet : regTask.getRegistreTasks()) {
-
                         oos.writeObject(objet);
                     }
                 }

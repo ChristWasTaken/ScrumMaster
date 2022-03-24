@@ -2,9 +2,10 @@ package model;
 
 import utils.Utilitaire;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Projet {
+public class Projet implements Serializable {
 
     private String nomProjet;
     private String description;

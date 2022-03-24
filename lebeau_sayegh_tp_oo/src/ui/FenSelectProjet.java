@@ -1,6 +1,8 @@
 package ui;
 
 import io.ManipulationFichier;
+import model.Projet;
+import model.RegistreEmploye;
 import model.RegistreProjet;
 import utils.Constante;
 
@@ -12,10 +14,15 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 
 public class FenSelectProjet extends JFrame{
     private FenSelectProjet fenetre;
     private RegistreProjet projet;
+    private RegistreEmploye employe;
 
     JLabel lblProjet, lblTitre, lblScrum ;
     JMenuBar menuBar;
@@ -32,9 +39,9 @@ public class FenSelectProjet extends JFrame{
     TableColumnModel colmod;
 
     String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin"};
-    String[][] tableProjet = {};
+    String[][] tableProjet = {{"", "", "", "", "", "" }};
 
-    public FenSelectProjet(RegistreProjet projet) {
+    public FenSelectProjet(RegistreProjet projet, RegistreEmploye employe) {
 
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,12 +49,12 @@ public class FenSelectProjet extends JFrame{
         setResizable(false);
 //        this.projet;
 //        projet = ManipulationFichier.lire(Constante.PROJET_FOLDER, projet, 1);
-
-        setWidget();
+        System.out.println(projet.getRegistrePro());
+        setWidget(projet);
         setListeners();
     }
 
-    private void setWidget() {
+    private void setWidget(RegistreProjet projet) {
 
         Border brd = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 
@@ -116,7 +123,17 @@ public class FenSelectProjet extends JFrame{
         tbMenu.add(btnDelete);
         tbMenu.add(lblProjet);
 
-        //initiation des tables
+        //initiation des table
+        Format formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Projet tmp = projet.getRegistrePro().get(0);
+            tableProjet[0][0]=tmp.getNomProjet();
+            tableProjet[0][1]=tmp.getDescription();
+            tableProjet[0][2]=Integer.toString(tmp.getScrumMasterId());
+            tableProjet[0][3]= formatDate.format(tmp.getDateDebut());
+            tableProjet[0][4]=formatDate.format(tmp.getDateFin());
+            tableProjet[0][5]=Integer.toString(tmp.getDureeSprint());
+
+
         tblProjet = new JTable(tableProjet, nomColonnes);
 
         //initiation des scrollpanes

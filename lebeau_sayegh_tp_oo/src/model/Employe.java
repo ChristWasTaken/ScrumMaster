@@ -1,15 +1,17 @@
 package model;
 
-public class Employe {
-    private static int employeID;
-    private String nom, prenom, poste;
+import java.io.Serializable;
 
-    public Employe() {
-        employeID++;
-    }
+public class Employe implements Serializable {
+    private static int nbrEmploye=0;
+    private String nom, prenom, poste;
+    private int employeID;
+
+    public Employe() {}
     //
     public Employe(String nom, String prenom, String poste) {
-        employeID++;
+        this.employeID = nbrEmploye;
+        nbrEmploye++;
         this.nom = nom;
         this.prenom = prenom;
         this.poste = poste;
@@ -40,7 +42,7 @@ public class Employe {
     }
     @Override
     public String toString() {
-        return "Employe{" +
+        return  " Employe{" +
                 "nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", poste='" + poste + '\'' +
