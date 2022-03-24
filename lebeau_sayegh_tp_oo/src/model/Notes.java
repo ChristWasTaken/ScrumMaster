@@ -1,6 +1,8 @@
 package model;
 
-public class Notes {
+import java.io.Serializable;
+
+public class Notes implements Serializable {
     private String titre;
     private String description;
     private int taskID;
