@@ -3,9 +3,10 @@ package model;
 
 import utils.Utilitaire;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Sprint {
+public class Sprint implements Serializable {
 
 
     private int[] taskID;
