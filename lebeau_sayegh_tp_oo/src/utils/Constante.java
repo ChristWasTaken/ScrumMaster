@@ -3,10 +3,9 @@ package utils;
 import java.awt.*;
 
 public class Constante {
-    public static String[] type = {"C:\\temp\\Employes.dat","C:\\temp\\Projets.dat",
-        "C:\\temp\\Task.dat","C:\\temp\\Sprint.dat","C:\\temp\\Notes.dat"};
+    public static String[] nomFichier = {"Projets.dat"};
 
-    public static final String PROJET_FOLDER = "dataFiles\\Projets\\";
+    public static final String REPERTOIRE_PROJET = "dataFiles\\Projets\\";
 
     public static final String[] POSTES = {"Scrum master", "Programmeur senior", "Programmeur junior"};
 

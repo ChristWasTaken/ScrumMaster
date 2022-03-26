@@ -1,50 +1,15 @@
 package io;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import model.*;
 import utils.*;
 
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class ManipulationFichier{
 
-    public static void nouveauProjet(String projet) {
-        System.out.println(Constante.PROJET_FOLDER);
-        String dirName = Constante.PROJET_FOLDER+"\\"+projet;
-        File newFolder = new File(dirName);
-        if(newFolder.mkdir()){
-            System.out.println("créer");
-        }else{
-            System.out.println("echec");
-        }
-        try {
-            File newFile = new File( Constante.PROJET_FOLDER+"\\"+projet+"\\"+"tasks.txt");
-            if (newFile.createNewFile()) {
-                System.out.println("File created: " + newFile.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-        try {
-            File newFile = new File( Constante.PROJET_FOLDER+"\\"+projet+"\\"+"sprints.txt");
-            if (newFile.createNewFile()) {
-                System.out.println("File created: " + newFile.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException f) {
-            System.out.println("An error occurred.");
-            f.printStackTrace();
-        }
-    }
+    //************ READ/WRITE ************
 
+    //Lecture d'un fichier binaire
     public static void lire(String fichier, Object registre, int index) {
         //lire du fichier binaire
         File file = new File(fichier);
@@ -117,7 +82,7 @@ public class ManipulationFichier{
 
 
     }
-
+    //Ecriture d'un fichier binaire
     public static void ecrire(String fichier, Object reg, int index) {
         //ecrire dans un fichier
         File file = new File(fichier);
@@ -134,6 +99,7 @@ public class ManipulationFichier{
                 case 0 -> {
                     RegistreEmploye regEmp = (RegistreEmploye) reg;
                     oos.writeInt(regEmp.getRegistreEmp().size());
+                    System.out.println(regEmp.getRegistreEmp().size());
                     for (Object objet : regEmp.getRegistreEmp()) {
                         oos.writeObject(objet);
                     }
@@ -181,8 +147,86 @@ public class ManipulationFichier{
                 }
             }
         }
-
     }
 
+    //************ Manipulation des fichiers/répertoires projets ************
+
+    //Creation des fichiers d'un nouveau projet
+    public static void nouveauProjet(String projet) {
+        System.out.println(Constante.REPERTOIRE_PROJET);
+        String dirName = Constante.REPERTOIRE_PROJET +"\\"+projet;
+        File newFolder = new File(dirName);
+        if(newFolder.mkdir()){
+            System.out.println("créer");
+        }else{
+            System.out.println("echec");
+        }
+        try {
+            File newFile = new File( Constante.REPERTOIRE_PROJET +"\\"+projet+"\\"+"tasks.txt");
+            if (newFile.createNewFile()) {
+                System.out.println("File created: " + newFile.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        try {
+            File newFile = new File( Constante.REPERTOIRE_PROJET +"\\"+projet+"\\"+"sprints.txt");
+            if (newFile.createNewFile()) {
+                System.out.println("File created: " + newFile.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException f) {
+            System.out.println("An error occurred.");
+            f.printStackTrace();
+        }
+    }
+
+    public static void effacerFichiersProjet(String projet) {
+        String dirName = Constante.REPERTOIRE_PROJET + projet;
+        File directory = new File(dirName);
+        try {
+
+            if (directory.exists()) {
+                System.out.println(dirName);
+                effacerRepertoire(directory);
+                directory.delete();
+            } else {
+                System.out.println("Répertoire inexistant:"+ directory);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void effacerFichier(String fichier) {
+        File myFile = new File(fichier);
+        if (myFile.delete()) {
+            System.out.println("Fichier supprimé: " + myFile.getName());
+        } else {
+            System.out.println("Erreur, fichier toujours présent.");
+        }
+    }
+
+    public static void effacerRepertoire(File file)
+    {
+        // store all the paths of files and folders present
+        // inside directory
+        for (File subfile : file.listFiles()) {
+
+            // if it is a subfolder,e.g Rohan and Ritik,
+            // recursiley call function to empty subfolder
+            if (subfile.isDirectory()) {
+                effacerRepertoire(subfile);
+            }
+
+            // delete files and empty subfolders
+            subfile.delete();
+        }
+    }
 
 }

@@ -11,54 +11,54 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
 public class FenSelectProjet extends JFrame{
     private FenSelectProjet fenetre;
-    private RegistreProjet projet;
+    private RegistreProjet registreProjet;
     private RegistreEmploye employe;
 
-    JLabel lblProjet, lblTitre, lblScrum ;
-    JMenuBar menuBar;
-    JToolBar tbMenu;
-    ImageIcon iconNew, iconDelete, iconCharger;
-    JButton btnNew, btnCharger, btnDelete;
-    JMenu mnuFile;
-    JMenuItem miNouveauProj, miChargerProj, miSupprimerProj, miSortir;
-    JSeparator sep1;
-    JPanel panGlobal, panProjet, panButton, panProjetCourrant, panBasDePage;
-    JTable tblProjet;
-    JScrollPane scPaneProjet;
-    TableColumn tempCol0, tempCol1;
-    TableColumnModel colmod;
+    private JLabel lblProjet, lblTitre, lblScrum ;
+    private JMenuBar menuBar;
+    private JToolBar tbMenu;
+    private ImageIcon iconNew, iconDelete, iconCharger;
+    private JButton btnNew, btnCharger, btnDelete;
+    private JMenu mnuFile;
+    private JMenuItem miNouveauProj, miChargerProj, miSupprimerProj, miSortir;
+    private JSeparator sep1;
+    private JPanel panGlobal, panProjet, panButton, panProjetCourrant, panBasDePage;
+    private JTable tblProjet;
+    private JScrollPane scPaneProjet;
+    private TableColumn tempCol0, tempCol1;
+    private TableColumnModel colmod;
+    private DefaultTableModel tableModel;
 
-    String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin"};
-    String[][] tableProjet = {{"", "", "", "", "", "" }};
+    private String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin", "Durée des sprints"};
+
 
     public FenSelectProjet(RegistreProjet projet, RegistreEmploye employe) {
+        this.registreProjet = projet;
+        this.employe = employe;
 
         setSize(800, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-//        this.projet;
-//        projet = ManipulationFichier.lire(Constante.PROJET_FOLDER, projet, 1);
-        System.out.println(projet.getRegistrePro());
-        setWidget(projet);
+
+        setWidget();
         setListeners();
     }
 
-    private void setWidget(RegistreProjet projet) {
+    private void setWidget() {
 
         Border brd = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 
-        //************************************************************
+        //*******************************************
         // Initialisation des objets de la fenetre.
 
         //initialisation des Labels
@@ -79,9 +79,9 @@ public class FenSelectProjet extends JFrame{
         tbMenu.setRollover(false);
 
         //initiation des icones de boutons
-        iconNew = new ImageIcon("src/images/iconNew.png");
-        iconDelete = new ImageIcon("src/images/iconDelete.png");
-        iconCharger = new ImageIcon("src/images/iconCharger.png");
+        iconNew = new ImageIcon("src/images/iconNewProjet.png");
+        iconDelete = new ImageIcon("src/images/iconDeleteProjet.png");
+        iconCharger = new ImageIcon("src/images/iconChargerProjet.png");
 
         //initiation des boutons
         btnNew = new JButton(iconNew);
@@ -91,7 +91,7 @@ public class FenSelectProjet extends JFrame{
         btnDelete = new JButton(iconDelete);
         btnDelete.setToolTipText("Supprimer le Projet Sélectionné..");
 
-        //*****************************************
+        //*************** Entete ****************
         //initiation item du menu principal
         mnuFile = new JMenu("Fichier");
 
@@ -112,31 +112,29 @@ public class FenSelectProjet extends JFrame{
         mnuFile.add(sep1);
 
         mnuFile.add(miSortir);
+        //*************** Toolbar ****************
 
-        //****************************************************
-        //panneau menu
+        //panneau du toolbar
         panButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panButton.add(tbMenu);
-        //panneau toolbar
+        //objet du toolbar
         tbMenu.add(btnNew);
         tbMenu.add(btnCharger);
         tbMenu.add(btnDelete);
         tbMenu.add(lblProjet);
 
-        //initiation des table
-        Format formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Projet tmp = projet.getRegistrePro().get(0);
-            tableProjet[0][0]=tmp.getNomProjet();
-            tableProjet[0][1]=tmp.getDescription();
-            tableProjet[0][2]=Integer.toString(tmp.getScrumMasterId());
-            tableProjet[0][3]= formatDate.format(tmp.getDateDebut());
-            tableProjet[0][4]=formatDate.format(tmp.getDateFin());
-            tableProjet[0][5]=Integer.toString(tmp.getDureeSprint());
+        //******* initiation da la table *********
+        //Modele de la table
+        tableModel = new DefaultTableModel();
+        tableModel.setColumnIdentifiers(nomColonnes);
+        //table
+        tblProjet = new JTable();
+        tblProjet.setModel(tableModel);
+        // Permet la selection d'une colonne seulement
+        tblProjet.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //Fonction pour remplir la table par le model
+        remplirTable();
 
-
-        tblProjet = new JTable(tableProjet, nomColonnes);
-
-        //initiation des scrollpanes
         scPaneProjet = new JScrollPane(tblProjet);
 
         scPaneProjet.setPreferredSize(new Dimension(765, 150));
@@ -175,8 +173,47 @@ public class FenSelectProjet extends JFrame{
             @Override
             public void actionPerformed(ActionEvent a) {
 
-               ManipulationFichier.nouveauProjet("Projet1");
+                FenProjet fenProjet = new FenProjet(registreProjet);
+                fenProjet.setVisible(true);
+                dispose();
             }
         });
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int result = JOptionPane.showConfirmDialog(null,"La suppression set final. Êtes-vous sur?", "Suppression de projet",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if(result == JOptionPane.YES_OPTION){
+                    try{
+                        int i = tblProjet.getSelectedRow();
+                        System.out.println(registreProjet.getRegistrePro().size());
+                        ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet());
+                        registreProjet.effacerProjet(i);
+                        ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET +Constante.nomFichier[0], registreProjet, 1);
+                        System.out.println(registreProjet.getRegistrePro().size());
+                        tableModel.removeRow(i);
+
+                        JOptionPane.showMessageDialog(null,"Suppression du projet complété.");
+                    } catch (IndexOutOfBoundsException ex) {
+                        JOptionPane.showMessageDialog(null,"La ligne du projet doit être correctement selectionné pour pouvoir le supprimer.");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"Suppression du projet annulée.");
+                }
+            }
+        });
+    }
+    public void remplirTable(){
+        Format formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(registreProjet.getRegistrePro().size());
+        System.out.println(nomColonnes.length);
+        for (Projet tmp : registreProjet.getRegistrePro()){
+            Object[] row = {tmp.getNomProjet(), tmp.getDescription(), Integer.toString(tmp.getScrumMasterId()),
+                            formatDate.format(tmp.getDateDebut()), formatDate.format(tmp.getDateFin()),
+                            Integer.toString(tmp.getDureeSprint())};
+            tableModel.addRow(row);
+        }
     }
 }

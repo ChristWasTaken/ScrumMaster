@@ -1,7 +1,11 @@
 package ui;
 
+import io.ManipulationFichier;
+import model.Projet;
 import model.RegistreProjet;
 import utils.Constante;
+import utils.ProjetDejaPresentException;
+import utils.Utilitaire;
 
 
 import javax.swing.*;
@@ -9,6 +13,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +22,7 @@ import java.text.SimpleDateFormat;
 
 public class FenProjet extends JFrame {
 
-    private RegistreProjet registre;
+    private RegistreProjet registreProj;
 
     private FenProjet fenetre;
 
@@ -34,7 +39,7 @@ public class FenProjet extends JFrame {
     private JButton btnProjetSave, btnAjouterTask, btnModifierTask, btnDeleteTask, btnAjouterSprint, btnModifierSprint, btnDeleteSprint;
 
     private JMenuBar menuBar;
-    private JMenuItem miEnregistrerProj, miSortir, miAjouterTask, miModifierTask, miDeleteTask, miAjouterSprint, miModifierSprint, miDeleteSprint;
+    private JMenuItem miEnregistrerProj, miRetour, miAjouterTask, miModifierTask, miDeleteTask, miAjouterSprint, miModifierSprint, miDeleteSprint;
     private JMenu mnuProjet, mnuSprint, mnuTask;
     private JSeparator sep1, sepVertical, sepVertical2;
 
@@ -53,24 +58,18 @@ public class FenProjet extends JFrame {
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
             { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" }
+
     };
 
     public FenProjet(RegistreProjet registre) {
-
+        this.registreProj = registre;
         setSize(800, 1200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         setWidget();
 //        setAlwaysOnTop(true);
-        //setListeners();
+        setListeners();
     }
 
     private void setWidget() {
@@ -101,13 +100,21 @@ public class FenProjet extends JFrame {
         lblTitre.setFont(Constante.F4);
         lblScrum = new JLabel("Scrum..Master");
         lblScrum.setFont(Constante.F3);
-        new SimpleDateFormat("yyyy-MM-dd");
+
 
         //initialisation des textfields
         txtProjet = new JTextField(20);
         txtNomProjet = new JTextField(30);
         txtDescProjet = new JTextField(50);
         txtScrumId = new JTextField(20);
+
+
+//        formatDate = new SimpleDateFormat("yyyy-MM-dd");
+//        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+//        JFormattedTextField txtDate = new JFormattedTextField(df);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormatter formatDate = new DateFormatter(format);
+//        JFormattedTextField dateField = new JFormattedTextField(df);
         ftxtDateDebut = new JFormattedTextField(formatDate);
         ftxtDateFin = new JFormattedTextField(formatDate);
         txtDureeSprint = new JTextField(3);
@@ -182,7 +189,7 @@ public class FenProjet extends JFrame {
 
         //initiation des items du menu Projet
         miEnregistrerProj = new JMenuItem("Enregistrer le Projet..");
-        miSortir = new JMenuItem("Sortir");
+        miRetour = new JMenuItem("Retour à la selection..");
         //initiation des items du menu Task
         miAjouterTask = new JMenuItem("Ajouter une tache..");
         miModifierTask = new JMenuItem("Modifier une tache..");
@@ -194,7 +201,7 @@ public class FenProjet extends JFrame {
 
         mnuProjet.add(miEnregistrerProj);
         mnuProjet.add(sep1);
-        mnuProjet.add(miSortir);
+        mnuProjet.add(miRetour);
 
         mnuSprint.add(miAjouterSprint);
         mnuSprint.add(miModifierSprint);
@@ -221,7 +228,7 @@ public class FenProjet extends JFrame {
         tempCol0 = colmod.getColumn(0);
         tempCol0.setPreferredWidth(150);
 
-        scPaneTask.setPreferredSize(new Dimension(765,200));
+        scPaneTask.setPreferredSize(new Dimension(765,190));
         colmod = tblTask.getColumnModel();
         tempCol0 = colmod.getColumn(0);
         tempCol0.setPreferredWidth(150);
@@ -283,12 +290,36 @@ public class FenProjet extends JFrame {
     }
 
     private void setListeners() {
+
+        miRetour.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                dispose();
+
+
+            }
+        });
         btnProjetSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                ManipulationFichier.nouveauProjet(txtNomProjet.getText());
+                DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+                Projet tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), Integer.parseInt(txtScrumId.getText()),
+                        Utilitaire.getTodayDate(), Utilitaire.getTodayDate(), Integer.parseInt(txtDureeSprint.getText()));
 
-
+                try {
+                    registreProj.ajouterProjet(tempProj);
+                    for (Projet tmp : registreProj.getRegistrePro()){
+                        System.out.println(tmp);
+                    }
+                } catch (ProjetDejaPresentException ex) {
+                    ex.printStackTrace();
+                }
+                ManipulationFichier.effacerFichier(Constante.REPERTOIRE_PROJET +Constante.nomFichier[0]);
+                System.out.println(registreProj.getRegistrePro().size());
+                ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET +Constante.nomFichier[0], registreProj, 1);
             }
         });
     }

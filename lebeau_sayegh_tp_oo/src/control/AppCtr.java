@@ -2,20 +2,12 @@ package control;
 
 import io.ManipulationFichier;
 import model.*;
-import ui.FenProjet;
 import ui.FenSelectProjet;
-import ui.FenSprint;
-import ui.FenTask;
 import utils.*;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrastIJTheme;
 
 
 import javax.swing.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class AppCtr {
     public static void main(String[] args) {
@@ -28,21 +20,26 @@ public class AppCtr {
         RegistreEmploye employe = new RegistreEmploye();
         RegistreProjet projet = new RegistreProjet();
         RegistreTask regTask = new RegistreTask();
+
+        FenSelectProjet fenetre;
 //        try {
 //            Date projFin = sdf.parse("2022-07-26");
-//            Projet proj2 = new Projet("bibi", "blabla", 1,projFin,4);
+//            Projet proj2 = new Projet("bibi", "blabla", 1,Utilitaire.getTodayDate(),4);
 //            Projet proj = new Projet("Scrum..Master", "Gérer des projets avec la méthode Scrum",1, Utilitaire.getTodayDate(),2);
 //
 //            try{
 //                projet.ajouterProjet(proj);
+////                projet.ajouterProjet(proj2);
 //
 //            }catch (ProjetDejaPresentException e) {
 //                e.printStackTrace();
 //            }
 //        System.out.println(projet.getRegistrePro());
-////            ManipulationFichier.ecrire(Constante.PROJET_FOLDER+"Projets.dat", projet, 1);
-              ManipulationFichier.lire(Constante.PROJET_FOLDER+"Projets.dat", projet, 1);
-        System.out.println(projet.getRegistrePro());
+//            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
+              ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
+            for (Projet tmp : projet.getRegistrePro()){
+                System.out.println(tmp);
+            }
 //            Task t1 = new Task(1,"blabl1",6);
 //            Task t2 = new Task(1,"blabl2",6);
 //            Task t3= new Task(1,"blabl3",6);
@@ -108,19 +105,16 @@ public class AppCtr {
 //            System.out.println(tmp);
 //        }
 //        ManipulationFichier.ecrire(Constante.PROJET_FOLDER+"Employes.dat",employe,0);
-        ManipulationFichier.lire(Constante.PROJET_FOLDER+"Employes.dat", employe,0);
-        for (Employe emp : employe.getRegistreEmp()) {
-            System.out.println(emp);
-        }
+//        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET +"Employes.dat", employe,0);
+//        for (Employe emp : employe.getRegistreEmp()) {
+//            System.out.println(emp);
+//        }
 
-        FenSelectProjet fenetreSelect = new FenSelectProjet(projet, employe);
-        fenetreSelect.setVisible(true);
+        fenetre = new FenSelectProjet(projet, employe);
+        fenetre.setVisible(true);
 //
 //        FenTask fenetreTask = new FenTask();
 //        fenetreTask.setVisible(true);
-//
-//        FenProjet fenProjet = new FenProjet(projet);
-//        fenProjet.setVisible(true);
 
     }
 }

@@ -21,9 +21,13 @@ public class RegistreProjet extends Registre {
         }
     }
 
+    public void effacerProjet(int index){
+        registreProjet.remove(index);
+    }
+
     private boolean verifierDoublons(Projet projet) {
         for (Projet tmp : registreProjet) {
-            if (projet.getDescription().equals(tmp.getDescription())) {
+            if (projet.getNomProjet().equals(tmp.getNomProjet())) {
                 return true;
             }
         }
