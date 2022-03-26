@@ -7,7 +7,7 @@ import java.io.*;
 
 public class ManipulationFichier{
 
-    //************ READ/WRITE ************
+    //************ READ/WRITE ***********
 
     //Lecture d'un fichier binaire
     public static void lire(String fichier, Object registre, int index) {
