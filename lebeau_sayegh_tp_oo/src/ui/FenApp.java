@@ -552,7 +552,13 @@ public class FenApp extends JFrame {
     }
 
     public void carteProjetEnCours() {
-        lblProjet.setText("Projet en cours: " + registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
+        try{
+            lblProjet.setText("Projet en cours: " + registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
+        } catch (IndexOutOfBoundsException e) {
+            consoleTxtArea.append("Erreur de chargement. Selectionner la ligne du projet à charger.\n");
+            e.printStackTrace();
+        }
+
 
         panProjetEnCours.add(panProjetForm, BorderLayout.NORTH);
         panProjetEnCours.add(scPaneTask);
