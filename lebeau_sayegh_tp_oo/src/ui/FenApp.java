@@ -66,7 +66,6 @@ public class FenApp extends JFrame {
         this.registreTask = task;
 
         // Paramêtre de la fenêtre de l'application
-        setTitle("Scrum..Master");
         setSize(800, 700);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -277,7 +276,7 @@ public class FenApp extends JFrame {
         // *** Formulaires
 
         // Formulaire Projet
-        panProjetForm = new JPanel(new GridLayout(6,2));
+        panProjetForm = new JPanel(new GridLayout(7,2));
 
         panProjetForm.add(lblNomProjet);
         panProjetForm.add(txtNomProjet);
@@ -291,6 +290,7 @@ public class FenApp extends JFrame {
         panProjetForm.add(ftxtDateFin);
         panProjetForm.add(lblDureeSprint);
         panProjetForm.add(txtDureeSprint);
+        panProjetForm.add(btnEnregistrer);
 
         // Formulaire Task
         // *** Code pour formulaire panTaskForm
