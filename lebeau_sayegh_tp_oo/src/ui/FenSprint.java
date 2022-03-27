@@ -17,7 +17,7 @@ public class FenSprint extends JFrame {
     private RegistreSprint registreSprint;
     private RegistreTask registreTask;
 
-    private FenProjet fenetre;
+//    private FenProjet fenetre;
 
     private JPanel panGlobal, panProjet, panProjetCourrant, panButton, panProjetForm, panSprint, panTask, panBasDePage;
 

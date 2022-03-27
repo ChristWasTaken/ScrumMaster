@@ -161,28 +161,28 @@ public class ManipulationFichier{
         }else{
             System.out.println("echec");
         }
-        try {
-            File newFile = new File( Constante.REPERTOIRE_PROJET +"\\"+projet+"\\"+"tasks.txt");
-            if (newFile.createNewFile()) {
-                System.out.println("File created: " + newFile.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-        try {
-            File newFile = new File( Constante.REPERTOIRE_PROJET +"\\"+projet+"\\"+"sprints.txt");
-            if (newFile.createNewFile()) {
-                System.out.println("File created: " + newFile.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException f) {
-            System.out.println("An error occurred.");
-            f.printStackTrace();
-        }
+//        try {
+//            File newFile = new File( Constante.REPERTOIRE_PROJET +"\\"+projet+"\\"+"tasks.dat");
+//            if (newFile.createNewFile()) {
+//                System.out.println("File created: " + newFile.getName());
+//            } else {
+//                System.out.println("File already exists.");
+//            }
+//        } catch (IOException e) {
+//            System.out.println("An error occurred.");
+//            e.printStackTrace();
+//        }
+//        try {
+//            File newFile = new File( Constante.REPERTOIRE_PROJET +"\\"+projet+"\\"+"sprints.dat");
+//            if (newFile.createNewFile()) {
+//                System.out.println("File created: " + newFile.getName());
+//            } else {
+//                System.out.println("File already exists.");
+//            }
+//        } catch (IOException f) {
+//            System.out.println("An error occurred.");
+//            f.printStackTrace();
+//        }
     }
 
     public static void effacerFichiersProjet(String projet) {

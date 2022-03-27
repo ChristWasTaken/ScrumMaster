@@ -1,218 +1,220 @@
-package ui;
+//package ui;
+//
+//import io.ManipulationFichier;
+//import model.Projet;
+//import model.RegistreProjet;
+//import utils.Constante;
+//import utils.ProjetDejaPresentException;
+//import utils.Utilitaire;
+//
+//
+//import javax.swing.*;
+//import javax.swing.border.Border;
+//import javax.swing.border.EtchedBorder;
+//import javax.swing.table.TableColumn;
+//import javax.swing.table.TableColumnModel;
+//import javax.swing.text.DateFormatter;
+//import java.awt.*;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+//import java.text.DateFormat;
+//import java.text.SimpleDateFormat;
+//
+//public class FenProjet extends JFrame {
+//
+//}
 
-import io.ManipulationFichier;
-import model.Projet;
-import model.RegistreProjet;
-import utils.Constante;
-import utils.ProjetDejaPresentException;
-import utils.Utilitaire;
+//    private RegistreProjet registreProj;
+//
+//    private FenProjet fenetre;
+//
+//    private JPanel panGlobal, panProjet, panProjetCourrant, panButton, panProjetForm, panSprint, panTask, panBasDePage;
+
+//    private JLabel lblProjet, lblScrum, lblSprint, lblTasks, lblTitre, lblNomProjet, lblDescProjet, lblScrumId, lblDateDebut, lblDateFin, lblDureeSprint;
+//    private JTextField txtProjet, txtNomProjet, txtDescProjet, txtScrumId, txtDureeSprint;
+//
+//    private JFormattedTextField ftxtDateDebut, ftxtDateFin;
+//    private DateFormat formatDate;
+//
+//    private JToolBar tbMenu;
+//    private ImageIcon iconProjetSave, iconAjouterTask, iconModifierTask, iconDeleteTask, iconAjouterSprint, iconModifierSprint, iconDeleteSprint;
+//    private JButton btnProjetSave, btnAjouterTask, btnModifierTask, btnDeleteTask, btnAjouterSprint, btnModifierSprint, btnDeleteSprint;
+//
+//    private JMenuBar menuBar;
+////    private JMenuItem miEnregistrerProj, miRetour, miAjouterTask, miModifierTask, miDeleteTask, miAjouterSprint, miModifierSprint, miDeleteSprint;
+////    private JMenu mnuProjet, mnuSprint, mnuTask;
+//    private JSeparator sep1, sepVertical, sepVertical2;
+
+//    private JTable tblSprint, tblTask;
+//    private TableColumnModel colmod;
+//    private TableColumn tempCol0, tempCol1;
+//    private JScrollPane scPaneSprint, scPaneTask;
 
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.text.DateFormatter;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+//
+//    private String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin"};
+//    private String[][] tableTest = {
+//            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+//            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+//            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+//            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+//            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+//            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
+//
+//    };
 
-public class FenProjet extends JFrame {
-
-    private RegistreProjet registreProj;
-
-    private FenProjet fenetre;
-
-    private JPanel panGlobal, panProjet, panProjetCourrant, panButton, panProjetForm, panSprint, panTask, panBasDePage;
-
-    private JLabel lblProjet, lblScrum, lblSprint, lblTasks, lblTitre, lblNomProjet, lblDescProjet, lblScrumId, lblDateDebut, lblDateFin, lblDureeSprint;
-    private JTextField txtProjet, txtNomProjet, txtDescProjet, txtScrumId, txtDureeSprint;
-
-    private JFormattedTextField ftxtDateDebut, ftxtDateFin;
-    private DateFormat formatDate;
-
-    private JToolBar tbMenu;
-    private ImageIcon iconProjetSave, iconAjouterTask, iconModifierTask, iconDeleteTask, iconAjouterSprint, iconModifierSprint, iconDeleteSprint;
-    private JButton btnProjetSave, btnAjouterTask, btnModifierTask, btnDeleteTask, btnAjouterSprint, btnModifierSprint, btnDeleteSprint;
-
-    private JMenuBar menuBar;
-    private JMenuItem miEnregistrerProj, miRetour, miAjouterTask, miModifierTask, miDeleteTask, miAjouterSprint, miModifierSprint, miDeleteSprint;
-    private JMenu mnuProjet, mnuSprint, mnuTask;
-    private JSeparator sep1, sepVertical, sepVertical2;
-
-    private JTable tblSprint, tblTask;
-    private TableColumnModel colmod;
-    private TableColumn tempCol0, tempCol1;
-    private JScrollPane scPaneSprint, scPaneTask;
-
-
-
-    private String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin"};
-    private String[][] tableTest = {
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-            { "Projet Teletubies", "Regarder la TV le matin", "Bibi", "10-20-30", "10-20-30" },
-
-    };
-
-    public FenProjet(RegistreProjet registre) {
-        this.registreProj = registre;
-        setSize(800, 1200);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setWidget();
-//        setAlwaysOnTop(true);
-        setListeners();
-    }
-
-    private void setWidget() {
-
-        Border brd = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+//    public FenProjet(RegistreProjet registre) {
+//        this.registreProj = registre;
+//        setSize(800, 1200);
+//        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        setLocationRelativeTo(null);
+//        setResizable(false);
+//        setWidget();
+////        setAlwaysOnTop(true);
+//        setListeners();
+//    }
+//
+//    private void setWidget() {
+//
+//        Border brd = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 
         //************************************************************
         // Initialisation des objets de la fenetre.
 
         //initialisation des Labels
-        lblProjet = new JLabel("              Projets en cours");
-        lblProjet.setFont(Constante.F2);
-
-        lblNomProjet = new JLabel("Nom du projet: ");
-        lblDescProjet = new JLabel("Description du projet: ");
-        lblScrumId = new JLabel("Charger de projet: ");
-        lblDateDebut = new JLabel("Début du projet (yyyy-mm-dd): ");
-        lblDateFin = new JLabel("Fin du projet (yyyy-mm-dd): ");
-        lblDureeSprint = new JLabel("Nombre de semaine par sprint: ");
-
-        lblSprint = new JLabel("Sprints restant au projet");
-        lblSprint.setFont(Constante.F2);
-
-        lblTasks = new JLabel("Taches restantes au projet");
-        lblTasks.setFont(Constante.F2);
-
-        lblTitre = new JLabel("Tous droit Réservé. ®");
-        lblTitre.setFont(Constante.F4);
-        lblScrum = new JLabel("Scrum..Master");
-        lblScrum.setFont(Constante.F3);
-
-
-        //initialisation des textfields
-        txtProjet = new JTextField(20);
-        txtNomProjet = new JTextField(30);
-        txtDescProjet = new JTextField(50);
-        txtScrumId = new JTextField(20);
+//        lblProjet = new JLabel("              Projets en cours");
+//        lblProjet.setFont(Constante.F2);
+//
+//        lblNomProjet = new JLabel("Nom du projet: ");
+//        lblDescProjet = new JLabel("Description du projet: ");
+//        lblScrumId = new JLabel("Charger de projet: ");
+//        lblDateDebut = new JLabel("Début du projet (yyyy-mm-dd): ");
+//        lblDateFin = new JLabel("Fin du projet (yyyy-mm-dd): ");
+//        lblDureeSprint = new JLabel("Nombre de semaine par sprint: ");
+//
+//        lblSprint = new JLabel("Sprints restant au projet");
+//        lblSprint.setFont(Constante.F2);
+//
+//        lblTasks = new JLabel("Taches restantes au projet");
+//        lblTasks.setFont(Constante.F2);
+//
+//        lblTitre = new JLabel("Tous droit Réservé. ®");
+//        lblTitre.setFont(Constante.F4);
+//        lblScrum = new JLabel("Scrum..Master");
+//        lblScrum.setFont(Constante.F3);
+//
+//
+//        //initialisation des textfields
+//        txtProjet = new JTextField(20);
+//        txtNomProjet = new JTextField(30);
+//        txtDescProjet = new JTextField(50);
+//        txtScrumId = new JTextField(20);
 
 
 //        formatDate = new SimpleDateFormat("yyyy-MM-dd");
 //        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 //        JFormattedTextField txtDate = new JFormattedTextField(df);
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormatter formatDate = new DateFormatter(format);
-//        JFormattedTextField dateField = new JFormattedTextField(df);
-        ftxtDateDebut = new JFormattedTextField(formatDate);
-        ftxtDateFin = new JFormattedTextField(formatDate);
-        txtDureeSprint = new JTextField(3);
+//        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//        DateFormatter formatDate = new DateFormatter(format);
+////        JFormattedTextField dateField = new JFormattedTextField(df);
+//        ftxtDateDebut = new JFormattedTextField(formatDate);
+//        ftxtDateFin = new JFormattedTextField(formatDate);
+//        txtDureeSprint = new JTextField(3);
 
 
-        //initiation du ToolBar
-        menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
+//        //initiation du ToolBar
+//        menuBar = new JMenuBar();
+//        setJMenuBar(menuBar);
 
-        //initialisation du toolbar
-        tbMenu = new JToolBar();
-        tbMenu.setFloatable(false);
-        tbMenu.setRollover(false);
+//        //initialisation du toolbar
+//        tbMenu = new JToolBar();
+//        tbMenu.setFloatable(false);
+//        tbMenu.setRollover(false);
 
-        //Séparateur de la toolbar
-        sep1 = new JSeparator();
-        sep1.setForeground(Color.gray);
-        sepVertical = new JSeparator(SwingConstants.VERTICAL);
-        sepVertical.setForeground(Color.lightGray);
-        sepVertical2 = new JSeparator(SwingConstants.VERTICAL);
-        sepVertical2.setForeground(Color.lightGray);
+//        //Séparateur de la toolbar
+//        sep1 = new JSeparator();
+//        sep1.setForeground(Color.gray);
+//        sepVertical = new JSeparator(SwingConstants.VERTICAL);
+//        sepVertical.setForeground(Color.lightGray);
+//        sepVertical2 = new JSeparator(SwingConstants.VERTICAL);
+//        sepVertical2.setForeground(Color.lightGray);
 
         //initiation des icones de boutons
-        iconProjetSave = new ImageIcon("src/images/iconNewProjet.png");
-        iconAjouterTask= new ImageIcon("src/images/iconNewTask.png");
-        iconModifierTask = new ImageIcon("src/images/iconChargerTask.png");
-        iconDeleteTask = new ImageIcon("src/images/iconDeleteTask.png");
-        iconAjouterSprint = new ImageIcon("src/images/iconNewSprint.png");
-        iconModifierSprint = new ImageIcon("src/images/iconChargerSprint.png");
-        iconDeleteSprint = new ImageIcon("src/images/iconDeleteSprint.png");
+//        iconProjetSave = new ImageIcon("src/images/iconNewProjet.png");
+//        iconAjouterTask= new ImageIcon("src/images/iconNewTask.png");
+//        iconModifierTask = new ImageIcon("src/images/iconChargerTask.png");
+//        iconDeleteTask = new ImageIcon("src/images/iconDeleteTask.png");
+//        iconAjouterSprint = new ImageIcon("src/images/iconNewSprint.png");
+//        iconModifierSprint = new ImageIcon("src/images/iconChargerSprint.png");
+//        iconDeleteSprint = new ImageIcon("src/images/iconDeleteSprint.png");
+//
+//        //initiation des boutonss
+//        btnProjetSave = new JButton(iconProjetSave);
+//        btnProjetSave.setToolTipText("Sauvegarder le projet..");
+//        btnAjouterTask = new JButton(iconAjouterTask);
+//        btnAjouterTask.setToolTipText("Ajouter une tache..");
+//        btnModifierTask = new JButton(iconModifierTask);
+//        btnModifierTask.setToolTipText("Modifier une tache..");
+//        btnDeleteTask = new JButton(iconDeleteTask);
+//        btnDeleteTask.setToolTipText("Supprimer une tache..");
+//        btnAjouterSprint = new JButton(iconAjouterSprint);
+//        btnAjouterSprint.setToolTipText("Ajouter un sprint..");
+//        btnModifierSprint = new JButton(iconModifierSprint);
+//        btnModifierSprint.setToolTipText("Modifier un sprint..");
+//        btnDeleteSprint = new JButton(iconDeleteSprint);
+//        btnDeleteSprint.setToolTipText("Supprimer un sprint..");
 
-        //initiation des boutonss
-        btnProjetSave = new JButton(iconProjetSave);
-        btnProjetSave.setToolTipText("Sauvegarder le projet..");
-        btnAjouterTask = new JButton(iconAjouterTask);
-        btnAjouterTask.setToolTipText("Ajouter une tache..");
-        btnModifierTask = new JButton(iconModifierTask);
-        btnModifierTask.setToolTipText("Modifier une tache..");
-        btnDeleteTask = new JButton(iconDeleteTask);
-        btnDeleteTask.setToolTipText("Supprimer une tache..");
-        btnAjouterSprint = new JButton(iconAjouterSprint);
-        btnAjouterSprint.setToolTipText("Ajouter un sprint..");
-        btnModifierSprint = new JButton(iconModifierSprint);
-        btnModifierSprint.setToolTipText("Modifier un sprint..");
-        btnDeleteSprint = new JButton(iconDeleteSprint);
-        btnDeleteSprint.setToolTipText("Supprimer un sprint..");
-
-        //initiation panneau toolbar
-        panButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panButton.add(tbMenu);
-        //ajout objet toolbar
-        tbMenu.add(btnProjetSave);
-        tbMenu.add(sepVertical);
-        tbMenu.add(btnAjouterTask);
-        tbMenu.add(btnModifierTask);
-        tbMenu.add(btnDeleteTask);
-        tbMenu.add(sepVertical2);
-        tbMenu.add(btnAjouterSprint);
-        tbMenu.add(btnModifierSprint);
-        tbMenu.add(btnDeleteSprint);
-        tbMenu.add(lblProjet);
+//        //initiation panneau toolbar
+//        panButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//        panButton.add(tbMenu);
+//        //ajout objet toolbar
+//        tbMenu.add(btnProjetSave);
+//        tbMenu.add(sepVertical);
+//        tbMenu.add(btnAjouterTask);
+//        tbMenu.add(btnModifierTask);
+//        tbMenu.add(btnDeleteTask);
+//        tbMenu.add(sepVertical2);
+//        tbMenu.add(btnAjouterSprint);
+//        tbMenu.add(btnModifierSprint);
+//        tbMenu.add(btnDeleteSprint);
+//        tbMenu.add(lblProjet);
 
         //*****************************************
         //initiation item du menu principal
-        mnuProjet = new JMenu("Projet");
-        mnuSprint = new JMenu("Sprints");
-        mnuTask = new JMenu("Taches");
-
-        menuBar.add(mnuProjet);
-        menuBar.add(mnuTask);
-        menuBar.add(mnuSprint);
+//        mnuProjet = new JMenu("Projet");
+//        mnuSprint = new JMenu("Sprints");
+//        mnuTask = new JMenu("Taches");
+//
+//        menuBar.add(mnuProjet);
+//        menuBar.add(mnuTask);
+//        menuBar.add(mnuSprint);
 
         //initiation des items du menu Projet
-        miEnregistrerProj = new JMenuItem("Enregistrer le Projet..");
-        miRetour = new JMenuItem("Retour à la selection..");
-        //initiation des items du menu Task
-        miAjouterTask = new JMenuItem("Ajouter une tache..");
-        miModifierTask = new JMenuItem("Modifier une tache..");
-        miDeleteTask = new JMenuItem("Supprimer une tache..");
-        //initiation des items du menu Sprint
-        miAjouterSprint = new JMenuItem("Ajouter un sprint..");
-        miModifierSprint = new JMenuItem("Modifier un sprint..");
-        miDeleteSprint = new JMenuItem("Supprimer un sprint..");
-
-        mnuProjet.add(miEnregistrerProj);
-        mnuProjet.add(sep1);
-        mnuProjet.add(miRetour);
-
-        mnuSprint.add(miAjouterSprint);
-        mnuSprint.add(miModifierSprint);
-        mnuSprint.add(miDeleteSprint);
-
-        mnuTask.add(miAjouterTask);
-        mnuTask.add(miModifierTask);
-        mnuTask.add(miDeleteTask);
+//        miEnregistrerProj = new JMenuItem("Enregistrer le Projet..");
+//        miRetour = new JMenuItem("Retour à la selection..");
+//        //initiation des items du menu Task
+//        miAjouterTask = new JMenuItem("Ajouter une tache..");
+//        miModifierTask = new JMenuItem("Modifier une tache..");
+//        miDeleteTask = new JMenuItem("Supprimer une tache..");
+//        //initiation des items du menu Sprint
+//        miAjouterSprint = new JMenuItem("Ajouter un sprint..");
+//        miModifierSprint = new JMenuItem("Modifier un sprint..");
+//        miDeleteSprint = new JMenuItem("Supprimer un sprint..");
+//
+//        mnuProjet.add(miEnregistrerProj);
+//        mnuProjet.add(sep1);
+//        mnuProjet.add(miRetour);
+//
+//        mnuSprint.add(miAjouterSprint);
+//        mnuSprint.add(miModifierSprint);
+//        mnuSprint.add(miDeleteSprint);
+//
+//        mnuTask.add(miAjouterTask);
+//        mnuTask.add(miModifierTask);
+//        mnuTask.add(miDeleteTask);
 
         //****************************************************
-
+/*
         //initiation des tables
         tblSprint = new JTable(tableTest, nomColonnes);
         tblTask = new JTable(tableTest, nomColonnes);
@@ -323,4 +325,4 @@ public class FenProjet extends JFrame {
             }
         });
     }
-}
+} */
