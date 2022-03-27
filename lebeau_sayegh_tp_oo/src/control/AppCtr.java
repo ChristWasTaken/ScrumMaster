@@ -37,9 +37,9 @@ public class AppCtr {
 //        System.out.println(projet.getRegistrePro());
 ////            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
               ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
-            for (Projet tmp : projet.getRegistrePro()) {
-                System.out.println(tmp);
-            }
+//            for (Projet tmp : projet.getRegistrePro()) {
+//                System.out.println(tmp);
+//            }
 //        try {
 //            Task t1 = new Task(1, "blabl1", 6);
 //            Task t2 = new Task(1, "blabl2", 6);

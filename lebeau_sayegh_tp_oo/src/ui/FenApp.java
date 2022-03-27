@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.DateFormatter;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,29 +27,28 @@ public class FenApp extends JFrame {
     private RegistreTask registreTask;
     private RegistreSprint registreSprint;
 
-    private JLabel lblProjet, lblTitre, lblScrum, lblSprint, lblTasks, lblNomProjet, lblDescProjet, lblScrumId, lblDateDebut, lblDateFin, lblDureeSprint;
-    private JTextField txtProjet, txtNomProjet, txtDescProjet, txtScrumId, txtDureeSprint;
+    private JLabel lblSepProjet, lblSepTask, lblSepSprint, lblProjet, lblTitre, lblRights, lblSprint, lblTasks, lblNomProjet, lblDescProjet, lblScrumId,
+            lblDateDebut, lblDateFin, lblDureeSprint, lblConsole;
+    private JTextField txtNomProjet, txtDescProjet, txtScrumId, txtDureeSprint;
+    private JTextArea consoleTxtArea;
 
     private JFormattedTextField ftxtDateDebut, ftxtDateFin;
-    private DateFormat formatDate;
 
     private JMenuBar menuBar;
     private JMenu mnuProjet, mnuSprint, mnuTask;
     private JMenuItem miNouveauProj, miChargerProj, miSupprimerProj, miRetourSelect, miSortir, miAjouterTask, miModifierTask, miDeleteTask, miAjouterSprint, miModifierSprint, miDeleteSprint;
 
 
-    private JToolBar tbMenu, tbMenu2;
-    private ImageIcon iconNew, iconCharger, iconDelete, iconSelectProjet, iconTaskSave,iconSprintSave, iconSave, iconAjouterTask, iconModifierTask, iconDeleteTask, iconAjouterSprint, iconModifierSprint, iconDeleteSprint;
-    private JButton btnNew, btnSelectProjet, btnCharger, btnDelete, btnEnregistrer, btnEnregistrerSprint, btnEnregistrerTask, btnAjouterTask, btnModifierTask, btnDeleteTask, btnAjouterSprint, btnModifierSprint, btnDeleteSprint;
+    private JToolBar tbMenu;
+    private ImageIcon iconNew, iconCharger, iconDelete, iconRetour, iconTaskSave,iconSprintSave, iconSave, iconAjouterTask, iconModifierTask, iconDeleteTask, iconAjouterSprint, iconModifierSprint, iconDeleteSprint;
+    private JButton btnNew, btnRetour, btnCharger, btnDelete, btnEnregistrer, btnEnregistrerSprint, btnEnregistrerTask, btnAjouterTask, btnModifierTask, btnDeleteTask, btnAjouterSprint, btnModifierSprint, btnDeleteSprint;
 
     private CardLayout cl;
-
-    private JSeparator sep1, sepVertical, sepHorizontal, sepHorizontal2, sepHorizontal3;
 
     private JPanel panGlobal, panCard, panEntete, panTitre, panProjetForm, panTaskForm, panSprintForm, panButton, panProjetEnCours, panProjetCreation, panBasDePage;
 
     private JTable tblProjet, tblSprint, tblTask;
-    private JScrollPane scPaneProjet, scPaneSprint, scPaneTask;
+    private JScrollPane scPaneProjet, scPaneSprint, scPaneTask, scPaneConsole;
 
     private TableColumn tempCol0, tempCol1;
     private TableColumnModel colmod;
@@ -68,7 +68,7 @@ public class FenApp extends JFrame {
         this.registreTask = task;
 
         // Paramêtre de la fenêtre de l'application
-        setSize(800, 700);
+        setSize(800, 850);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -80,6 +80,18 @@ public class FenApp extends JFrame {
     private void setWidget() {
 
         // Initialisation des labels
+        lblSepProjet = new JLabel("Projet", JTextField.CENTER);
+        lblSepProjet.setFont(Constante.F4);
+        lblSepProjet.setForeground(new Color(204, 123, 31));
+        lblSepTask = new JLabel("Task", JTextField.CENTER);
+        lblSepTask.setFont(Constante.F4);
+        lblSepTask.setForeground(new Color(95, 185, 85));
+        lblSepSprint = new JLabel("Sprint", JTextField.CENTER);
+        lblSepSprint.setFont(Constante.F4);
+        lblSepSprint.setForeground(new Color(101, 150, 197));
+        lblConsole = new JLabel("Console");
+        lblConsole.setFont(Constante.F4);
+
         lblNomProjet = new JLabel("Nom du projet: ");
         lblDescProjet = new JLabel("Description du projet: ");
         lblScrumId = new JLabel("Charger de projet: ");
@@ -94,7 +106,6 @@ public class FenApp extends JFrame {
         lblTasks.setFont(Constante.F2);
 
         // Initialisation des textfields
-        txtProjet = new JTextField(20);
         txtNomProjet = new JTextField(30);
         txtDescProjet = new JTextField(50);
         txtScrumId = new JTextField(20);
@@ -138,17 +149,14 @@ public class FenApp extends JFrame {
         miModifierSprint = new JMenuItem("Modifier un sprint..");
         miDeleteSprint = new JMenuItem("Supprimer un sprint..");
 
-        // Séparateur de menu
-        sep1 = new JSeparator();
-        sep1.setForeground(Color.gray);
-
         // Ajout des items de menu
+        mnuProjet.add(miRetourSelect);
         mnuProjet.add(miNouveauProj);
         mnuProjet.add(miChargerProj);
         mnuProjet.add(miSupprimerProj);
-        mnuProjet.add(sep1);
-        mnuProjet.add(miRetourSelect);
         mnuProjet.add(miSortir);
+        mnuProjet.insertSeparator(1);
+        mnuProjet.insertSeparator(4);
 
         mnuSprint.add(miAjouterSprint);
         mnuSprint.add(miModifierSprint);
@@ -165,19 +173,9 @@ public class FenApp extends JFrame {
         tbMenu.setFloatable(false);
         tbMenu.setRollover(false);
 
-        // Séparateur de la toolbar
-        sep1 = new JSeparator();
-        sep1.setForeground(Color.gray);
-        sepHorizontal = new JSeparator(SwingConstants.HORIZONTAL);
-        sepHorizontal.setForeground(Color.lightGray);
-        sepHorizontal2 = new JSeparator(SwingConstants.HORIZONTAL);
-        sepHorizontal2.setForeground(Color.lightGray);
-        sepHorizontal3 = new JSeparator(SwingConstants.HORIZONTAL);
-        sepHorizontal3.setForeground(Color.lightGray);
-
         // Initialisation des icones de boutons
+        iconRetour = new ImageIcon("src/images/iconRetour.png");
         iconNew = new ImageIcon("src/images/iconNewProjet.png");
-        iconSelectProjet = new ImageIcon("src/images/iconSelectProjet.png");
         iconDelete = new ImageIcon("src/images/iconDeleteProjet.png");
         iconCharger = new ImageIcon("src/images/iconChargerProjet.png");
         iconAjouterTask= new ImageIcon("src/images/iconNewTask.png");
@@ -188,8 +186,8 @@ public class FenApp extends JFrame {
         iconDeleteSprint = new ImageIcon("src/images/iconDeleteSprint.png");
 
         // Initialisation des boutons
-        btnSelectProjet = new JButton(iconSelectProjet);
-        btnSelectProjet.setToolTipText("Retour à la selection de projet..");
+        btnRetour = new JButton(iconRetour);
+        btnRetour.setToolTipText("Retour au menu précédant..");
         btnNew = new JButton(iconNew);
         btnNew.setToolTipText("Nouveau Projet..");
         btnCharger = new JButton(iconCharger);
@@ -213,18 +211,24 @@ public class FenApp extends JFrame {
         panButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panButton.add(tbMenu);
         // Objet du toolbar
-        tbMenu.add(sepHorizontal3);
+        tbMenu.add(btnRetour);
+        tbMenu.addSeparator();
+        tbMenu.add(lblSepProjet);
         tbMenu.add(btnNew);
         tbMenu.add(btnCharger);
         tbMenu.add(btnDelete);
-        tbMenu.add(sepHorizontal);
+        tbMenu.addSeparator();
+        tbMenu.add(lblSepTask);
         tbMenu.add(btnAjouterTask);
         tbMenu.add(btnModifierTask);
         tbMenu.add(btnDeleteTask);
-        tbMenu.add(sepHorizontal2);
+        tbMenu.addSeparator();
+        tbMenu.add(lblSepSprint);
         tbMenu.add(btnAjouterSprint);
         tbMenu.add(btnModifierSprint);
         tbMenu.add(btnDeleteSprint);
+        tbMenu.addSeparator();
+        tbMenu.add(lblConsole);
 
         // Bouton d'enregistrement des formulaires
         iconSave = new ImageIcon("src/images/iconSave.png");
@@ -243,8 +247,6 @@ public class FenApp extends JFrame {
         tblProjet.setModel(tableModel);
         // Permet la selection d'une colonne seulement
         tblProjet.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // Fonction pour remplir la table par le model
-        remplirTableProjet();
 
         scPaneProjet = new JScrollPane(tblProjet);
 
@@ -301,6 +303,14 @@ public class FenApp extends JFrame {
         // *** Code pour formulaire panSprintForm
 
 
+        iconSprintSave = new ImageIcon("src/images/iconSave.png");
+        iconTaskSave = new ImageIcon("src/images/iconSave.png");
+
+        btnEnregistrerTask = new JButton("Enregistrer", iconTaskSave);
+        btnEnregistrer.setBackground(Color.white);
+        btnEnregistrerSprint = new JButton("Enregistrer", iconSprintSave);
+
+
         // *****Card Panels ****
 
         // Card Panel # 1 - Selection de projet
@@ -334,31 +344,34 @@ public class FenApp extends JFrame {
         lblProjet = new JLabel("Selection des projets");
         lblProjet.setFont(Constante.F2);
 
-        panEntete = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panTitre = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 0));
-        panTitre.add(lblProjet);
+        panEntete = new JPanel(new FlowLayout(FlowLayout.LEFT, 80, 10));
+        panEntete.add(lblProjet);
 
-        iconSprintSave = new ImageIcon("src/images/iconSave.png");
-        iconTaskSave = new ImageIcon("src/images/iconSave.png");
-
-        btnEnregistrerTask = new JButton("Enregistrer", iconTaskSave);
-        btnEnregistrer.setBackground(Color.white);
-        btnEnregistrerSprint = new JButton("Enregistrer", iconSprintSave);
-
-        panEntete.add(btnSelectProjet);
-        panEntete.add(panTitre);
-        panEntete.setBorder(BorderFactory.createEmptyBorder(0, 2,0,0));
+//        panEntete.add(panTitre);
+//        panEntete.setBorder(BorderFactory.createEmptyBorder(0, 8,0,0));
 
         // *** Bas de page ***
-        lblTitre = new JLabel("Tous droit Réservé. ®");
-        lblTitre.setFont(Constante.F4);
-        lblScrum = new JLabel("Scrum..Master");
-        lblScrum.setFont(Constante.F3);
-        panBasDePage = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        panBasDePage.add(lblTitre);
-        panBasDePage.add(lblScrum);
+        lblTitre = new JLabel("Scrum..Master");
+        lblTitre.setFont(Constante.F3);
+        lblRights = new JLabel("Tout droits réservés. ©");
+        lblRights.setFont(Constante.F4);
 
-        // Initialisation du Layout Global
+
+
+        consoleTxtArea = new JTextArea(3,45);
+        consoleTxtArea.setEditable(false);
+        scPaneConsole = new JScrollPane(consoleTxtArea);
+
+        DefaultCaret caret = (DefaultCaret)consoleTxtArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
+
+        panBasDePage = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 10));
+        panBasDePage.add(scPaneConsole);
+        panBasDePage.add(lblTitre);
+        panBasDePage.add(lblRights);
+
+            // Initialisation du Layout Global
         panGlobal = new JPanel(new BorderLayout());
         panGlobal.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 10));
         panGlobal.add(panButton, BorderLayout.WEST);
@@ -368,6 +381,8 @@ public class FenApp extends JFrame {
 
         // Configuration du panneau par defaut
         configPan1();
+        // Fonction pour remplir la table par le model
+        remplirTableProjet();
 
         //
         getContentPane().add(panGlobal);
@@ -380,27 +395,29 @@ public class FenApp extends JFrame {
         // *** Bouton de la toolbar ***
 
         // Retour à la selection de projet
-        btnSelectProjet.addActionListener(new ActionListener() {
+        btnRetour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lblProjet.setText("Gestion des projets");
 
                 if(currentCard != 1) {
-                    int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Retour à la Sélection de projet?",
+                    int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Retour au menu précedant?",
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE);
                     if (result == JOptionPane.YES_OPTION) {
-
-                        tableModel.setRowCount(0);
-                        remplirTableProjet();
-
-                        cl.show(panCard, "1");
-                        configPan1();
+                        if(currentCard == 2 || currentCard == 3) {
+                            consoleTxtArea.append("Retour à la selection de projet.\n");
+                            carteSelectionProjet();
+                        }else if(currentCard == 4 || currentCard == 5){
+                            consoleTxtArea.append("Retour à la selection de projet.\n");
+                            carteProjetEnCours();
+                        }
                     }
+                }else{
+                    consoleTxtArea.append("Aucun retour en arrière possible de cette fenêtre.\n");
                 }
-                currentCard = 1;
             }
         });
+
         // Créer un nouveau projet - formulaire
         btnNew.addActionListener(new ActionListener() {
             @Override
@@ -413,40 +430,17 @@ public class FenApp extends JFrame {
                 reinitialiserFormProjet();
                 configPan2();
                 currentCard = 2;
+                consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
             }
         });
         // Charger un projet
         btnCharger.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Enregistrer l'index de la selection
                 indexProjetEnCours = tblProjet.getSelectedRow();
-                lblProjet.setText("Projet en cours: " + registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
-
-                panProjetEnCours.add(panProjetForm, BorderLayout.NORTH);
-                panProjetEnCours.add(scPaneTask);
-
-                reinitialiserFormProjet();
-
-                // Ajout du projet en cours au textFields
-                txtNomProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
-                txtDescProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getDescription());
-                txtScrumId.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId()));
-                ftxtDateDebut.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateDebut()));
-                ftxtDateFin.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateFin()));
-                txtDureeSprint.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getDureeSprint()));
-
-                //Task
-                try{
-                    ManipulationFichier.lire(Constante.REPERTOIRE_PROJET+txtNomProjet.getText()+Constante.nomFichier[1], registreTask, 2);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
-                remplirTableTask();
-
-                cl.show(panCard, "3");
-                configPan3();
-                currentCard = 3;
+                carteProjetEnCours();
+                consoleTxtArea.append("Chargement complété avec succès.\n");
             }
         });
         // Supprimer un projet
@@ -460,17 +454,17 @@ public class FenApp extends JFrame {
                 if(result == JOptionPane.YES_OPTION){
                     try{
                         int i = tblProjet.getSelectedRow();
-                        ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet());
+                        ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet(), consoleTxtArea);
                         registreProjet.effacerProjet(i);
                         ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET +Constante.nomFichier[0], registreProjet, 1);
                         tableModel.removeRow(i);
 
-                        JOptionPane.showMessageDialog(null,"Suppression du projet complété.");
+                        consoleTxtArea.append("Suppression du projet complété.\n");
                     } catch (IndexOutOfBoundsException ex) {
                         JOptionPane.showMessageDialog(null,"La ligne du projet doit être correctement selectionné pour pouvoir le supprimer.");
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null,"Suppression du projet annulée.");
+                    consoleTxtArea.append("Suppression du projet annulée.\n");
                 }
             }
         });
@@ -503,7 +497,7 @@ public class FenApp extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                ManipulationFichier.nouveauProjet(txtNomProjet.getText());
+                ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
                 DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
                 Projet tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), Integer.parseInt(txtScrumId.getText()),
                         Utilitaire.getTodayDate(), Utilitaire.getTodayDate(), Integer.parseInt(txtDureeSprint.getText()));
@@ -512,10 +506,12 @@ public class FenApp extends JFrame {
                     registreProjet.ajouterProjet(tempProj);
                     for (Projet tmp : registreProjet.getRegistrePro()){
                     }
+                    consoleTxtArea.append("Projet charger dans le registre avec succès.\n");
                 } catch (ProjetDejaPresentException ex) {
+                    consoleTxtArea.append("Erreur, doublons présent\n");
                     ex.printStackTrace();
                 }
-                ManipulationFichier.effacerFichier(Constante.REPERTOIRE_PROJET +Constante.nomFichier[0]);
+                ManipulationFichier.effacerFichier(Constante.REPERTOIRE_PROJET +Constante.nomFichier[0], consoleTxtArea);
                 ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET +Constante.nomFichier[0], registreProjet, 1);
             }
         });
@@ -545,23 +541,66 @@ public class FenApp extends JFrame {
 
     }
 
+    public void carteSelectionProjet(){
+        lblProjet.setText("Gestion des projets");
+        remplirTableProjet();
+
+        cl.show(panCard, "1");
+        configPan1();
+
+        currentCard = 1;
+    }
+
+    public void carteProjetEnCours() {
+        lblProjet.setText("Projet en cours: " + registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
+
+        panProjetEnCours.add(panProjetForm, BorderLayout.NORTH);
+        panProjetEnCours.add(scPaneTask);
+
+        // Ajout du projet en cours au textFields
+        reinitialiserFormProjet();
+        txtNomProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
+        txtDescProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getDescription());
+        txtScrumId.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId()));
+        ftxtDateDebut.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateDebut()));
+        ftxtDateFin.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateFin()));
+        txtDureeSprint.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getDureeSprint()));
+
+        //Task
+        //Vider le registre avant de repopuler avec le contenu du fichier
+        registreTask.getRegistreTasks().clear();
+        try{
+            ManipulationFichier.lire(Constante.REPERTOIRE_PROJET+txtNomProjet.getText()+Constante.nomFichier[1], registreTask, 2);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        remplirTableTask();
+
+        cl.show(panCard, "3");
+        configPan3();
+        currentCard = 3;
+    }
+
     // ***** Méthode pour remplir les tables *****
 
     public void remplirTableProjet(){
         Format formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        tableModel.setRowCount(0);
         for (Projet tmp : registreProjet.getRegistrePro()){
             Object[] row = {tmp.getNomProjet(), tmp.getDescription(), Integer.toString(tmp.getScrumMasterId()),
                     formatDate.format(tmp.getDateDebut()), formatDate.format(tmp.getDateFin()),
                     Integer.toString(tmp.getDureeSprint())};
             tableModel.addRow(row);
         }
+        consoleTxtArea.append("Tableau des projets créé avec success.\nSelectionner un projet et appuyer sur modifier ou appuyer sur nouveau.\n");
     }
     public void remplirTableTask(){
-
+        tableModel2.setRowCount(0);
         for (Task tmp : registreTask.getRegistreTasks()){
             Object[] row = {tmp.getTaskID(), tmp.getTaskPriority(), tmp.getDescription(), tmp.getEmployeID()};
             tableModel2.addRow(row);
         }
+        consoleTxtArea.append("Tableau des taches créé avec success.\n");
     }
 
     // *** code pour remplirTableSprint()

@@ -3,6 +3,7 @@ package io;
 import model.*;
 import utils.*;
 
+import javax.swing.*;
 import java.io.*;
 
 public class ManipulationFichier{
@@ -99,7 +100,6 @@ public class ManipulationFichier{
                 case 0 -> {
                     RegistreEmploye regEmp = (RegistreEmploye) reg;
                     oos.writeInt(regEmp.getRegistreEmp().size());
-                    System.out.println(regEmp.getRegistreEmp().size());
                     for (Object objet : regEmp.getRegistreEmp()) {
                         oos.writeObject(objet);
                     }
@@ -152,40 +152,17 @@ public class ManipulationFichier{
     //************ Manipulation des fichiers/répertoires projets ************
 
     //Creation des fichiers d'un nouveau projet
-    public static void nouveauProjet(String projet) {
-        System.out.println(Constante.REPERTOIRE_PROJET);
+    public static void nouveauProjet(String projet, JTextArea console) {
         String dirName = Constante.REPERTOIRE_PROJET +"\\"+projet;
         File newFolder = new File(dirName);
         if(newFolder.mkdir()){
-            System.out.println("créer");
+            console.append("Nouveau projet créer. Retourner à la page précédente pour lui accèder.\n");
         }else{
-            System.out.println("echec");
+            console.append("Échec de la création du projet\n");
         }
-//        try {
-//            File newFile = new File( Constante.REPERTOIRE_PROJET +"\\"+projet+"\\"+"tasks.dat");
-//            if (newFile.createNewFile()) {
-//                System.out.println("File created: " + newFile.getName());
-//            } else {
-//                System.out.println("File already exists.");
-//            }
-//        } catch (IOException e) {
-//            System.out.println("An error occurred.");
-//            e.printStackTrace();
-//        }
-//        try {
-//            File newFile = new File( Constante.REPERTOIRE_PROJET +"\\"+projet+"\\"+"sprints.dat");
-//            if (newFile.createNewFile()) {
-//                System.out.println("File created: " + newFile.getName());
-//            } else {
-//                System.out.println("File already exists.");
-//            }
-//        } catch (IOException f) {
-//            System.out.println("An error occurred.");
-//            f.printStackTrace();
-//        }
     }
 
-    public static void effacerFichiersProjet(String projet) {
+    public static void effacerFichiersProjet(String projet, JTextArea console) {
         String dirName = Constante.REPERTOIRE_PROJET + projet;
         File directory = new File(dirName);
         try {
@@ -194,8 +171,9 @@ public class ManipulationFichier{
                 System.out.println(dirName);
                 effacerRepertoire(directory);
                 directory.delete();
+                console.append("Répertoire " + projet +" supprimé\n");
             } else {
-                System.out.println("Répertoire inexistant:"+ directory);
+                console.append("Répertoire inexistant:"+ directory+"\n");
             }
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -203,12 +181,12 @@ public class ManipulationFichier{
     }
 
 
-    public static void effacerFichier(String fichier) {
+    public static void effacerFichier(String fichier, JTextArea console) {
         File myFile = new File(fichier);
         if (myFile.delete()) {
-            System.out.println("Fichier supprimé: " + myFile.getName());
+            console.append("Fichier supprimé: " + myFile.getName()+"\n");
         } else {
-            System.out.println("Erreur, fichier toujours présent.");
+            console.append("Erreur, fichier toujours présent.\n");
         }
     }
 
