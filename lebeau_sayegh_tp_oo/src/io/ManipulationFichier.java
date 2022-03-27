@@ -6,6 +6,8 @@ import utils.*;
 import javax.swing.*;
 import java.io.*;
 
+@SuppressWarnings("FieldCanBeLocal")
+
 public class ManipulationFichier{
 
     //************ READ/WRITE ***********

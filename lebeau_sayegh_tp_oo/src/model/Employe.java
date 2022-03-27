@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+@SuppressWarnings("FieldCanBeLocal")
 
 public class Employe implements Serializable {
     private static int nbrEmploye=0;

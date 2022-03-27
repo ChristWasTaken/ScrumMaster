@@ -9,6 +9,8 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrast
 
 import javax.swing.*;
 
+@SuppressWarnings("FieldCanBeLocal")
+
 public class AppCtr {
     public static void main(String[] args) {
         try {

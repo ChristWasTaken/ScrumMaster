@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+@SuppressWarnings("FieldCanBeLocal")
 
 public class Notes implements Serializable {
     private String titre;

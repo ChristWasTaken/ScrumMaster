@@ -4,6 +4,7 @@ import utils.Utilitaire;
 
 import java.io.Serializable;
 import java.util.Date;
+@SuppressWarnings("FieldCanBeLocal")
 
 public class Projet implements Serializable {
 
