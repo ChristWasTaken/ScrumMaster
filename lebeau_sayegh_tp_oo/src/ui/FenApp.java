@@ -18,6 +18,8 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
+@SuppressWarnings("FieldCanBeLocal")
+
 public class FenApp extends JFrame {
     private RegistreProjet registreProjet;
     private RegistreEmploye registreEmploye;

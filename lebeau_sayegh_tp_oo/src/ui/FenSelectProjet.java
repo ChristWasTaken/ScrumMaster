@@ -1,60 +1,60 @@
-package ui;
-
-import io.ManipulationFichier;
-import model.Projet;
-import model.RegistreEmploye;
-import model.RegistreProjet;
-import utils.Constante;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-
-public class FenSelectProjet extends JFrame{
-    private FenSelectProjet fenetre;
-    private RegistreProjet registreProjet;
-    private RegistreEmploye employe;
-
-    private JLabel lblProjet, lblTitre, lblScrum ;
-    private JMenuBar menuBar;
-    private JToolBar tbMenu;
-    private ImageIcon iconNew, iconDelete, iconCharger;
-    private JButton btnNew, btnCharger, btnDelete;
-    private JMenu mnuFile;
-    private JMenuItem miNouveauProj, miChargerProj, miSupprimerProj, miSortir;
-    private JSeparator sep1;
-    private JPanel panGlobal, panProjet, panButton, panProjetCourrant, panBasDePage;
-    private JTable tblProjet;
-    private JScrollPane scPaneProjet;
-    private TableColumn tempCol0, tempCol1;
-    private TableColumnModel colmod;
-    private DefaultTableModel tableModel;
-
-    private String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin", "Durée des sprints"};
-
-
-    public FenSelectProjet(RegistreProjet projet, RegistreEmploye employe) {
-        this.registreProjet = projet;
-        this.employe = employe;
-
-        setSize(800, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
-
-//        setWidget();
-//        setListeners();
-    }
-
-    private void setWidget() {}}
+//package ui;
+//
+//import io.ManipulationFichier;
+//import model.Projet;
+//import model.RegistreEmploye;
+//import model.RegistreProjet;
+//import utils.Constante;
+//
+//import javax.swing.*;
+//import javax.swing.border.Border;
+//import javax.swing.border.EtchedBorder;
+//import javax.swing.table.TableColumn;
+//import javax.swing.table.TableColumnModel;
+//import javax.swing.table.DefaultTableModel;
+//import java.awt.*;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+//import java.text.Format;
+//import java.text.SimpleDateFormat;
+//
+//public class FenSelectProjet extends JFrame{
+//    private FenSelectProjet fenetre;
+//    private RegistreProjet registreProjet;
+//    private RegistreEmploye employe;
+//
+//    private JLabel lblProjet, lblTitre, lblScrum ;
+//    private JMenuBar menuBar;
+//    private JToolBar tbMenu;
+//    private ImageIcon iconNew, iconDelete, iconCharger;
+//    private JButton btnNew, btnCharger, btnDelete;
+//    private JMenu mnuFile;
+//    private JMenuItem miNouveauProj, miChargerProj, miSupprimerProj, miSortir;
+//    private JSeparator sep1;
+//    private JPanel panGlobal, panProjet, panButton, panProjetCourrant, panBasDePage;
+//    private JTable tblProjet;
+//    private JScrollPane scPaneProjet;
+//    private TableColumn tempCol0, tempCol1;
+//    private TableColumnModel colmod;
+//    private DefaultTableModel tableModel;
+//
+//    private String[] nomColonnes = { "Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin", "Durée des sprints"};
+//
+//
+//    public FenSelectProjet(RegistreProjet projet, RegistreEmploye employe) {
+//        this.registreProjet = projet;
+//        this.employe = employe;
+//
+//        setSize(800, 300);
+//        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        setLocationRelativeTo(null);
+//        setResizable(false);
+//
+////        setWidget();
+////        setListeners();
+//    }
+//
+//    private void setWidget() {}}
 
 //        Border brd = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 
