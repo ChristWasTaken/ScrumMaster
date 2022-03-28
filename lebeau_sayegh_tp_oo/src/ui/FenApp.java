@@ -1,5 +1,6 @@
 /*  Optimisations:
 *       Méthode générique pour remplir les 3 tables.
+*       Faire la vérification de saisie et d'exception pour les formulaires
 *       */
 
 
