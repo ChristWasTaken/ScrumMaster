@@ -1,3 +1,8 @@
+/*  Optimisations:
+*       Méthode générique pour remplir les 3 tables.
+*       */
+
+
 package ui;
 
 import io.ManipulationFichier;
@@ -35,8 +40,8 @@ public class FenApp extends JFrame {
     private JFormattedTextField ftxtDateDebut, ftxtDateFin;
 
     private JMenuBar menuBar;
-    private JMenu mnuProjet, mnuSprint, mnuTask;
-    private JMenuItem miNouveauProj, miChargerProj, miSupprimerProj, miRetourSelect, miSortir, miAjouterTask, miModifierTask, miDeleteTask, miAjouterSprint, miModifierSprint, miDeleteSprint;
+    private JMenu mnuProjet, mnuSprint, mnuTask, mnuView;
+    private JMenuItem miNouveauProj, miChargerProj, miSupprimerProj, miRetourSelect, miSortir, miAjouterTask, miModifierTask, miDeleteTask, miAjouterSprint, miModifierSprint, miDeleteSprint, miConsole;
 
 
     private JToolBar tbMenu;
@@ -45,7 +50,7 @@ public class FenApp extends JFrame {
 
     private CardLayout cl;
 
-    private JPanel panGlobal, panCard, panEntete, panTitre, panProjetForm, panTaskForm, panSprintForm, panButton, panProjetEnCours, panProjetCreation, panBasDePage;
+    private JPanel panGlobal, panCard, panEntete, panProjetForm, panTaskForm, panSprintForm, panButton, panProjetEnCours, panProjetCreation, panBasDePage;
 
     private JTable tblProjet, tblSprint, tblTask;
     private JScrollPane scPaneProjet, scPaneSprint, scPaneTask, scPaneConsole;
@@ -69,7 +74,7 @@ public class FenApp extends JFrame {
 
         // Paramêtre de la fenêtre de l'application
         setSize(800, 850);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
 
@@ -80,17 +85,6 @@ public class FenApp extends JFrame {
     private void setWidget() {
 
         // Initialisation des labels
-        lblSepProjet = new JLabel("Projet", JTextField.CENTER);
-        lblSepProjet.setFont(Constante.F4);
-        lblSepProjet.setForeground(new Color(204, 123, 31));
-        lblSepTask = new JLabel("Task", JTextField.CENTER);
-        lblSepTask.setFont(Constante.F4);
-        lblSepTask.setForeground(new Color(95, 185, 85));
-        lblSepSprint = new JLabel("Sprint", JTextField.CENTER);
-        lblSepSprint.setFont(Constante.F4);
-        lblSepSprint.setForeground(new Color(101, 150, 197));
-        lblConsole = new JLabel("Console");
-        lblConsole.setFont(Constante.F4);
 
         lblNomProjet = new JLabel("Nom du projet: ");
         lblDescProjet = new JLabel("Description du projet: ");
@@ -104,6 +98,18 @@ public class FenApp extends JFrame {
 
         lblTasks = new JLabel("Taches restantes au projet");
         lblTasks.setFont(Constante.F2);
+
+        lblSepProjet = new JLabel("Projet");
+        lblSepProjet.setFont(Constante.F4);
+        lblSepProjet.setForeground(new Color(204, 123, 31));
+        lblSepTask = new JLabel("Task");
+        lblSepTask.setFont(Constante.F4);
+        lblSepTask.setForeground(new Color(95, 185, 85));
+        lblSepSprint = new JLabel("Sprint");
+        lblSepSprint.setFont(Constante.F4);
+        lblSepSprint.setForeground(new Color(101, 150, 197));
+        lblConsole = new JLabel("Console");
+        lblConsole.setFont(Constante.F4);
 
         // Initialisation des textfields
         txtNomProjet = new JTextField(30);
@@ -129,10 +135,12 @@ public class FenApp extends JFrame {
         mnuProjet = new JMenu("Projet");
         mnuSprint = new JMenu("Sprints");
         mnuTask = new JMenu("Taches");
+        mnuView = new JMenu("View");
 
         menuBar.add(mnuProjet);
         menuBar.add(mnuTask);
         menuBar.add(mnuSprint);
+        menuBar.add(mnuView);
 
         // Initialisation des items du menu Fichiers
         miNouveauProj = new JMenuItem("Créer un Nouveau Projet..");
@@ -148,6 +156,8 @@ public class FenApp extends JFrame {
         miAjouterSprint = new JMenuItem("Ajouter un sprint..");
         miModifierSprint = new JMenuItem("Modifier un sprint..");
         miDeleteSprint = new JMenuItem("Supprimer un sprint..");
+        // Initialisation des items du menu View
+        miConsole = new JMenuItem("Cacher/Afficher la Console..");
 
         // Ajout des items de menu
         mnuProjet.add(miRetourSelect);
@@ -165,6 +175,8 @@ public class FenApp extends JFrame {
         mnuTask.add(miAjouterTask);
         mnuTask.add(miModifierTask);
         mnuTask.add(miDeleteTask);
+
+        mnuView.add(miConsole);
 
 
         // *** Toolbar ***
@@ -281,11 +293,12 @@ public class FenApp extends JFrame {
 
         // Formulaire Projet
         panProjetForm = new JPanel(new GridLayout(7,2));
-
+        panProjetForm.setBorder(BorderFactory.createEmptyBorder(10,50,300,200));
         panProjetForm.add(lblNomProjet);
         panProjetForm.add(txtNomProjet);
         panProjetForm.add(lblDescProjet);
         panProjetForm.add(txtDescProjet);
+        // Besoin d'un combo box pour scrumid, date, date https://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
         panProjetForm.add(lblScrumId);
         panProjetForm.add(txtScrumId);
         panProjetForm.add(lblDateDebut);
@@ -294,6 +307,7 @@ public class FenApp extends JFrame {
         panProjetForm.add(ftxtDateFin);
         panProjetForm.add(lblDureeSprint);
         panProjetForm.add(txtDureeSprint);
+        panProjetForm.add(new JLabel());
         panProjetForm.add(btnEnregistrer);
 
         // Formulaire Task
@@ -313,8 +327,9 @@ public class FenApp extends JFrame {
 
         // *****Card Panels ****
 
-        // Card Panel # 1 - Selection de projet
+        // Card Panel # 1 - Selection de projet (Menu principal COULD HAVE)
 
+        //Utilise seulement le scPaneProjet pour sélectionner un projet pour l'instant. (reste va dans le COULD HAVE)
 
         // Card Panel # 2 - Formulaire nouveau projet
 
@@ -380,7 +395,7 @@ public class FenApp extends JFrame {
         panGlobal.add(panBasDePage, BorderLayout.SOUTH);
 
         // Configuration du panneau par defaut
-        configPan1();
+        setToolbarActif1();
         // Fonction pour remplir la table par le model
         remplirTableProjet();
 
@@ -398,7 +413,6 @@ public class FenApp extends JFrame {
         btnRetour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 if(currentCard != 1) {
                     int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Retour au menu précedant?",
                             JOptionPane.YES_NO_OPTION,
@@ -408,7 +422,7 @@ public class FenApp extends JFrame {
                             consoleTxtArea.append("Retour à la selection de projet.\n");
                             carteSelectionProjet();
                         }else if(currentCard == 4 || currentCard == 5){
-                            consoleTxtArea.append("Retour à la selection de projet.\n");
+                            consoleTxtArea.append("Retour à la gestion de projet.\n");
                             carteProjetEnCours();
                         }
                     }
@@ -422,17 +436,19 @@ public class FenApp extends JFrame {
         btnNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                lblProjet.setText("Nouveau projet");
-
-                panProjetCreation.add(panProjetForm);
-
-                cl.show(panCard, "2");
-                reinitialiserFormProjet();
-                configPan2();
-                currentCard = 2;
-                consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
+                if(currentCard != 2){
+                    carteNouveauProjet();
+                }else{
+                    int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Nouveau projet?",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+                    if (result == JOptionPane.YES_OPTION) {
+                        carteNouveauProjet();
+                    }
+                }
             }
         });
+
         // Charger un projet
         btnCharger.addActionListener(new ActionListener() {
             @Override
@@ -448,9 +464,7 @@ public class FenApp extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                int result = JOptionPane.showConfirmDialog(null,"La suppression set final. Êtes-vous sur?", "Suppression de projet",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
+                int result = Utilitaire.popupOuiNon("La suppression set final. Êtes-vous sur?", "Suppression de projet");
                 if(result == JOptionPane.YES_OPTION){
                     try{
                         int i = tblProjet.getSelectedRow();
@@ -515,6 +529,7 @@ public class FenApp extends JFrame {
                 ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET +Constante.nomFichier[0], registreProjet, 1);
             }
         });
+
         // Sauvegarder Formulaire Task
         //   *** Code pour btnEnregistrerTask
 
@@ -527,9 +542,7 @@ public class FenApp extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(currentCard != 1){
-                    int result = JOptionPane.showConfirmDialog(null,"Les données non sauvegardé seron perdu.", "Retour à la Sélection de projet?",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
+                    int result = Utilitaire.popupOuiNon("Les données du formulaire seron perdu.", "Nouveau formulaire?");
                     if(result == JOptionPane.YES_OPTION) {
                         cl.show(panCard, "1");
                         currentCard = 1;
@@ -539,18 +552,38 @@ public class FenApp extends JFrame {
             }
         });
 
+        miConsole.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (scPaneConsole.isVisible()){
+                    scPaneConsole.setVisible(false);
+                    setVisible(true);
+                }else if(!scPaneConsole.isVisible()){
+                    scPaneConsole.setVisible(true);
+                    setVisible(true);
+                }
+            }
+        });
+
     }
 
+
+    // ***** Méthodes de la fenêtre *****
+
+
+    // *** Carte des différentes fenêtres
+    // Carte de selection de projet
     public void carteSelectionProjet(){
         lblProjet.setText("Gestion des projets");
         remplirTableProjet();
 
         cl.show(panCard, "1");
-        configPan1();
+        setToolbarActif1();
 
         currentCard = 1;
     }
 
+    // Carte de gestion d'un projet
     public void carteProjetEnCours() {
         try{
             lblProjet.setText("Projet en cours: " + registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
@@ -583,8 +616,20 @@ public class FenApp extends JFrame {
         remplirTableTask();
 
         cl.show(panCard, "3");
-        configPan3();
+        setToolbarActif3();
         currentCard = 3;
+    }
+    // Carte nouveau projet
+    public void carteNouveauProjet(){
+        lblProjet.setText("Nouveau projet");
+
+        panProjetCreation.add(panProjetForm);
+
+        cl.show(panCard, "2");
+        reinitialiserFormProjet();
+        setToolbarActif2();
+        currentCard = 2;
+        consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
 
     // ***** Méthode pour remplir les tables *****
@@ -622,7 +667,7 @@ public class FenApp extends JFrame {
         ftxtDateFin.setText("");
         txtDureeSprint.setText("");
     }
-    public void configPan1(){
+    public void setToolbarActif1(){
         btnNew.setEnabled(true);
         btnCharger.setEnabled(true);
         btnDelete.setEnabled(true);
@@ -633,7 +678,7 @@ public class FenApp extends JFrame {
         btnModifierTask.setEnabled(false);
         btnDeleteTask.setEnabled(false);
     }
-    public void configPan2(){
+    public void setToolbarActif2(){
         btnNew.setEnabled(true);
         btnCharger.setEnabled(false);
         btnDelete.setEnabled(false);
@@ -644,7 +689,7 @@ public class FenApp extends JFrame {
         btnModifierTask.setEnabled(false);
         btnDeleteTask.setEnabled(false);
     }
-    public void configPan3(){
+    public void setToolbarActif3(){
         btnNew.setEnabled(false);
         btnCharger.setEnabled(false);
         btnDelete.setEnabled(false);
