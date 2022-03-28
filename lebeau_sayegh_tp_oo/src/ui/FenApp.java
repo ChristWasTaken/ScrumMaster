@@ -1,6 +1,9 @@
 /*  Optimisations:
+        Exception générique pour les doublons au lieu de 4 différentes.
 *       Méthode générique pour remplir les 3 tables.
-*       Faire la vérification de saisie et d'exception pour les formulaires
+        Exception de saisie Invalide pour les formulaires.
+*       Faire la vérification de saisie et d'exception pour les formulaires.
+
 *       */
 
 
