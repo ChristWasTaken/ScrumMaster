@@ -40,6 +40,7 @@ import io.ManipulationFichier;
 import model.*;
 import utils.Constante;
 import utils.ProjetDejaPresentException;
+import utils.TaskDejaExistException;
 import utils.Utilitaire;
 
 import javax.swing.*;
@@ -307,7 +308,7 @@ public class FenApp extends FenParent {
         panTaskForm.add(txtDescTask);
         panTaskForm.add(txtEmployeId);
         panTaskForm.add(new JLabel());
-        panTaskForm.add(btnEnregistrer);
+        panTaskForm.add(btnEnregistrerTask);
 
         // Formulaire Sprint
         // *** Code pour formulaire panSprintForm
@@ -514,11 +515,28 @@ public class FenApp extends FenParent {
 
             try {
                 registreProjet.ajouterProjet(tempProj);
-                for (Projet tmp : registreProjet.getRegistrePro()) {
-
-                }
+                ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + Constante.nomFichier[0], consoleTxtArea);
+                ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
                 consoleTxtArea.append("Projet charger dans le registre avec succès.\n");
             } catch (ProjetDejaPresentException ex) {
+                consoleTxtArea.append("Erreur, doublons présent\n");
+                ex.printStackTrace();
+            }
+            ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + Constante.nomFichier[0], consoleTxtArea);
+            ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+        });
+        btnEnregistrerTask.addActionListener(e -> {
+
+
+            Task tempTask = new Task(Integer.parseInt(txtTaskPriority.getText()),
+                    txtDescTask.getText(),Integer.parseInt(txtEmployeId.getText()));
+
+            try {
+                registreTask.ajouterTask(tempTask);
+                ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + Constante.nomFichier[0], consoleTxtArea);
+                ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+                consoleTxtArea.append("Projet charger dans le registre avec succès.\n");
+            } catch (TaskDejaExistException ex) {
                 consoleTxtArea.append("Erreur, doublons présent\n");
                 ex.printStackTrace();
             }
