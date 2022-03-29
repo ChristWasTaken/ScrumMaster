@@ -26,12 +26,6 @@ public class Sprint implements Serializable {
         this.progres = progres;
     }
 
-    public Sprint(int[] taskID, Date dateDebut, Date dateFin, boolean progres) {
-        this.taskID = taskID;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
-        this.progres = progres;
-    }
 
     public int[] getTaskID() {
         return taskID;
@@ -43,6 +37,14 @@ public class Sprint implements Serializable {
 
     public Date getDateDebut() {
         return dateDebut;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setDateDebut(Date dateDebut) {
