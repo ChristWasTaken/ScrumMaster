@@ -27,6 +27,7 @@
 
 
      //Could-Have:
+     Menu de haut de page pour les cartes. (J'ai juste configurer sortir et view)
      Méthode générique pour remplir les 3 tables.
      Traiter les notes
      Création d'employé
