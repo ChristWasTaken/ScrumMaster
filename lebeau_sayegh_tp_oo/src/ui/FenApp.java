@@ -34,7 +34,6 @@
      Ajouter détails à la Carte 1
 *       */
 
-
 package ui;
 
 import io.ManipulationFichier;
@@ -45,61 +44,21 @@ import utils.Utilitaire;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.SimpleDateFormat;
-
-import static utils.Utilitaire.*;
 
 @SuppressWarnings("FieldCanBeLocal")
 
-public class FenApp extends JFrame {
+public class FenApp extends FenParent {
     private RegistreProjet registreProjet;
     private RegistreEmploye registreEmploye;
     private RegistreTask registreTask;
     private RegistreSprint registreSprint;
-
-    private JLabel lblSepProjet, lblSepTask, lblSepSprint, lblProjet, lblTitre, lblRights, lblSprint, lblTasks, lblNomProjet, lblDescProjet, lblScrumId,
-            lblDateDebut, lblDateFin, lblDureeSprint, lblConsole;
-    private JTextField txtNomProjet, txtDescProjet, txtScrumId, txtDureeSprint;
-    private JTextArea consoleTxtArea;
-
-    private JFormattedTextField ftxtDateDebut, ftxtDateFin;
-
-    private JMenuBar menuBar;
-    private JMenu mnuProjet, mnuSprint, mnuTask, mnuView;
-    private JMenuItem miNouveauProj, miChargerProj, miSupprimerProj, miRetourSelect, miSortir, miAjouterTask, miModifierTask, miDeleteTask, miAjouterSprint, miModifierSprint, miDeleteSprint, miConsole;
-
-
-    private JToolBar tbMenu;
-    private ImageIcon iconNew, iconCharger, iconDelete, iconRetour, iconTaskSave, iconSprintSave, iconSave, iconAjouterTask, iconModifierTask, iconDeleteTask, iconAjouterSprint, iconModifierSprint, iconDeleteSprint;
-    private JButton btnNew, btnRetour, btnCharger, btnDelete, btnEnregistrer, btnEnregistrerSprint, btnEnregistrerTask, btnAjouterTask, btnModifierTask, btnDeleteTask, btnAjouterSprint, btnModifierSprint, btnDeleteSprint;
-
-    private CardLayout cL;
-
-    private JPanel panGlobal, panCard, panEntete, panProjetForm, panTaskForm, panSprintForm, panButton, panProjetEnCours, panProjetCreation, panBasDePage;
-
-    private JTable tblProjet, tblSprint, tblTask;
-    private JScrollPane scPaneProjet, scPaneSprint, scPaneTask, scPaneConsole;
-
-    private TableColumn tempCol0, tempCol1;
-    private TableColumnModel colmod;
-    private DefaultTableModel tableModel, tableModel2, tableModel3;
-
-    private String[] nomColonnesProjet = Constante.TBL_PROJET;
-    private String[] nomColonnesTask = Constante.TBL_TASK;
-    private String[] nomColonnesSprint = Constante.TBL_SPRINT;
-
-    private int currentCard = 1;
-    private int indexProjetEnCours;
-
 
     public FenApp(RegistreProjet projet, RegistreEmploye employe, RegistreTask task) {
         this.registreProjet = projet;
@@ -435,7 +394,7 @@ public class FenApp extends JFrame {
         setToolbarActif(1, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint,
                 btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
         // Fonction pour remplir la table par le model
-        remplirTableProjet(tableModel,registreProjet,consoleTxtArea);
+        remplirTableProjet(tableModel, registreProjet, consoleTxtArea);
 
         //
         getContentPane().add(panGlobal);
@@ -447,41 +406,35 @@ public class FenApp extends JFrame {
         // *** Bouton de la toolbar ***
 
         // Retour à la selection de projet
-        btnRetour.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (currentCard != 1) {
-                    int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Retour au menu précedant?",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
-                        if (currentCard == 2 || currentCard == 3) {
-                            consoleTxtArea.append("Retour à la selection de projet.\n");
-                            carteSelectionProjet();
-                        } else if (currentCard == 4 || currentCard == 5) {
-                            consoleTxtArea.append("Retour à la gestion de projet.\n");
-                            carteProjetEnCours();
-                        }
+        btnRetour.addActionListener(e -> {
+            if (currentCard != 1) {
+                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Retour au menu précedant?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    if (currentCard == 2 || currentCard == 3) {
+                        consoleTxtArea.append("Retour à la selection de projet.\n");
+                        carteSelectionProjet();
+                    } else if (currentCard == 4 || currentCard == 5) {
+                        consoleTxtArea.append("Retour à la gestion de projet.\n");
+                        carteProjetEnCours();
                     }
-                } else {
-                    consoleTxtArea.append("Aucun retour en arrière possible de cette fenêtre.\n");
                 }
+            } else {
+                consoleTxtArea.append("Aucun retour en arrière possible de cette fenêtre.\n");
             }
         });
 
         // Créer un nouveau projet - formulaire
-        btnNew.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                if (currentCard != 2) {
+        btnNew.addActionListener(a -> {
+            if (currentCard != 2) {
+                carteNouveauProjet();
+            } else {
+                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Nouveau projet?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
                     carteNouveauProjet();
-                } else {
-                    int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Nouveau projet?",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
-                        carteNouveauProjet();
-                    }
                 }
             }
         });
@@ -613,7 +566,7 @@ public class FenApp extends JFrame {
     // Carte de selection de projet
     public void carteSelectionProjet() {
         lblProjet.setText("Gestion des projets");
-        remplirTableProjet(tableModel,registreProjet,consoleTxtArea);
+        remplirTableProjet(tableModel, registreProjet, consoleTxtArea);
 
         cL.show(panCard, "1");
         setToolbarActif(1, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint,
@@ -673,13 +626,5 @@ public class FenApp extends JFrame {
         currentCard = 2;
         consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
-
-   
-
-    
-
-
     // ***** Gestion des card *****
-
-
 }
