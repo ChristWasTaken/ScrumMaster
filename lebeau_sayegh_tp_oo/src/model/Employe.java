@@ -8,6 +8,14 @@ public class Employe implements Serializable {
     private String nom, prenom, poste;
     private int employeID;
 
+    public int getEmployeID() {
+        return employeID;
+    }
+
+    public void setEmployeID(int employeID) {
+        this.employeID = employeID;
+    }
+
     public Employe() {}
     //
     public Employe(String nom, String prenom, String poste) {

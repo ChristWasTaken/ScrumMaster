@@ -32,7 +32,7 @@
      Traiter les notes
      Création d'employé
      Ajouter détails à la Carte 1
-*       */
+       */
 
 package ui;
 
@@ -258,6 +258,24 @@ public class FenApp extends FenParent {
         // *** Formulaires
 
         // Formulaire Projet
+        JComboBox<String> jcbEmploye = new JComboBox<String>();
+//        System.out.println(registreEmploye.getRegistreEmp().size());
+        int[] listNomID = new int[registreEmploye.getRegistreEmp().size()];
+
+        int index = 0;
+        for (Employe tmp : registreEmploye.getRegistreEmp()) {
+
+//            System.out.println(Constante.POSTES[0]);
+            if(tmp.getPoste().equals(Constante.POSTES[0])){
+                System.out.println(tmp.getPoste());
+                listNomID[index] = tmp.getEmployeID();
+                String tmpEmp = registreEmploye.getRegistreEmp().get(index).getPrenom()+" "
+                        +registreEmploye.getRegistreEmp().get(index).getNom();
+                jcbEmploye.addItem(tmpEmp);
+            }
+            index++;
+        }
+
         panProjetForm = new JPanel(new GridLayout(7, 2));
         panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 300, 200));
         panProjetForm.add(lblNomProjet);
@@ -266,7 +284,7 @@ public class FenApp extends FenParent {
         panProjetForm.add(txtDescProjet);
         // Besoin d'un combo box pour scrumid, date, date https://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
         panProjetForm.add(lblScrumId);
-        panProjetForm.add(txtScrumId);
+        panProjetForm.add(jcbEmploye);
         panProjetForm.add(lblDateDebut);
         panProjetForm.add(ftxtDateDebut);
         panProjetForm.add(lblDateFin);
@@ -429,6 +447,7 @@ public class FenApp extends FenParent {
             carteProjetEnCours();
             consoleTxtArea.append("Chargement complété avec succès.\n");
         });
+
         // Supprimer un projet
         btnDelete.addActionListener(e -> {
 

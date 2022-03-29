@@ -56,6 +56,7 @@ public class FenParent extends JFrame {
     protected int currentCard = 1;
     protected int indexProjetEnCours;
 
+
     // ***** Méthode pour remplir les tables *****
     //méthode remplir Projet
     public static void remplirTableProjet(DefaultTableModel tableModel, RegistreProjet registreProjet,

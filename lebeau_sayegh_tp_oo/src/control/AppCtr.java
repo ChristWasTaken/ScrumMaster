@@ -92,12 +92,17 @@ public class AppCtr {
 //        }// catch(SprintDejaPresentException f){
 //            f.printStackTrace();
 
-//
+
 //        Employe emp1 = new Employe("Alain", "Flouflou", Constante.POSTES[0]);
 //        Employe emp2 = new Employe("Bibi", "Telebubies", Constante.POSTES[1]);
 //        Employe emp3 = new Employe("Caroline", "Lemay", Constante.POSTES[1]);
 //        Employe emp4 = new Employe("Christian", "Sayegh", Constante.POSTES[2]);
 //        Employe emp5 = new Employe("Yann", "Lebeau", Constante.POSTES[2]);
+//        Employe emp6 = new Employe("Toto", "Flouflou", Constante.POSTES[0]);
+//        Employe emp7 = new Employe("Hafed", "Buenocafe", Constante.POSTES[0]);
+//        Employe emp8 = new Employe("Nicole", "Desjardins", Constante.POSTES[1]);
+//        Employe emp9 = new Employe("Virginie", "Picard", Constante.POSTES[2]);
+//        Employe emp0 = new Employe("Pascal", "Lachance", Constante.POSTES[2]);
 //
 //        try{
 //            employe.ajouterEmp(emp1);
@@ -105,6 +110,11 @@ public class AppCtr {
 //            employe.ajouterEmp(emp3);
 //            employe.ajouterEmp(emp4);
 //            employe.ajouterEmp(emp5);
+//            employe.ajouterEmp(emp6);
+//            employe.ajouterEmp(emp7);
+//            employe.ajouterEmp(emp8);
+//            employe.ajouterEmp(emp9);
+//            employe.ajouterEmp(emp0);
 //        }
 //        catch(EmployeDejaPresentException e){
 //            e.printStackTrace();
@@ -112,8 +122,8 @@ public class AppCtr {
 //        for (Employe tmp : employe.getRegistreEmp()) {
 //            System.out.println(tmp);
 //        }
-//        ManipulationFichier.ecrire(Constante.PROJET_FOLDER+"Employes.dat",employe,0);
-//        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET +"Employes.dat", employe,0);
+//        ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET+"Employes.dat",employe,0);
+        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET +"Employes.dat", employe,0);
 //        for (Employe emp : employe.getRegistreEmp()) {
 //            System.out.println(emp);
 //        }
