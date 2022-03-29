@@ -257,33 +257,34 @@ public class FenApp extends FenParent {
 
         // *** Formulaires
 
-        // Formulaire Projet
-        JComboBox<String> jcbEmploye = new JComboBox<String>();
+//        // Formulaire Projet
+        JComboBox<String> jcbEmploye = new JComboBox<>();
+        remplirComboBox(registreEmploye, jcbEmploye);
 //        System.out.println(registreEmploye.getRegistreEmp().size());
-        int[] listNomID = new int[registreEmploye.getRegistreEmp().size()];
-
-        int index = 0;
-        for (Employe tmp : registreEmploye.getRegistreEmp()) {
-
-//            System.out.println(Constante.POSTES[0]);
-            if(tmp.getPoste().equals(Constante.POSTES[0])){
-                System.out.println(tmp.getPoste());
-                listNomID[index] = tmp.getEmployeID();
-                String tmpEmp = registreEmploye.getRegistreEmp().get(index).getPrenom()+" "
-                        +registreEmploye.getRegistreEmp().get(index).getNom();
-                jcbEmploye.addItem(tmpEmp);
-            }
-            index++;
-        }
+//        int[] listNomID = new int[registreEmploye.getRegistreEmp().size()];
+//
+//        int index = 0;
+//        for (Employe tmp : registreEmploye.getRegistreEmp()) {
+//
+////            System.out.println(Constante.POSTES[0]);
+//            if(tmp.getPoste().equals(Constante.POSTES[0])){
+//                System.out.println(tmp.getPoste());
+//                listNomID[index] = tmp.getEmployeID();
+//                String tmpEmp = registreEmploye.getRegistreEmp().get(index).getPrenom()+" "
+//                        +registreEmploye.getRegistreEmp().get(index).getNom();
+//                jcbEmploye.addItem(tmpEmp);
+//            }
+//            index++;
+//        }
 
         panProjetForm = new JPanel(new GridLayout(7, 2));
-        panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 300, 200));
+        panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 250, 200));
         panProjetForm.add(lblNomProjet);
         panProjetForm.add(txtNomProjet);
         panProjetForm.add(lblDescProjet);
         panProjetForm.add(txtDescProjet);
-        // Besoin d'un combo box pour scrumid, date, date https://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
         panProjetForm.add(lblScrumId);
+        panProjetForm.add(txtScrumId);
         panProjetForm.add(jcbEmploye);
         panProjetForm.add(lblDateDebut);
         panProjetForm.add(ftxtDateDebut);
@@ -299,14 +300,14 @@ public class FenApp extends FenParent {
 
         panTaskForm = new JPanel(new GridLayout(4, 2));
         panTaskForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 500, 200));
-       panTaskForm.add( lblTaskPriority);
-       panTaskForm.add(lblDeskTask);
-       panTaskForm.add(lblEmpId);
+        panTaskForm.add(lblTaskPriority);
+        panTaskForm.add(lblDeskTask);
+        panTaskForm.add(lblEmpId);
         panTaskForm.add(txtTaskPriority);
         panTaskForm.add(txtDescTask);
         panTaskForm.add(txtEmployeId);
-        panProjetForm.add(new JLabel());
-        panProjetForm.add(btnEnregistrer);
+        panTaskForm.add(new JLabel());
+        panTaskForm.add(btnEnregistrer);
 
         // Formulaire Sprint
         // *** Code pour formulaire panSprintForm

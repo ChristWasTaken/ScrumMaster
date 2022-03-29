@@ -56,7 +56,25 @@ public class FenParent extends JFrame {
     protected int currentCard = 1;
     protected int indexProjetEnCours;
 
+    public void remplirComboBox(RegistreEmploye registreEmploye, JComboBox jcbEmploye){
 
+        int[] listNomID = new int[registreEmploye.getRegistreEmp().size()];
+
+        int index = 0;
+        for (Employe tmp : registreEmploye.getRegistreEmp()) {
+
+            if(tmp.getPoste().equals(Constante.POSTES[0])){
+                System.out.println(tmp.getPoste());
+                listNomID[index] = tmp.getEmployeID();
+                String tmpEmp = registreEmploye.getRegistreEmp().get(index).getPrenom()+" "
+                        +registreEmploye.getRegistreEmp().get(index).getNom();
+                jcbEmploye.addItem(tmpEmp);
+            }
+            index++;
+        }
+
+
+    }
     // ***** Méthode pour remplir les tables *****
     //méthode remplir Projet
     public static void remplirTableProjet(DefaultTableModel tableModel, RegistreProjet registreProjet,
