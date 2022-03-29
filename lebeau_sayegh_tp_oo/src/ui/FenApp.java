@@ -418,7 +418,7 @@ public class FenApp extends FenParent {
                         carteSelectionProjet(registreProjet);
                     } else if (currentCard == 4 || currentCard == 5) {
                         consoleTxtArea.append("Retour à la gestion de projet.\n");
-                        carteProjetEnCours();
+                        carteProjetEnCours(registreProjet,registreTask);
                     }
                 }
             } else {
@@ -444,7 +444,7 @@ public class FenApp extends FenParent {
         btnCharger.addActionListener(e -> {
             // Enregistrer l'index de la selection
             indexProjetEnCours = tblProjet.getSelectedRow();
-            carteProjetEnCours();
+            carteProjetEnCours(registreProjet,registreTask);
             consoleTxtArea.append("Chargement complété avec succès.\n");
         });
 
