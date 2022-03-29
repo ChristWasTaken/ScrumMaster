@@ -56,6 +56,9 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
+import static utils.Utilitaire.reinitialiserFormProjet;
+import static utils.Utilitaire.setToolbarActif;
+
 @SuppressWarnings("FieldCanBeLocal")
 
 public class FenApp extends JFrame {
@@ -431,7 +434,8 @@ public class FenApp extends JFrame {
         panGlobal.add(panBasDePage, BorderLayout.SOUTH);
 
         // Configuration du panneau par defaut
-        setToolbarActif1();
+        setToolbarActif(1, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint,
+                btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
         // Fonction pour remplir la table par le model
         remplirTableProjet();
 
@@ -555,6 +559,7 @@ public class FenApp extends JFrame {
                 try {
                     registreProjet.ajouterProjet(tempProj);
                     for (Projet tmp : registreProjet.getRegistrePro()){
+                        
                     }
                     consoleTxtArea.append("Projet charger dans le registre avec succès.\n");
                 } catch (ProjetDejaPresentException ex) {
@@ -614,7 +619,8 @@ public class FenApp extends JFrame {
         remplirTableProjet();
 
         cl.show(panCard, "1");
-        setToolbarActif1();
+        setToolbarActif(1, btnNew,  btnCharger,  btnDelete,  btnAjouterSprint, btnDeleteSprint,
+                btnModifierSprint,btnAjouterTask, btnModifierTask,  btnDeleteTask);
 
         currentCard = 1;
     }
@@ -633,7 +639,7 @@ public class FenApp extends JFrame {
         panProjetEnCours.add(scPaneTask);
 
         // Ajout du projet en cours au textFields
-        reinitialiserFormProjet();
+        reinitialiserFormProjet(txtNomProjet,txtDescProjet,txtScrumId,ftxtDateDebut,ftxtDateFin,txtDureeSprint);
         txtNomProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
         txtDescProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getDescription());
         txtScrumId.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId()));
@@ -652,7 +658,8 @@ public class FenApp extends JFrame {
         remplirTableTask();
 
         cl.show(panCard, "3");
-        setToolbarActif3();
+        setToolbarActif(3, btnNew,  btnCharger,  btnDelete,  btnAjouterSprint, btnDeleteSprint,
+                btnModifierSprint, btnAjouterTask, btnModifierTask,  btnDeleteTask);
         currentCard = 3;
     }
     // Carte nouveau projet
@@ -662,8 +669,9 @@ public class FenApp extends JFrame {
         panProjetCreation.add(panProjetForm);
 
         cl.show(panCard, "2");
-        reinitialiserFormProjet();
-        setToolbarActif2();
+        reinitialiserFormProjet(txtNomProjet,txtDescProjet,txtScrumId,ftxtDateDebut,ftxtDateFin,txtDureeSprint);
+        setToolbarActif(2, btnNew,  btnCharger,  btnDelete,  btnAjouterSprint, btnDeleteSprint,  btnModifierSprint,
+                btnAjouterTask, btnModifierTask,  btnDeleteTask);
         currentCard = 2;
         consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
@@ -695,45 +703,6 @@ public class FenApp extends JFrame {
 
     // ***** Gestion des card *****
 
-    public void reinitialiserFormProjet(){
-        txtNomProjet.setText("");
-        txtDescProjet.setText("");
-        txtScrumId.setText("");
-        ftxtDateDebut.setText("");
-        ftxtDateFin.setText("");
-        txtDureeSprint.setText("");
-    }
-    public void setToolbarActif1(){
-        btnNew.setEnabled(true);
-        btnCharger.setEnabled(true);
-        btnDelete.setEnabled(true);
-        btnAjouterSprint.setEnabled(false);
-        btnDeleteSprint.setEnabled(false);
-        btnModifierSprint.setEnabled(false);
-        btnAjouterTask.setEnabled(false);
-        btnModifierTask.setEnabled(false);
-        btnDeleteTask.setEnabled(false);
-    }
-    public void setToolbarActif2(){
-        btnNew.setEnabled(true);
-        btnCharger.setEnabled(false);
-        btnDelete.setEnabled(false);
-        btnAjouterSprint.setEnabled(false);
-        btnDeleteSprint.setEnabled(false);
-        btnModifierSprint.setEnabled(false);
-        btnAjouterTask.setEnabled(false);
-        btnModifierTask.setEnabled(false);
-        btnDeleteTask.setEnabled(false);
-    }
-    public void setToolbarActif3(){
-        btnNew.setEnabled(false);
-        btnCharger.setEnabled(false);
-        btnDelete.setEnabled(false);
-        btnAjouterSprint.setEnabled(true);
-        btnDeleteSprint.setEnabled(true);
-        btnModifierSprint.setEnabled(true);
-        btnAjouterTask.setEnabled(true);
-        btnModifierTask.setEnabled(true);
-        btnDeleteTask.setEnabled(true);
-    }
+
+
 }

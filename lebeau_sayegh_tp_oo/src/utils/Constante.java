@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Constante {
     //**** Constantes de manipulation de fichier ****
-    public static String[] nomFichier = {"Projets.dat", "\\tasks.dat", "\\sprints.dat"};
+    public static String[] nomFichier = {"\\Projets.dat", "\\tasks.dat", "\\sprints.dat"};
 
     public static final String REPERTOIRE_PROJET = "dataFiles\\Projets\\";
 
@@ -17,8 +17,6 @@ public class Constante {
 
 
     public static final String[] POSTES = {"Scrum master", "Programmeur senior", "Programmeur junior"};
-
-
 
     /*  ***************************************************************************************** */
 
