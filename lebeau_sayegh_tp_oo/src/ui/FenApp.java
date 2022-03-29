@@ -1,9 +1,36 @@
-/*  Optimisations:
-        Exception générique pour les doublons au lieu de 4 différentes.
-*       Méthode générique pour remplir les 3 tables.
-        Exception de saisie Invalide pour les formulaires.
-*       Faire la vérification de saisie et d'exception pour les formulaires.
+/*
 
+     //Must-Have:
+     Terminer formulaire de Gestion de projet
+
+     Formulaire de Task + carte 4 + settoolbar pour la carte
+     Code pour btnEnregistrerTask
+
+     Formulaire de Sprint + carte 5 + settoolbar pour la carte
+     Code pour btnEnregistrerSprint
+
+     Créer la table sprint + methode pour la remplir
+
+     Exception de saisie Invalide pour les formulaires.
+     Faire la vérification de saisie et d'exception pour les formulaires.
+
+     Code pour btnAjouterTask
+     Code pour btnModifierTask
+     Code pour btnDeleteTask
+     Code pour btnAjouterSprint
+     Code pour btnModifierSprint
+     Code pour btnDeleteSprint
+
+     //Should-Have:
+     Exception générique pour les doublons au lieu de 4 différentes.
+
+
+
+     //Could-Have:
+     Méthode générique pour remplir les 3 tables.
+     Traiter les notes
+     Création d'employé
+     Ajouter détails à la Carte 1
 *       */
 
 
@@ -317,8 +344,12 @@ public class FenApp extends JFrame {
         // Formulaire Task
         // *** Code pour formulaire panTaskForm
 
+        panTaskForm = new JPanel(new GridLayout(4,2));
+
         // Formulaire Sprint
         // *** Code pour formulaire panSprintForm
+
+        panSprintForm = new JPanel(new GridLayout(4,2));
 
 
         iconSprintSave = new ImageIcon("src/images/iconSave.png");
