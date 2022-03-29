@@ -7,7 +7,10 @@ public class Constante {
     public static String[] nomFichier = {"\\Projets.dat", "\\tasks.dat", "\\sprints.dat"};
 
     public static final String REPERTOIRE_PROJET = "dataFiles\\Projets\\";
-
+    public static final String[] REPERTOIRE_IMAGE ={"src/images/iconRetour.png","src/images/iconNewProjet.png",
+            "src/images/iconDeleteProjet.png","src/images/iconChargerProjet.png","src/images/iconNewTask.png",
+            "src/images/iconChargerTask.png","src/images/iconDeleteTask.png","src/images/iconNewSprint.png",
+            "src/images/iconChargerSprint.png","src/images/iconDeleteSprint.png","src/images/iconSave.png"};
 
     //Constantes de nom de colonnes des tableaux
 
