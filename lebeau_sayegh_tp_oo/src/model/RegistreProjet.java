@@ -31,7 +31,6 @@ public class RegistreProjet extends Registre {
     public int verifierDoublons(Projet projet) {
         for (Projet tmp : registreProjet) {
             if (projet.getNomProjet().equals(tmp.getNomProjet())) {
-                System.out.println(getRegistrePro().indexOf(tmp));
                 return getRegistrePro().indexOf(tmp);
             }
         }
