@@ -69,11 +69,21 @@ public class FenParent extends JFrame {
                 for (Employe emp : registre.getRegistreEmp()) {
                     jcbTemp.addItem(emp);
                 }
-
             }
         }
     }
     // ***** Méthode pour remplir les tables *****
+    // Méthode pour configurere les champs de tables
+    public static void setTailleColonneTable(JTable table, int[] tmpColTable){
+        int nbrCol = table.getColumnCount();
+        TableColumn column = null;
+        for (int i = 0; i < nbrCol; i++) {
+            column = table.getColumnModel().getColumn(i);
+            column.setPreferredWidth(tmpColTable[i]);
+            System.out.println(tmpColTable[i]);
+        }
+    }
+
     // méthode remplir Projet
     public static void remplirTableProjet(DefaultTableModel tableModel, RegistreProjet registreProjet, RegistreEmploye registreEmploye,
                                           JTextArea consoleTxtArea) {
@@ -186,8 +196,8 @@ public class FenParent extends JFrame {
 
         panProjetEnCours.add(panProjetForm, BorderLayout.NORTH);
         panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 0, 150));
-        panProjetEnCours.add(scPaneTask, BorderLayout.CENTER);
-        panProjetEnCours.add(scPaneSprint, BorderLayout.SOUTH);
+        panProjetEnCours.add(scPaneTask, BorderLayout.EAST);
+        panProjetEnCours.add(scPaneSprint, BorderLayout.WEST);
 
 
         // Ajout du projet en cours au textFields

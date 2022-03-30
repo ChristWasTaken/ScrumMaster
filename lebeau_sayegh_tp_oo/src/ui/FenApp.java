@@ -251,15 +251,7 @@ public class FenApp extends FenParent {
         scPaneProjet = new JScrollPane(tblProjet);
 
         scPaneProjet.setPreferredSize(new Dimension(765, 150));
-        colmod = tblProjet.getColumnModel();
-        tempCol0 = colmod.getColumn(0);
-        tempCol0.setPreferredWidth(100);
-        tempCol1 = colmod.getColumn(1);
-        tempCol1.setPreferredWidth(250);
-        tempCol2 = colmod.getColumn(2);
-        tempCol2.setPreferredWidth(125);
-
-
+        setTailleColonneTable(tblProjet, Constante.TAILLE_COL_1);
 
         // *** Table Task ***
         tableModel2 = new DefaultTableModel();
@@ -274,9 +266,7 @@ public class FenApp extends FenParent {
         scPaneTask = new JScrollPane(tblTask);
 
         scPaneTask.setPreferredSize(new Dimension(300, 150));
-        colmod = tblTask.getColumnModel();
-        tempCol1 = colmod.getColumn(2);
-        tempCol1.setPreferredWidth(200);
+        setTailleColonneTable(tblTask, Constante.TAILLE_COL_2);
 
         // *** Table Sprint ***
         tableModel3 = new DefaultTableModel();
