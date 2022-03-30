@@ -115,10 +115,12 @@ public class FenParent extends JFrame {
     }
 
     // méthode pour remplir les table de task
-    public void remplirTableTask(DefaultTableModel tableModel2, RegistreTask registreTask, JTextArea consoleTxtArea) {
+    public void remplirTableTask(DefaultTableModel tableModel2, RegistreTask registreTask, JTextArea consoleTxtArea, RegistreEmploye registreEmploye) {
         tableModel2.setRowCount(0);
+
         for (Task tmp : registreTask.getRegistreTasks()) {
-            Object[] row = {tmp.getTaskID(), tmp.getTaskPriority(), tmp.getDescription(), tmp.getEmployeID()};
+            String employe = registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getNom() + registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getPrenom();
+            Object[] row = {tmp.getTaskID(), tmp.getTaskPriority(), tmp.getDescription(), employe};
             tableModel2.addRow(row);
         }
         consoleTxtArea.append("Tableau des taches créé avec succes.\n");
@@ -232,7 +234,7 @@ public class FenParent extends JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        remplirTableTask(tableModel2, registreTask, consoleTxtArea);
+        remplirTableTask(tableModel2, registreTask, consoleTxtArea , registreEmploye);
 
         registreSprint.getRegSprint().clear();
         try {

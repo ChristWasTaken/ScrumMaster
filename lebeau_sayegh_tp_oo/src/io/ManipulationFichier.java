@@ -229,14 +229,14 @@ public class ManipulationFichier{
     }
 
 
-    public static void effacerFichier(String fichier, JTextArea console) {
-        File myFile = new File(fichier);
-        if (myFile.delete()) {
-            console.append("Fichier supprimé: " + myFile.getName()+"\n");
-        } else {
-            console.append("Erreur, fichier toujours présent.\n");
-        }
-    }
+//    public static void effacerFichier(String fichier, JTextArea console) {
+//        File myFile = new File(fichier);
+//        if (myFile.delete()) {
+//            console.append("Fichier supprimé: " + myFile.getName()+"\n");
+//        } else {
+//            console.append("Erreur, fichier toujours présent.\n");
+//        }
+//    }
 
     public static void effacerRepertoire(File file)
     {

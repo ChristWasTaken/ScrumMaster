@@ -1,49 +1,13 @@
 /*
-
-     //Must-Have:
-     Terminer formulaire de Gestion de projet
-     **Changelog:
-        FenParent:
-        -remplirComboBox() -> Méthode remplirComboBox pour tout les types (ajouter au besoin)
-        RegistreEmploye:
-        -listeEmployeParPoste() -> Méthode pour trier par poste.
-        -modification carte selection et projet
-
-        ManipulerFichier:
-        -copierFichier();
-        -nouveauProjet modifier
-
-        AppFen:
-        -btn new, btnCharger, btnEnregistrer
-        -table sprint créé
-
-        Exception diverse pour gestion de projet
-
-
-     Formulaire de Task + carte 4 + settoolbar pour la carte
-     Code pour btnEnregistrerTask
-
-     Formulaire de Sprint + carte 5 + settoolbar pour la carte
-     Code pour btnEnregistrerSprint
-
-     *DONE*Créer la table sprint + methode pour la remplir
-
      Exception de saisie Invalide pour les formulaires.
      Faire la vérification de saisie et d'exception pour les formulaires.
 
-
-     Code pour btnModifierTask
-     Code pour btnDeleteTask
      Code pour btnAjouterSprint
      Code pour btnModifierSprint
      Code pour btnDeleteSprint
 
-     Ajuster les colonnes des tables
-
      //Should-Have:
      Exception générique pour les doublons au lieu de 4 différentes.
-
-
 
      //Could-Have:
      Menu de haut de page pour les cartes. (J'ai juste configurer sortir et view)

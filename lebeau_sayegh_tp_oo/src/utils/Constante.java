@@ -15,15 +15,15 @@ public class Constante {
     //Constantes de nom de colonnes des tableaux
 
     public static final String[] TBL_PROJET = {"Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin", "Durée des sprints"};
-    public static final String[] TBL_TASK = {"TaskID", "Indice de Priorité", "Description", "Assignation"};
+    public static final String[] TBL_TASK = {"TaskID", "Priorité", "Description", "Assignation"};
     public static final String[] TBL_SPRINT ={"Description", "Date de début", "Date de fin", "Progrès"};
 
 
     public static final String[] POSTES = {"Scrum master", "Programmeur senior", "Programmeur junior"};
 
     public static final int[] TAILLE_COL_1 = {30, 350, 50, 20, 20, 20};
-    public static final int[] TAILLE_COL_2 = {10, 10, 150, 15};
-    public static final int[] TAILLE_COL_3 = {150, 10, 10, 10};
+    public static final int[] TAILLE_COL_2 = {6, 15, 230, 70};
+    public static final int[] TAILLE_COL_3 = {180, 20, 15, 6};
 
     /*  ***************************************************************************************** */
 
