@@ -82,7 +82,7 @@ public class FenApp extends FenParent {
         this.registreSprint = sprint;
 
         // Paramêtre de la fenêtre de l'application
-        setSize(1100, 900);
+        setSize(1000, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);

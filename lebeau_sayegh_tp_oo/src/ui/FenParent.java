@@ -185,7 +185,7 @@ public class FenParent extends JFrame {
         }
 
         panProjetEnCours.add(panProjetForm, BorderLayout.NORTH);
-        panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 50, 150));
+        panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 0, 150));
         panProjetEnCours.add(scPaneTask, BorderLayout.CENTER);
         panProjetEnCours.add(scPaneSprint, BorderLayout.SOUTH);
 
