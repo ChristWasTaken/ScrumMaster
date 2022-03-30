@@ -364,7 +364,7 @@ public class FenApp extends FenParent {
         panCard.add(panProjetCreation, "2");
         panCard.add(panProjetEnCours, "3");
         panCard.add(panTaskCreation, "4");
-        panCard.add(panTaskCours,"5");
+        panCard.add(panTaskCours, "5");
 
         // *** Entete ***
         lblProjet = new JLabel("Selection des projets");
@@ -431,7 +431,7 @@ public class FenApp extends FenParent {
                         carteSelectionProjet(registreProjet, registreEmploye);
                     } else if (currentCard == 4 || currentCard == 5) {
                         consoleTxtArea.append("Retour à la gestion de projet.\n");
-                        carteProjetEnCours(registreProjet,registreTask, registreEmploye, registreSprint);
+                        carteProjetEnCours(registreProjet, registreTask, registreEmploye, registreSprint);
                     }
                 }
             } else {
@@ -501,13 +501,33 @@ public class FenApp extends FenParent {
 
         // Modifier un Task
         //   *** Code pour
-           btnModifierTask.addActionListener(e->{
-
-                   });
+        btnModifierTask.addActionListener(e -> {
+            if (currentCard != 5) {
+                carteModifierTask(registreTask, registreEmploye);
+            }
+        });
 
         // Supprimer Task
         //   *** Code pour btnDeleteTask
-
+//        btnDeleteTask.addActionListener(e -> {
+//
+//            int result = Utilitaire.popupOuiNon("La suppression des projets est final. Êtes-vous sur?", "Suppression de projet");
+//            if (result == JOptionPane.YES_OPTION) {
+//                try {
+//                    int i = tblProjet.getSelectedRow();
+//                    ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet(), consoleTxtArea);
+//                    registreProjet.effacerProjet(i);
+//                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[1], registreProjet, 1);
+//                    tableModel.removeRow(i);
+//
+//                    consoleTxtArea.append("Suppression du projet complété.\n");
+//                } catch (IndexOutOfBoundsException ex) {
+//                    JOptionPane.showMessageDialog(null, "La ligne du projet doit être correctement selectionné pour pouvoir le supprimer.");
+//                }
+//            } else {
+//                consoleTxtArea.append("Suppression du projet annulée.\n");
+//            }
+//        });
         // Listener de Gestion de Sprint
 
         // Créer un Nouveau Sprint
@@ -526,19 +546,19 @@ public class FenApp extends FenParent {
         btnEnregistrerProjet.addActionListener(e -> {
 
             try {
-                Employe temp = (Employe)jcbEmploye.getSelectedItem();
+                Employe temp = (Employe) jcbEmploye.getSelectedItem();
                 Projet tempProj = null;
 
                 if (temp != null) {
                     int duree = Integer.parseInt(txtDureeSprint.getText());
                     Utilitaire.verifierDureeSprint(duree);
-                    tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), temp.getEmployeID(), format.parse(ftxtDateDebut.getText()) ,
-                            format.parse(ftxtDateFin.getText()),duree);
+                    tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), temp.getEmployeID(), format.parse(ftxtDateDebut.getText()),
+                            format.parse(ftxtDateFin.getText()), duree);
                 }
 
-                if(currentCard == 2) {
+                if (currentCard == 2) {
                     try {
-                        if(registreProjet.ajouterProjet(tempProj, 0) == -1){
+                        if (registreProjet.ajouterProjet(tempProj, 0) == -1) {
                             ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
                             ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
                             consoleTxtArea.append("Nouveau projet créer. Retourner à la page précédente pour lui accèder.\n");
@@ -546,13 +566,12 @@ public class FenApp extends FenParent {
                     } catch (ProjetDejaPresentException ex) {
                         consoleTxtArea.append("Projet déja présent, Changer le nom du projet pour le sauvegarder.\n");
                     }
-                } else if(currentCard == 3){
-                    try{
-                        if(registreProjet.ajouterProjet(tempProj, 1) != -1){
+                } else if (currentCard == 3) {
+                    try {
+                        if (registreProjet.ajouterProjet(tempProj, 1) != -1) {
                             ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
                             consoleTxtArea.append("Les changements au projet: " + txtNomProjet.getText() + " sont sauvegardés.\n");
-                        }
-                        else {
+                        } else {
                             ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
                             ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
                         }
@@ -560,7 +579,7 @@ public class FenApp extends FenParent {
                         ex.printStackTrace();
                     }
                 }
-            } catch (NumberFormatException ex2){
+            } catch (NumberFormatException ex2) {
                 JOptionPane.showMessageDialog(null, "Les sprints sont des semaines saisie en entier seulement.",
                         "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
             } catch (ParseException ex) {
@@ -577,15 +596,17 @@ public class FenApp extends FenParent {
                     txtDescTask.getText(), jcbEmploye2.getSelectedIndex());
             try {
                 if (currentCard == 4) {
-                    if(registreTask.ajouterTask(tempTask,0)!= -1) {
-                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[1], registreProjet,2 );
+
+                    if (registreTask.ajouterTask(tempTask, 0) == -1) {
+                        System.out.println(registreTask.getRegistreTasks().get(1));
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
-                }else if(currentCard ==5){
-                   if( registreTask.ajouterTask(tempTask,1)!=-1){
-                       ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[1], registreProjet,2 );
-                       consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
-                   }
+                } else if (currentCard == 5) {
+                    if (registreTask.ajouterTask(tempTask, 1) != -1) {
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[1], registreTask, 2);
+                        consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
+                    }
                 }
             } catch (TaskDejaExistException ex) {
                 consoleTxtArea.append("Erreur, doublons présent\n");
@@ -605,10 +626,10 @@ public class FenApp extends FenParent {
         // SHOULD HAVE
         miSortir.addActionListener(e -> {
 
-                int result = Utilitaire.popupOuiNon("Voulez vous vraiment Quitter?", "Quitter?");
-                if (result == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }
+            int result = Utilitaire.popupOuiNon("Voulez vous vraiment Quitter?", "Quitter?");
+            if (result == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
 
         });
 
@@ -626,10 +647,6 @@ public class FenApp extends FenParent {
 
 
     // ***** Méthodes de la fenêtre *****
-
-
-
-
 
 
     // ***** Gestion des card *****

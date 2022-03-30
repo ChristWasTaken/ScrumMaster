@@ -83,10 +83,10 @@ public class AppCtr {
 //            registreSprint.ajouterSprint(spt);
 //
 //                ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2] ,registreSprint, 3);
-                ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2], registreSprint, 3);
-                for (Sprint tmp : registreSprint.getRegSprint()){
-                    System.out.println(tmp);
-                }
+//                ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2], registreSprint, 3);
+//                for (Sprint tmp : registreSprint.getRegSprint()){
+//                    System.out.println(tmp);
+//                }
 //        } catch (SprintDejaPresentException e) {
 //            e.printStackTrace();
 //        }

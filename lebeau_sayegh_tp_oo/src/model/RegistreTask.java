@@ -17,6 +17,7 @@ public class RegistreTask extends Registre {
     //ajouter Task au registre
     public int ajouterTask(Task t, int operation) throws TaskDejaExistException {
         int index = verifierDoublons(t);
+
         if (index!=-1 && operation==0) {
             throw new TaskDejaExistException("Doublons trouvé", t);
         }else if(index!=-1 &&operation ==1){
@@ -29,6 +30,7 @@ public class RegistreTask extends Registre {
 
     private int verifierDoublons(Task t) {
         for (Task tmp : registreTasks) {
+            System.out.println("2");
             if (t.getDescription().equals(tmp.getDescription())) {
                 return getRegistreTasks().indexOf(tmp);
             }
