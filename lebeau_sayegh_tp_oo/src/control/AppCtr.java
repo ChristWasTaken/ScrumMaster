@@ -1,11 +1,10 @@
 package control;
 
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrastIJTheme;
 import io.ManipulationFichier;
 import model.*;
 import ui.FenApp;
-import utils.*;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrastIJTheme;
-
+import utils.Constante;
 
 import javax.swing.*;
 
@@ -22,6 +21,7 @@ public class AppCtr {
         RegistreEmploye employe = new RegistreEmploye();
         RegistreProjet projet = new RegistreProjet();
         RegistreTask regTask = new RegistreTask();
+        RegistreSprint registreSprint = new RegistreSprint();
 
 
 //        try {
@@ -42,12 +42,12 @@ public class AppCtr {
 //                System.out.println(tmp);
 //            }
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
-            ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
-//            for (Projet tmp : projet.getRegistrePro()) {
-//                System.out.println(tmp);
-//            }
+        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
+            for (Projet tmp : projet.getRegistrePro()) {
+                System.out.println(tmp);
+            }
 //        try {
-//            Task t1 = new Task(1, "blabl1", 6);
+//            Task t1 = new Task(1, "Ajouter vos tasks ici - effacer ou modifier ce task.", 6);
 //            Task t2 = new Task(1, "blabl2", 6);
 //            Task t3 = new Task(1, "blabl3", 6);
 //            Task t4 = new Task(1, "blabl4", 6);
@@ -61,39 +61,36 @@ public class AppCtr {
 //            regTask.ajouterTask(t5);
 //            regTask.ajouterTask(t6);
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET+Constante.nomFichier[1],regTask,2 );
-            ManipulationFichier.lire(Constante.REPERTOIRE_PROJET +Constante.nomFichier[1], regTask, 2);
-//            for (Task tmp : regTask.getRegistreTasks()) {
-//                System.out.println(tmp);
-//            }
+        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[1], regTask, 2);
+            for (Task tmp : regTask.getRegistreTasks()) {
+                System.out.println(tmp);
+            }
 //        } catch (TaskDejaExistException e) {
 //            e.printStackTrace();
 //        }
 
 
-//            int[] taskID = {1,2,3,0};
-//            int[] taskID2 = {5,4};
-
-//            Sprint spt = new Sprint(taskID,projFin,false);
-//            Sprint spt1 = new Sprint(taskID,projFin,true);
-//            Sprint sp2 = new Sprint(taskID,projFin,false);
-//            Sprint spt3 = new Sprint(taskID,projFin,true);
+//        int[] taskID = {0};
+////            int[] taskID2 = {5,4};
+//        Date projFin = Utilitaire.getTodayDate();
 //
-//            RegistreSprint regSprint = new RegistreSprint();
-//            regSprint.ajouterSprint(spt);
-//            regSprint.ajouterSprint(spt1);
+//        Sprint spt = new Sprint(taskID, "Ajouter vos Sprints ici - effacer ou modificer ce sprint", projFin, true);
+////            Sprint spt1 = new Sprint(taskID,projFin,true);
+////            Sprint sp2 = new Sprint(taskID,projFin,false);
+////            Sprint spt3 = new Sprint(taskID,projFin,true);
+//        try {
 //
-//            for(Sprint tmp: regSprint.getRegSprint()){
-//                System.out.println(tmp);
-//                for (int j : tmp.getTaskID()) {
-//                    Task temp = regTask.getRegistreTasks().get(j);
-//                    System.out.println(temp);
-//                }
-//            }
+//            registreSprint.ajouterSprint(spt);
 //
-//        } catch ( /*ParseException*/ /*TaskDejaExistException*/ e) {
+//                ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2] ,registreSprint, 3);
+                ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2], registreSprint, 3);
+                for (Sprint tmp : registreSprint.getRegSprint()){
+                    System.out.println(tmp);
+                }
+//        } catch (SprintDejaPresentException e) {
 //            e.printStackTrace();
-//        }// catch(SprintDejaPresentException f){
-//            f.printStackTrace();
+//        }
+
 
 //
 //        Employe emp1 = new Employe("Alain", "Flouflou", Constante.POSTES[0]);
@@ -124,12 +121,12 @@ public class AppCtr {
 //        }
 //        ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET+"Employes.dat",employe,0);
         ManipulationFichier.lire(Constante.REPERTOIRE_PROJET +"Employes.dat", employe,0);
-//        for (Employe emp : employe.getRegistreEmp()) {
-//            System.out.println(emp);
-//        }
+        for (Employe emp : employe.getRegistreEmp()) {
+            System.out.println(emp);
+        }
         FenApp fenetre;
 
-        fenetre = new FenApp(projet, employe, regTask);
+        fenetre = new FenApp(projet, employe, regTask, registreSprint);
         fenetre.setVisible(true);
     }
 }

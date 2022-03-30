@@ -176,7 +176,7 @@ public class FenParent extends JFrame {
         currentCard = 1;
     }
     // Carte de gestion d'un projet
-    public void carteProjetEnCours(RegistreProjet registreProjet, RegistreTask registreTask, RegistreEmploye registreEmploye) {
+    public void carteProjetEnCours(RegistreProjet registreProjet, RegistreTask registreTask, RegistreEmploye registreEmploye, RegistreSprint registreSprint) {
         try {
             lblProjet.setText("Projet en cours: " + registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
         } catch (IndexOutOfBoundsException e) {
@@ -185,7 +185,10 @@ public class FenParent extends JFrame {
         }
 
         panProjetEnCours.add(panProjetForm, BorderLayout.NORTH);
-        panProjetEnCours.add(scPaneTask);
+        panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 50, 150));
+        panProjetEnCours.add(scPaneTask, BorderLayout.CENTER);
+        panProjetEnCours.add(scPaneSprint, BorderLayout.SOUTH);
+
 
         // Ajout du projet en cours au textFields
         reinitialiserFormProjet(txtNomProjet, txtDescProjet, txtScrumId, ftxtDateDebut, ftxtDateFin, txtDureeSprint);
@@ -219,6 +222,17 @@ public class FenParent extends JFrame {
         }
         remplirTableTask(tableModel2, registreTask, consoleTxtArea);
 
+        registreSprint.getRegSprint().clear();
+        try {
+            ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[2], registreSprint, 3);
+            for (Sprint emp : registreSprint.getRegSprint()){
+                System.out.println(emp);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        remplirTableSprint(tableModel3, registreSprint, consoleTxtArea);
+
         cL.show(panCard, "3");
         setToolbarActif(3, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint,
                 btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
@@ -229,6 +243,7 @@ public class FenParent extends JFrame {
         lblProjet.setText("Nouveau projet");
 
         panProjetCreation.add(panProjetForm);
+        panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 250, 150));
 
         cL.show(panCard, "2");
         reinitialiserFormProjet(txtNomProjet, txtDescProjet, txtScrumId, ftxtDateDebut, ftxtDateFin, txtDureeSprint);

@@ -7,6 +7,16 @@
         -remplirComboBox() -> Méthode remplirComboBox pour tout les types (ajouter au besoin)
         RegistreEmploye:
         -listeEmployeParPoste() -> Méthode pour trier par poste.
+        -modification carte selection et projet
+
+        ManipulerFichier:
+        -copierFichier();
+        -nouveauProjet modifier
+
+        AppFen:
+        -btn new, btnCharger, btnEnregistrer
+
+        Exception diverse pour gestion de projet
 
 
      Formulaire de Task + carte 4 + settoolbar pour la carte
@@ -65,13 +75,14 @@ public class FenApp extends FenParent {
     private RegistreTask registreTask;
     private RegistreSprint registreSprint;
 
-    public FenApp(RegistreProjet projet, RegistreEmploye employe, RegistreTask task) {
+    public FenApp(RegistreProjet projet, RegistreEmploye employe, RegistreTask task, RegistreSprint sprint) {
         this.registreProjet = projet;
         this.registreEmploye = employe;
         this.registreTask = task;
+        this.registreSprint = sprint;
 
         // Paramêtre de la fenêtre de l'application
-        setSize(800, 1000);
+        setSize(1100, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -265,7 +276,24 @@ public class FenApp extends FenParent {
         tempCol1.setPreferredWidth(200);
 
         // *** Table Sprint ***
-        // *** Code pour scPaneSprint
+        tableModel3 = new DefaultTableModel();
+        tableModel3.setColumnIdentifiers(nomColonnesSprint);
+        // Table
+        tblSprint = new JTable();
+        tblSprint.setModel(tableModel3);
+        // Permet la selection d'une colonne seulement
+        tblSprint.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        scPaneSprint = new JScrollPane(tblSprint);
+
+        scPaneSprint.setPreferredSize(new Dimension(765, 150));
+//        colmod = tblSprint.getColumnModel();
+//        tempCol0 = colmod.getColumn(0);
+//        tempCol0.setPreferredWidth(100);
+//        tempCol1 = colmod.getColumn(1);
+//        tempCol1.setPreferredWidth(250);
+//        tempCol2 = colmod.getColumn(2);
+//        tempCol2.setPreferredWidth(125);
 
         // *** Formulaires
 
@@ -404,7 +432,7 @@ public class FenApp extends FenParent {
                         carteSelectionProjet(registreProjet, registreEmploye);
                     } else if (currentCard == 4 || currentCard == 5) {
                         consoleTxtArea.append("Retour à la gestion de projet.\n");
-                        carteProjetEnCours(registreProjet,registreTask, registreEmploye);
+                        carteProjetEnCours(registreProjet,registreTask, registreEmploye, registreSprint);
                     }
                 }
             } else {
@@ -432,7 +460,7 @@ public class FenApp extends FenParent {
             // Enregistrer l'index de la selection
             indexProjetEnCours = tblProjet.getSelectedRow();
             // Initialise la mise en page et les paramètres de la carte
-            carteProjetEnCours(registreProjet, registreTask, registreEmploye);
+            carteProjetEnCours(registreProjet, registreTask, registreEmploye, registreSprint);
 
             consoleTxtArea.append("Chargement complété avec succès.\n");
         });

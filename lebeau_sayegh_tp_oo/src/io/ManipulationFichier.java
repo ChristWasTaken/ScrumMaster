@@ -151,12 +151,33 @@ public class ManipulationFichier{
         }
     }
 
+    private static void copierFichier(File source, File destination) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(destination);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } finally {
+            is.close();
+            os.close();
+        }
+    }
+
     //************ Manipulation des fichiers/répertoires projets ************
 
     //Creation des fichiers d'un nouveau projet
     public static void nouveauProjet(String projet, JTextArea console) {
         String dirName = Constante.REPERTOIRE_PROJET + projet;
         File newFolder = new File(dirName);
+        File taskSource = new File(Constante.REPERTOIRE_PROJET + Constante.nomFichier[1]);
+        File taskDestination = new File(Constante.REPERTOIRE_PROJET + projet + Constante.nomFichier[1]);
+        File sprintSource = new File(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2]);
+        File sprintDestination = new File(Constante.REPERTOIRE_PROJET + projet + Constante.nomFichier[2]);
         if(newFolder.mkdir()){
             console.append("Répertoire créer: " + newFolder.getName() + "\n");
         }else{
@@ -164,10 +185,10 @@ public class ManipulationFichier{
         }
 
         try {
-            File newFile = new File( Constante.REPERTOIRE_PROJET + projet + Constante.nomFichier[1]);
-            System.out.println(Constante.REPERTOIRE_PROJET + projet+Constante.nomFichier[1]);
-            if (newFile.createNewFile()) {
-                console.append("Fichier créer: " + newFile.getName()+ "\n");
+            copierFichier(taskSource, taskDestination);
+
+            if (taskDestination.exists()) {
+                console.append("Fichier créer: " + taskDestination.getName()+ "\n");
             } else {
                 console.append("Fichier tasks.dat déja éxistant pour ce projet.\n");
             }
@@ -176,15 +197,16 @@ public class ManipulationFichier{
             e.printStackTrace();
         }
         try {
-            File newFile = new File( Constante.REPERTOIRE_PROJET + projet + Constante.nomFichier[2]);
-            if (newFile.createNewFile()) {
-                console.append("Fichier créer: " + newFile.getName() + "\n");
+            copierFichier(sprintSource, sprintDestination);
+
+            if (sprintDestination.exists()) {
+                console.append("Fichier créer: " + sprintDestination.getName()+ "\n");
             } else {
-                console.append("Fichier sprints.dat déja existant pour ce projet.\n");
+                console.append("Fichier tasks.dat déja éxistant pour ce projet.\n");
             }
-        } catch (IOException f) {
+        } catch (IOException e) {
             console.append("Erreur de IO.");
-            f.printStackTrace();
+            e.printStackTrace();
         }
     }
 

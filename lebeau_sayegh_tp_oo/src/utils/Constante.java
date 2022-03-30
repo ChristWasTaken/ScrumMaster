@@ -16,7 +16,7 @@ public class Constante {
 
     public static final String[] TBL_PROJET = {"Nom du projet", "Description", "ScrumMaster", "Date de début", "Date de fin", "Durée des sprints"};
     public static final String[] TBL_TASK = {"TaskID", "Indice de Priorité", "Description", "Assignation"};
-    public static final String[] TBL_SPRINT ={""};
+    public static final String[] TBL_SPRINT ={"Tasks du sprint", "Description", "Date de début", "Date de fin", "Progrès"};
 
 
     public static final String[] POSTES = {"Scrum master", "Programmeur senior", "Programmeur junior"};
