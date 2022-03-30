@@ -15,21 +15,25 @@ public class RegistreTask extends Registre {
     }
 
     //ajouter Task au registre
-    public void ajouterTask(Task t) throws TaskDejaExistException {
-        if (verifierDoublons(t)) {
+    public int ajouterTask(Task t, int operation) throws TaskDejaExistException {
+        int index = verifierDoublons(t);
+        if (index!=-1 && operation==0) {
             throw new TaskDejaExistException("Doublons trouvé", t);
+        }else if(index!=-1 &&operation ==1){
+            registreTasks.set(index,t);
         } else {
             registreTasks.add(t);
         }
+        return index;
     }
 
-    private boolean verifierDoublons(Task t) {
+    private int verifierDoublons(Task t) {
         for (Task tmp : registreTasks) {
             if (t.getDescription().equals(tmp.getDescription())) {
-                return true;
+                return getRegistreTasks().indexOf(tmp);
             }
         }
-        return false;
+        return -1;
     }
 
     //afficher registre
