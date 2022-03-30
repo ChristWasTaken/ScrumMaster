@@ -44,10 +44,7 @@ package ui;
 
 import io.ManipulationFichier;
 import model.*;
-import utils.Constante;
-import utils.ProjetDejaPresentException;
-import utils.TaskDejaExistException;
-import utils.Utilitaire;
+import utils.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -443,13 +440,13 @@ public class FenApp extends FenParent {
         // Supprimer un projet
         btnDelete.addActionListener(e -> {
 
-            int result = Utilitaire.popupOuiNon("La suppression est final. Êtes-vous sur?", "Suppression de projet");
+            int result = Utilitaire.popupOuiNon("La suppression des projets est final. Êtes-vous sur?", "Suppression de projet");
             if (result == JOptionPane.YES_OPTION) {
                 try {
                     int i = tblProjet.getSelectedRow();
-//                    ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet(), consoleTxtArea);
+                    ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet(), consoleTxtArea);
                     registreProjet.effacerProjet(i);
-//                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
                     tableModel.removeRow(i);
 
                     consoleTxtArea.append("Suppression du projet complété.\n");
@@ -503,8 +500,10 @@ public class FenApp extends FenParent {
                 Projet tempProj = null;
 
                 if (temp != null) {
+                    int duree = Integer.parseInt(txtDureeSprint.getText());
+                    Utilitaire.verifierDureeSprint(duree);
                     tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), temp.getEmployeID(), format.parse(ftxtDateDebut.getText()) ,
-                            format.parse(ftxtDateFin.getText()), Integer.parseInt(txtDureeSprint.getText()));
+                            format.parse(ftxtDateFin.getText()),duree);
                 }
 
                 if(currentCard == 2) {
@@ -532,8 +531,11 @@ public class FenApp extends FenParent {
                     }
                 }
             } catch (NumberFormatException ex2){
-                Utilitaire.popupErreur("La durée de sprint est en semaine (entier seulement).", ex2);
+                JOptionPane.showMessageDialog(null, "Les sprints sont des semaines saisie en entier seulement.", "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
             } catch (ParseException ex) {
+                ex.printStackTrace();
+            } catch (SaisieInvalideException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
             }
         });

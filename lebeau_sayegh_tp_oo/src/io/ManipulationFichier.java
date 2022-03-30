@@ -194,11 +194,11 @@ public class ManipulationFichier{
         try {
 
             if (directory.exists()) {
-                System.out.println(dirName);
                 effacerRepertoire(directory);
                 directory.delete();
                 console.append("Répertoire " + projet +" supprimé\n");
-            } else {
+            }
+            else {
                 console.append("Répertoire inexistant:"+ directory+"\n");
             }
         } catch (IndexOutOfBoundsException e) {
@@ -218,20 +218,14 @@ public class ManipulationFichier{
 
     public static void effacerRepertoire(File file)
     {
-        // store all the paths of files and folders present
-        // inside directory
+
+        // Efface tout les sous répertoire et fichiers du répertoire parent
         for (File subfile : file.listFiles()) {
 
-            // if it is a subfolder,e.g Rohan and Ritik,
-            // recursiley call function to empty subfolder
             if (subfile.isDirectory()) {
                 effacerRepertoire(subfile);
             }
-
-            // delete files and empty subfolders
             subfile.delete();
         }
     }
-
-
 }

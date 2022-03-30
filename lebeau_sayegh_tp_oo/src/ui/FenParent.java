@@ -3,7 +3,6 @@ package ui;
 import io.ManipulationFichier;
 import model.*;
 import utils.Constante;
-import utils.EmployeDejaPresentException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -207,7 +206,7 @@ public class FenParent extends JFrame {
         Employe tmp = registreEmploye.getRegistreEmp().get(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId());
         System.out.println(tmp);
         // Initialise la valeur par défaut du JCombobox
-//        jcbEmploye.setSelectedItem(tmp);
+        jcbEmploye.setSelectedItem(tmp);
 
 
         //Task

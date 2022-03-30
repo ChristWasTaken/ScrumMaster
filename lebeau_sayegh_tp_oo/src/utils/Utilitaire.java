@@ -23,8 +23,10 @@ public class Utilitaire {
                 JOptionPane.QUESTION_MESSAGE);
     }
 
-    public static void popupErreur(String msg, NumberFormatException e){
-        JOptionPane.showMessageDialog(null, msg, e.getMessage(), JOptionPane.ERROR_MESSAGE);
+    public static void verifierDureeSprint(int duree) throws SaisieInvalideException{
+        if(duree < 2 || duree > 12){
+            throw new SaisieInvalideException("La durée des sprints doient être entre 2 et 12 semaines.");
+        }
     }
 
 
