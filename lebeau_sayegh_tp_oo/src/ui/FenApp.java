@@ -612,8 +612,6 @@ public class FenApp extends FenParent {
                 consoleTxtArea.append("Erreur, doublons présent\n");
                 ex.printStackTrace();
             }
-            ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + nomFichier[0], consoleTxtArea);
-            ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
         });
 
         // Sauvegarder Formulaire Task
