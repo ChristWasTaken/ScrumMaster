@@ -158,31 +158,32 @@ public class ManipulationFichier{
         String dirName = Constante.REPERTOIRE_PROJET + projet;
         File newFolder = new File(dirName);
         if(newFolder.mkdir()){
-            console.append("Nouveau projet créer. Retourner à la page précédente pour lui accèder.\n");
+            console.append("Répertoire créer: " + newFolder.getName() + "\n");
         }else{
             console.append("Échec de la création du projet\n");
         }
 
         try {
-            File newFile = new File( Constante.REPERTOIRE_PROJET +"\\"+projet+"\\"+"tasks.dat");
+            File newFile = new File( Constante.REPERTOIRE_PROJET + projet + Constante.nomFichier[1]);
+            System.out.println(Constante.REPERTOIRE_PROJET + projet+Constante.nomFichier[1]);
             if (newFile.createNewFile()) {
-                System.out.println("File created: " + newFile.getName());
+                console.append("Fichier créer: " + newFile.getName()+ "\n");
             } else {
-                System.out.println("File already exists.");
+                console.append("Fichier tasks.dat déja éxistant pour ce projet.\n");
             }
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            console.append("Erreur de IO.");
             e.printStackTrace();
         }
         try {
-            File newFile = new File( Constante.REPERTOIRE_PROJET +"\\"+projet+"\\"+"sprints.dat");
+            File newFile = new File( Constante.REPERTOIRE_PROJET + projet + Constante.nomFichier[2]);
             if (newFile.createNewFile()) {
-                System.out.println("File created: " + newFile.getName());
+                console.append("Fichier créer: " + newFile.getName() + "\n");
             } else {
-                System.out.println("File already exists.");
+                console.append("Fichier sprints.dat déja existant pour ce projet.\n");
             }
         } catch (IOException f) {
-            System.out.println("An error occurred.");
+            console.append("Erreur de IO.");
             f.printStackTrace();
         }
     }

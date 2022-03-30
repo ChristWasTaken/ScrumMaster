@@ -359,7 +359,7 @@ public class FenApp extends FenParent {
         lblRights.setFont(Constante.F4);
 
 
-        consoleTxtArea = new JTextArea(3, 45);
+        consoleTxtArea = new JTextArea(5, 45);
         consoleTxtArea.setEditable(false);
         scPaneConsole = new JScrollPane(consoleTxtArea);
 
@@ -443,13 +443,13 @@ public class FenApp extends FenParent {
         // Supprimer un projet
         btnDelete.addActionListener(e -> {
 
-            int result = Utilitaire.popupOuiNon("La suppression set final. Êtes-vous sur?", "Suppression de projet");
+            int result = Utilitaire.popupOuiNon("La suppression est final. Êtes-vous sur?", "Suppression de projet");
             if (result == JOptionPane.YES_OPTION) {
                 try {
                     int i = tblProjet.getSelectedRow();
-                    ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet(), consoleTxtArea);
+//                    ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet(), consoleTxtArea);
                     registreProjet.effacerProjet(i);
-                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+//                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
                     tableModel.removeRow(i);
 
                     consoleTxtArea.append("Suppression du projet complété.\n");
@@ -506,26 +506,28 @@ public class FenApp extends FenParent {
                     tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), temp.getEmployeID(), format.parse(ftxtDateDebut.getText()) ,
                             format.parse(ftxtDateFin.getText()), Integer.parseInt(txtDureeSprint.getText()));
                 }
-                if(currentCard == 2){
-                    try{
+
+                if(currentCard == 2) {
+                    try {
                         registreProjet.ajouterProjet(tempProj, 0);
                         ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
                     } catch (ProjetDejaPresentException ex) {
-                       consoleTxtArea.append("Projet déja présent");
+                        consoleTxtArea.append("Projet déja présent");
                     }
-
-                } else if(currentCard == 3){
-                    registreProjet.ajouterProjet(tempProj, 1);
-                    ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + Constante.nomFichier[0], consoleTxtArea);
                 }
-                ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+//                } else if(currentCard == 3){
+//                    registreProjet.ajouterProjet(tempProj, 1);
+//                    ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + Constante.nomFichier[0], consoleTxtArea);
+//                }
+//                ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
 
-                consoleTxtArea.append("Projet charger dans le registre avec succès.\n");
-            } catch (ProjetDejaPresentException ex) {
-                consoleTxtArea.append("Erreur, doublons présent\n");
-                ex.printStackTrace();
-            } catch (NumberFormatException ex2){
-                Utilitaire.popupErreur("La durée de sprint est en semaine (entier seulement).", ex2);
+                consoleTxtArea.append("Nouveau projet créer. Retourner à la page précédente pour lui accèder.\n");
+//            } catch (ProjetDejaPresentException ex) {
+//                consoleTxtArea.append("Erreur, doublons présent\n");
+//                ex.printStackTrace();
+//            } catch (NumberFormatException ex2){
+//                Utilitaire.popupErreur("La durée de sprint est en semaine (entier seulement).", ex2);
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }

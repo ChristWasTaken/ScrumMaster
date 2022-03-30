@@ -199,15 +199,16 @@ public class FenParent extends JFrame {
 
         // Créer un régistre des employées de niveau ScrumMaster
         RegistreEmploye regScrumMaster = registreEmploye.listeEmployeParPoste(registreEmploye, 0);
-        // Remplis le combo box avec les objets de type employé
+//        // Remplis le combo box avec les objets de type employé
         jcbEmploye.removeAllItems();
         remplirComboBox(regScrumMaster, jcbEmploye, 1);
-        if(currentCard == 3){
-            // Récupère l'employé du registre employé en utilisant le scrumMasterID du registre projet
-            Employe tmp = registreEmploye.getRegistreEmp().get(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId());
-            // Initialise la valeur par défaut du JCombobox
-            jcbEmploye.setSelectedItem(tmp);
-        }
+
+        // Récupère l'employé du registre employé en utilisant le scrumMasterID du registre projet
+        Employe tmp = registreEmploye.getRegistreEmp().get(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId());
+        System.out.println(tmp);
+        // Initialise la valeur par défaut du JCombobox
+//        jcbEmploye.setSelectedItem(tmp);
+
 
         //Task
         //Vider le registre avant de repopuler avec le contenu du fichier
@@ -232,10 +233,10 @@ public class FenParent extends JFrame {
 
         cL.show(panCard, "2");
         reinitialiserFormProjet(txtNomProjet, txtDescProjet, txtScrumId, ftxtDateDebut, ftxtDateFin, txtDureeSprint);
-
-        // Créer un régistre des employées de niveau ScrumMaster
+        txtNomProjet.setEnabled(true);
+//         Créer un régistre des employées de niveau ScrumMaster
         RegistreEmploye regScrumMaster = registreEmploye.listeEmployeParPoste(registreEmploye, 0);
-        // Remplis le combo box avec les objets de type employé
+//         Remplis le combo box avec les objets de type employé
         jcbEmploye.removeAllItems();
         remplirComboBox(regScrumMaster, jcbEmploye, 1);
 
