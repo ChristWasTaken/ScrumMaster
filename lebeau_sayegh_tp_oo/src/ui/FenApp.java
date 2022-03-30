@@ -509,29 +509,35 @@ public class FenApp extends FenParent {
 
                 if(currentCard == 2) {
                     try {
-                        registreProjet.ajouterProjet(tempProj, 0);
-                        ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
-                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+                        if(registreProjet.ajouterProjet(tempProj, 0) == -1){
+                            ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
+                            ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+                            consoleTxtArea.append("Nouveau projet créer. Retourner à la page précédente pour lui accèder.\n");
+                        }
                     } catch (ProjetDejaPresentException ex) {
-                        consoleTxtArea.append("Projet déja présent");
+                        consoleTxtArea.append("Projet déja présent, Changer le nom du projet pour le sauvegarder.\n");
+                    }
+                } else if(currentCard == 3){
+                    try{
+                        if(registreProjet.ajouterProjet(tempProj, 1) != -1){
+                            ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+                            consoleTxtArea.append("Les changements au projet: " + txtNomProjet.getText() + " sont sauvegardés.\n");
+                        }
+                        else {
+                            ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
+                            ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+                        }
+                    } catch (ProjetDejaPresentException ex) {
+                        ex.printStackTrace();
                     }
                 }
-//                } else if(currentCard == 3){
-//                    registreProjet.ajouterProjet(tempProj, 1);
-//                    ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + Constante.nomFichier[0], consoleTxtArea);
-//                }
-//                ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
-
-                consoleTxtArea.append("Nouveau projet créer. Retourner à la page précédente pour lui accèder.\n");
-//            } catch (ProjetDejaPresentException ex) {
-//                consoleTxtArea.append("Erreur, doublons présent\n");
-//                ex.printStackTrace();
-//            } catch (NumberFormatException ex2){
-//                Utilitaire.popupErreur("La durée de sprint est en semaine (entier seulement).", ex2);
+            } catch (NumberFormatException ex2){
+                Utilitaire.popupErreur("La durée de sprint est en semaine (entier seulement).", ex2);
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
         });
+
         btnEnregistrerTask.addActionListener(e -> {
 
             Task tempTask = new Task(Integer.parseInt(txtTaskPriority.getText()),

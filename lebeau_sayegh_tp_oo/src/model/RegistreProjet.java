@@ -13,7 +13,7 @@ public class RegistreProjet extends Registre {
     }
 
     //ajouter Projet au registre
-    public void ajouterProjet(Projet projet, int operation) throws ProjetDejaPresentException {
+    public int ajouterProjet(Projet projet, int operation) throws ProjetDejaPresentException {
         int index = verifierDoublons(projet);
         if (index != -1 && operation == 0) {
             throw new ProjetDejaPresentException("Doublons trouvé", projet);
@@ -22,6 +22,7 @@ public class RegistreProjet extends Registre {
         } else {
             registreProjet.add(projet);
         }
+        return index;
     }
 
     public void effacerProjet(int index){
