@@ -13,9 +13,12 @@ public class RegistreProjet extends Registre {
     }
 
     //ajouter Projet au registre
-    public void ajouterProjet(Projet projet) throws ProjetDejaPresentException {
-        if (verifierDoublons(projet)) {
+    public void ajouterProjet(Projet projet, int operation) throws ProjetDejaPresentException {
+        int index = verifierDoublons(projet);
+        if (index != -1 && operation == 0) {
             throw new ProjetDejaPresentException("Doublons trouvé", projet);
+        } else if (index != -1  && operation == 1){
+            registreProjet.set(index, projet);
         } else {
             registreProjet.add(projet);
         }
@@ -25,13 +28,14 @@ public class RegistreProjet extends Registre {
         registreProjet.remove(index);
     }
 
-    private boolean verifierDoublons(Projet projet) {
+    public int verifierDoublons(Projet projet) {
         for (Projet tmp : registreProjet) {
             if (projet.getNomProjet().equals(tmp.getNomProjet())) {
-                return true;
+                System.out.println(getRegistrePro().indexOf(tmp));
+                return getRegistrePro().indexOf(tmp);
             }
         }
-        return false;
+        return -1;
     }
 
     public ArrayList<Projet> getRegistrePro() {

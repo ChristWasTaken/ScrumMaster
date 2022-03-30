@@ -1,6 +1,7 @@
 package model;
 
 
+import utils.Constante;
 import utils.EmployeDejaPresentException;
 
 import java.util.ArrayList;
@@ -35,6 +36,25 @@ public class RegistreEmploye extends Registre {
 
         return true;
     }
+
+    public RegistreEmploye getScrumMaster(RegistreEmploye registreEmploye){
+        RegistreEmploye tmpReg = new RegistreEmploye();
+
+        int index = 0;
+        for (Employe tmp : registreEmploye.getRegistreEmp()) {
+
+            if(tmp.getPoste().equals(Constante.POSTES[0])){
+                try {
+                    tmpReg.ajouterEmp(tmp);
+                } catch (EmployeDejaPresentException e) {
+                    e.printStackTrace();
+                }
+            }
+            index++;
+        }
+        return tmpReg;
+    }
+
 
     public ArrayList<Employe> getRegistreEmp() {
         return registreEmp;

@@ -23,6 +23,10 @@ public class Utilitaire {
                 JOptionPane.QUESTION_MESSAGE);
     }
 
+    public static void popupErreur(String msg, NumberFormatException e){
+        JOptionPane.showMessageDialog(null, msg, e.getMessage(), JOptionPane.ERROR_MESSAGE);
+    }
+
 
 
 

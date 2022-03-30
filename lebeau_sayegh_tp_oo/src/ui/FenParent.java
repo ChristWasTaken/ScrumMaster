@@ -8,11 +8,14 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.DateFormatter;
 import java.awt.*;
+import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
 import static utils.Constante.REPERTOIRE_PROJET;
+
 
 public class FenParent extends JFrame {
 
@@ -29,6 +32,9 @@ public class FenParent extends JFrame {
     protected JMenu mnuFichier;
     protected JMenuItem miSortir, miConsole;
 
+    JComboBox<String> jcbEmploye;
+    SimpleDateFormat format;
+    DateFormatter formatDate;
 
     protected JToolBar tbMenu;
     protected ImageIcon iconNew, iconCharger, iconDelete, iconRetour, iconTaskSave, iconSprintSave, iconSave,
@@ -45,7 +51,7 @@ public class FenParent extends JFrame {
     protected JTable tblProjet, tblSprint, tblTask;
     protected JScrollPane scPaneProjet, scPaneSprint, scPaneTask, scPaneConsole;
 
-    protected TableColumn tempCol0, tempCol1;
+    protected TableColumn tempCol0, tempCol1, tempCol2;
     protected TableColumnModel colmod;
     protected DefaultTableModel tableModel, tableModel2, tableModel3;
 
@@ -56,35 +62,25 @@ public class FenParent extends JFrame {
     protected int currentCard = 1;
     protected int indexProjetEnCours;
 
-    public void remplirComboBox(RegistreEmploye registreEmploye, JComboBox jcbEmploye){
+    public void remplirComboBox(RegistreEmploye registreScrumMaster, JComboBox jcbEmploye, int type){
 
-        int[] listNomID = new int[registreEmploye.getRegistreEmp().size()];
-
-        int index = 0;
-        for (Employe tmp : registreEmploye.getRegistreEmp()) {
-
-            if(tmp.getPoste().equals(Constante.POSTES[0])){
-                System.out.println(tmp.getPoste());
-                listNomID[index] = tmp.getEmployeID();
-                String tmpEmp = registreEmploye.getRegistreEmp().get(index).getPrenom()+" "
-                        +registreEmploye.getRegistreEmp().get(index).getNom();
-                jcbEmploye.addItem(tmpEmp);
-            }
-            index++;
+        switch (type){
+            case 1:
+               for (Employe emp : registreScrumMaster.getRegistreEmp()){
+                   jcbEmploye.addItem(emp);
+               }
         }
-
-
     }
     // ***** Méthode pour remplir les tables *****
     //méthode remplir Projet
-    public static void remplirTableProjet(DefaultTableModel tableModel, RegistreProjet registreProjet,
+    public static void remplirTableProjet(DefaultTableModel tableModel, RegistreProjet registreProjet, RegistreEmploye registreEmploye,
                                           JTextArea consoleTxtArea) {
         Format formatDate = new SimpleDateFormat("yyyy-MM-dd");
         tableModel.setRowCount(0);
         for (Projet tmp : registreProjet.getRegistrePro()) {
-            Object[] row = {tmp.getNomProjet(), tmp.getDescription(), Integer.toString(tmp.getScrumMasterId()),
-                    formatDate.format(tmp.getDateDebut()), formatDate.format(tmp.getDateFin()),
-                    Integer.toString(tmp.getDureeSprint())};
+            Object[] row = {tmp.getNomProjet(), tmp.getDescription(), registreEmploye.getRegistreEmp().get(tmp.getScrumMasterId()).getPrenom() + " "
+                    + registreEmploye.getRegistreEmp().get(tmp.getScrumMasterId()).getNom(), formatDate.format(tmp.getDateDebut()),
+                    formatDate.format(tmp.getDateFin()), Integer.toString(tmp.getDureeSprint())};
             tableModel.addRow(row);
         }
         consoleTxtArea.append("Tableau des projets créé avec succes.\nSelectionner un projet et appuyer sur modifier " +
@@ -177,9 +173,9 @@ public class FenParent extends JFrame {
     }
     // *** Carte des différentes fenêtres
     // Carte de selection de projet
-    public void carteSelectionProjet(RegistreProjet registreProjet) {
+    public void carteSelectionProjet(RegistreProjet registreProjet, RegistreEmploye registreEmploye) {
         lblProjet.setText("Gestion des projets");
-        remplirTableProjet(tableModel, registreProjet, consoleTxtArea);
+        remplirTableProjet(tableModel, registreProjet, registreEmploye, consoleTxtArea);
 
         cL.show(panCard, "1");
         setToolbarActif(1, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint,
@@ -196,7 +192,6 @@ public class FenParent extends JFrame {
             e.printStackTrace();
         }
 
-
         panProjetEnCours.add(panProjetForm, BorderLayout.NORTH);
         panProjetEnCours.add(scPaneTask);
 
@@ -205,8 +200,8 @@ public class FenParent extends JFrame {
         txtNomProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
         txtDescProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getDescription());
         txtScrumId.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId()));
-        ftxtDateDebut.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateDebut()));
-        ftxtDateFin.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateFin()));
+        ftxtDateDebut.setText(format.format(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateDebut()));
+        ftxtDateFin.setText(format.format(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateFin()));
         txtDureeSprint.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getDureeSprint()));
 
         //Task

@@ -23,6 +23,7 @@
 
      //Should-Have:
      Exception générique pour les doublons au lieu de 4 différentes.
+     Combo box pour la date
 
 
 
@@ -40,6 +41,7 @@ import io.ManipulationFichier;
 import model.*;
 import utils.Constante;
 import utils.ProjetDejaPresentException;
+import utils.SaisieInvalideException;
 import utils.Utilitaire;
 
 import javax.swing.*;
@@ -50,7 +52,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import static utils.Constante.REPERTOIRE_IMAGE;
 import static utils.Constante.REPERTOIRE_PROJET;
@@ -69,7 +74,7 @@ public class FenApp extends FenParent {
         this.registreTask = task;
 
         // Paramêtre de la fenêtre de l'application
-        setSize(800, 850);
+        setSize(800, 1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -84,10 +89,10 @@ public class FenApp extends FenParent {
 
         lblNomProjet = new JLabel("Nom du projet: ");
         lblDescProjet = new JLabel("Description du projet: ");
-        lblScrumId = new JLabel("Charger de projet: ");
+        lblScrumId = new JLabel("Charger de projet: (Niveau: ScrumMaster)");
         lblDateDebut = new JLabel("Début du projet (yyyy-mm-dd): ");
         lblDateFin = new JLabel("Fin du projet (yyyy-mm-dd): ");
-        lblDureeSprint = new JLabel("Nombre de semaine par sprint: ");
+        lblDureeSprint = new JLabel("Nombre de semaine par sprint: (2-12 semaines)");
         lblTaskPriority= new JLabel("Définir la priorité");
         lblDeskTask=new JLabel("Description:");
         lblEmpId =new JLabel("Choisir l'employer");
@@ -119,8 +124,8 @@ public class FenApp extends FenParent {
         txtEmployeId=new JTextField(20);
 
         // Formats de date
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormatter formatDate = new DateFormatter(format);
+        format = new SimpleDateFormat("yyyy-MM-dd");
+        formatDate = new DateFormatter(format);
         ftxtDateDebut = new JFormattedTextField(formatDate);
         ftxtDateFin = new JFormattedTextField(formatDate);
 
@@ -230,10 +235,14 @@ public class FenApp extends FenParent {
 
         scPaneProjet.setPreferredSize(new Dimension(765, 150));
         colmod = tblProjet.getColumnModel();
-        tempCol1 = colmod.getColumn(1);
-        tempCol1.setPreferredWidth(350);
         tempCol0 = colmod.getColumn(0);
-        tempCol0.setPreferredWidth(150);
+        tempCol0.setPreferredWidth(100);
+        tempCol1 = colmod.getColumn(1);
+        tempCol1.setPreferredWidth(250);
+        tempCol2 = colmod.getColumn(2);
+        tempCol2.setPreferredWidth(125);
+
+
 
         // *** Table Task ***
         tableModel2 = new DefaultTableModel();
@@ -250,7 +259,7 @@ public class FenApp extends FenParent {
         scPaneTask.setPreferredSize(new Dimension(300, 150));
         colmod = tblTask.getColumnModel();
         tempCol1 = colmod.getColumn(2);
-        tempCol1.setPreferredWidth(250);
+        tempCol1.setPreferredWidth(200);
 
         // *** Table Sprint ***
         // *** Code pour scPaneSprint
@@ -258,33 +267,16 @@ public class FenApp extends FenParent {
         // *** Formulaires
 
 //        // Formulaire Projet
-        JComboBox<String> jcbEmploye = new JComboBox<>();
-        remplirComboBox(registreEmploye, jcbEmploye);
-//        System.out.println(registreEmploye.getRegistreEmp().size());
-//        int[] listNomID = new int[registreEmploye.getRegistreEmp().size()];
-//
-//        int index = 0;
-//        for (Employe tmp : registreEmploye.getRegistreEmp()) {
-//
-////            System.out.println(Constante.POSTES[0]);
-//            if(tmp.getPoste().equals(Constante.POSTES[0])){
-//                System.out.println(tmp.getPoste());
-//                listNomID[index] = tmp.getEmployeID();
-//                String tmpEmp = registreEmploye.getRegistreEmp().get(index).getPrenom()+" "
-//                        +registreEmploye.getRegistreEmp().get(index).getNom();
-//                jcbEmploye.addItem(tmpEmp);
-//            }
-//            index++;
-//        }
+
+        jcbEmploye = new JComboBox<>();
 
         panProjetForm = new JPanel(new GridLayout(7, 2));
-        panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 250, 200));
+        panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 250, 150));
         panProjetForm.add(lblNomProjet);
         panProjetForm.add(txtNomProjet);
         panProjetForm.add(lblDescProjet);
         panProjetForm.add(txtDescProjet);
         panProjetForm.add(lblScrumId);
-        panProjetForm.add(txtScrumId);
         panProjetForm.add(jcbEmploye);
         panProjetForm.add(lblDateDebut);
         panProjetForm.add(ftxtDateDebut);
@@ -307,7 +299,7 @@ public class FenApp extends FenParent {
         panTaskForm.add(txtDescTask);
         panTaskForm.add(txtEmployeId);
         panTaskForm.add(new JLabel());
-        panTaskForm.add(btnEnregistrer);
+//        panTaskForm.add(btnEnregistrer);
 
         // Formulaire Sprint
         // *** Code pour formulaire panSprintForm
@@ -396,7 +388,7 @@ public class FenApp extends FenParent {
         setToolbarActif(1, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint,
                 btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
         // Fonction pour remplir la table par le model
-        remplirTableProjet(tableModel, registreProjet, consoleTxtArea);
+        remplirTableProjet(tableModel, registreProjet, registreEmploye, consoleTxtArea);
 
         //
         getContentPane().add(panGlobal);
@@ -416,7 +408,7 @@ public class FenApp extends FenParent {
                 if (result == JOptionPane.YES_OPTION) {
                     if (currentCard == 2 || currentCard == 3) {
                         consoleTxtArea.append("Retour à la selection de projet.\n");
-                        carteSelectionProjet(registreProjet);
+                        carteSelectionProjet(registreProjet, registreEmploye);
                     } else if (currentCard == 4 || currentCard == 5) {
                         consoleTxtArea.append("Retour à la gestion de projet.\n");
                         carteProjetEnCours(registreProjet,registreTask);
@@ -430,13 +422,23 @@ public class FenApp extends FenParent {
         // Créer un nouveau projet - formulaire
         btnNew.addActionListener(a -> {
             if (currentCard != 2) {
+                // Initialise la mise en page et les paramètres de la carte
                 carteNouveauProjet();
+                // Créer un régistre des employées de niveau ScrumMaster
+                RegistreEmploye regScrumMaster = registreEmploye.getScrumMaster(registreEmploye);
+                // Remplis le combo box avec les objets de type employé
+                jcbEmploye.removeAllItems();
+                remplirComboBox(regScrumMaster, jcbEmploye, 1);
+
             } else {
                 int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Nouveau projet?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
                     carteNouveauProjet();
+                    RegistreEmploye regScrumMaster = registreEmploye.getScrumMaster(registreEmploye);
+                    jcbEmploye.removeAllItems();
+                    remplirComboBox(regScrumMaster, jcbEmploye, 1);
                 }
             }
         });
@@ -445,7 +447,13 @@ public class FenApp extends FenParent {
         btnCharger.addActionListener(e -> {
             // Enregistrer l'index de la selection
             indexProjetEnCours = tblProjet.getSelectedRow();
-            carteProjetEnCours(registreProjet,registreTask);
+            // Initialise la mise en page et les paramètres de la carte
+            carteProjetEnCours(registreProjet, registreTask);
+            // Créer un régistre des employées de niveau ScrumMaster
+            RegistreEmploye regScrumMaster = registreEmploye.getScrumMaster(registreEmploye);
+            // Remplis le combo box avec les objets de type employé
+            jcbEmploye.removeAllItems();
+            remplirComboBox(regScrumMaster, jcbEmploye, 1);
             consoleTxtArea.append("Chargement complété avec succès.\n");
         });
 
@@ -507,23 +515,37 @@ public class FenApp extends FenParent {
         // Sauvegarder Formulaire Projet
         btnEnregistrer.addActionListener(e -> {
 
-            ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
-            DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-            Projet tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), Integer.parseInt(txtScrumId.getText()),
-                    Utilitaire.getTodayDate(), Utilitaire.getTodayDate(), Integer.parseInt(txtDureeSprint.getText()));
-
             try {
-                registreProjet.ajouterProjet(tempProj);
-                for (Projet tmp : registreProjet.getRegistrePro()) {
+                Employe temp = (Employe)jcbEmploye.getSelectedItem();
+                Projet tempProj = null;
 
+                if (temp != null) {
+                    tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), temp.getEmployeID(), format.parse(ftxtDateDebut.getText()) ,
+                            format.parse(ftxtDateFin.getText()), Integer.parseInt(txtDureeSprint.getText()));
                 }
+                if(currentCard == 2){
+                    try{
+                        registreProjet.ajouterProjet(tempProj, 0);
+                        ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
+                    } catch (ProjetDejaPresentException ex) {
+                       consoleTxtArea.append("Projet déja présent");
+                    }
+
+                } else if(currentCard == 3){
+                    registreProjet.ajouterProjet(tempProj, 1);
+                    ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + Constante.nomFichier[0], consoleTxtArea);
+                }
+                ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+
                 consoleTxtArea.append("Projet charger dans le registre avec succès.\n");
             } catch (ProjetDejaPresentException ex) {
                 consoleTxtArea.append("Erreur, doublons présent\n");
                 ex.printStackTrace();
+            } catch (NumberFormatException ex2){
+                Utilitaire.popupErreur("La durée de sprint est en semaine (entier seulement).", ex2);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
             }
-            ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + Constante.nomFichier[0], consoleTxtArea);
-            ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
         });
 
         // Sauvegarder Formulaire Task

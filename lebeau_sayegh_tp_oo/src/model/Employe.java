@@ -51,11 +51,7 @@ public class Employe implements Serializable {
     }
     @Override
     public String toString() {
-        return  " Employe{" +
-                "nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", poste='" + poste + '\'' +
-                '}';
+        return  "ID: " + employeID + " - " + prenom + " " + nom;
     }
 
 }

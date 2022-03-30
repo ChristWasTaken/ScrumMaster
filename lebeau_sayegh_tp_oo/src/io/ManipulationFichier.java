@@ -44,7 +44,7 @@ public class ManipulationFichier{
                     for (int i = 0; i < taille; i++) {
                          regPro = (RegistreProjet) registre;
                         Projet projet = (Projet) ois.readObject();
-                        regPro.ajouterProjet(projet);
+                        regPro.ajouterProjet(projet, 0);
                     }
                 }
                 case 2 -> {
