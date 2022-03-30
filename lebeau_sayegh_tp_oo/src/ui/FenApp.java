@@ -2,6 +2,12 @@
 
      //Must-Have:
      Terminer formulaire de Gestion de projet
+     **Changelog:
+        FenParent:
+        -remplirComboBox() -> Méthode remplirComboBox pour tout les types (ajouter au besoin)
+        RegistreEmploye:
+        -listeEmployeParPoste() -> Méthode pour trier par poste.
+
 
      Formulaire de Task + carte 4 + settoolbar pour la carte
      Code pour btnEnregistrerTask
@@ -48,13 +54,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import static utils.Constante.REPERTOIRE_IMAGE;
 import static utils.Constante.REPERTOIRE_PROJET;
@@ -406,7 +407,7 @@ public class FenApp extends FenParent {
                         carteSelectionProjet(registreProjet, registreEmploye);
                     } else if (currentCard == 4 || currentCard == 5) {
                         consoleTxtArea.append("Retour à la gestion de projet.\n");
-                        carteProjetEnCours(registreProjet,registreTask);
+                        carteProjetEnCours(registreProjet,registreTask, registreEmploye);
                     }
                 }
             } else {
@@ -418,22 +419,13 @@ public class FenApp extends FenParent {
         btnNew.addActionListener(a -> {
             if (currentCard != 2) {
                 // Initialise la mise en page et les paramètres de la carte
-                carteNouveauProjet();
-                // Créer un régistre des employées de niveau ScrumMaster
-                RegistreEmploye regScrumMaster = registreEmploye.getScrumMaster(registreEmploye);
-                // Remplis le combo box avec les objets de type employé
-                jcbEmploye.removeAllItems();
-                remplirComboBox(regScrumMaster, jcbEmploye);
-
+                carteNouveauProjet(registreEmploye);
             } else {
                 int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Nouveau projet?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
-                    carteNouveauProjet();
-                    RegistreEmploye regScrumMaster = registreEmploye.getScrumMaster(registreEmploye);
-                    jcbEmploye.removeAllItems();
-                    remplirComboBox(regScrumMaster, jcbEmploye);
+                    carteNouveauProjet(registreEmploye);
                 }
             }
         });
@@ -443,12 +435,8 @@ public class FenApp extends FenParent {
             // Enregistrer l'index de la selection
             indexProjetEnCours = tblProjet.getSelectedRow();
             // Initialise la mise en page et les paramètres de la carte
-            carteProjetEnCours(registreProjet, registreTask);
-            // Créer un régistre des employées de niveau ScrumMaster
-            RegistreEmploye regScrumMaster = registreEmploye.getScrumMaster(registreEmploye);
-            // Remplis le combo box avec les objets de type employé
-            jcbEmploye.removeAllItems();
-            remplirComboBox(regScrumMaster, jcbEmploye);
+            carteProjetEnCours(registreProjet, registreTask, registreEmploye);
+
             consoleTxtArea.append("Chargement complété avec succès.\n");
         });
 

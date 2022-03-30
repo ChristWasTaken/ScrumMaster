@@ -36,21 +36,19 @@ public class RegistreEmploye extends Registre {
 
         return true;
     }
-
-    public RegistreEmploye getScrumMaster(RegistreEmploye registreEmploye){
+    // Filtre le registre employé par poste et retourne un registre temporaire avec la nouvelle liste
+    public RegistreEmploye listeEmployeParPoste(RegistreEmploye registreEmploye, int posteId){
         RegistreEmploye tmpReg = new RegistreEmploye();
 
-        int index = 0;
         for (Employe tmp : registreEmploye.getRegistreEmp()) {
 
-            if(tmp.getPoste().equals(Constante.POSTES[0])){
+            if(tmp.getPoste().equals(Constante.POSTES[posteId])){
                 try {
                     tmpReg.ajouterEmp(tmp);
                 } catch (EmployeDejaPresentException e) {
                     e.printStackTrace();
                 }
             }
-            index++;
         }
         return tmpReg;
     }

@@ -155,7 +155,7 @@ public class ManipulationFichier{
 
     //Creation des fichiers d'un nouveau projet
     public static void nouveauProjet(String projet, JTextArea console) {
-        String dirName = Constante.REPERTOIRE_PROJET +"\\"+projet;
+        String dirName = Constante.REPERTOIRE_PROJET + projet;
         File newFolder = new File(dirName);
         if(newFolder.mkdir()){
             console.append("Nouveau projet créer. Retourner à la page précédente pour lui accèder.\n");

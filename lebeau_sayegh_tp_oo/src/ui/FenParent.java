@@ -3,6 +3,7 @@ package ui;
 import io.ManipulationFichier;
 import model.*;
 import utils.Constante;
+import utils.EmployeDejaPresentException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,7 +11,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
-import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
@@ -61,15 +61,21 @@ public class FenParent extends JFrame {
 
     protected int currentCard = 1;
     protected int indexProjetEnCours;
+    // méthode pour remplir un JCombobox avec une liste d'un registre
+    public void remplirComboBox(Registre regTmp, JComboBox jcbTemp, int type) {
+        switch (type) {
+            case 1: {
+                RegistreEmploye registre = (RegistreEmploye) regTmp;
 
-    public void remplirComboBox(RegistreEmploye registreEmploye, JComboBox jcbEmploye){
+                for (Employe emp : registre.getRegistreEmp()) {
+                    jcbTemp.addItem(emp);
+                }
 
-        for (Employe emp : registreEmploye.getRegistreEmp()){
-            jcbEmploye.addItem(emp);
+            }
         }
     }
     // ***** Méthode pour remplir les tables *****
-    //méthode remplir Projet
+    // méthode remplir Projet
     public static void remplirTableProjet(DefaultTableModel tableModel, RegistreProjet registreProjet, RegistreEmploye registreEmploye,
                                           JTextArea consoleTxtArea) {
         Format formatDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -97,7 +103,7 @@ public class FenParent extends JFrame {
         consoleTxtArea.append("Tableau des sprints créé avec succes");
     }
 
-    //méthode pour remplir les table de task
+    // méthode pour remplir les table de task
     public void remplirTableTask(DefaultTableModel tableModel2, RegistreTask registreTask, JTextArea consoleTxtArea) {
         tableModel2.setRowCount(0);
         for (Task tmp : registreTask.getRegistreTasks()) {
@@ -158,16 +164,6 @@ public class FenParent extends JFrame {
         }
     }
 
-    public void reinitialiserFormProjet(JTextField txtNomProjet, JTextField txtDescProjet, JTextField txtScrumId,
-                                        JFormattedTextField ftxtDateDebut, JFormattedTextField ftxtDateFin,
-                                        JTextField txtDureeSprint) {
-        txtNomProjet.setText("");
-        txtDescProjet.setText("");
-        txtScrumId.setText("");
-        ftxtDateDebut.setText("");
-        ftxtDateFin.setText("");
-        txtDureeSprint.setText("");
-    }
     // *** Carte des différentes fenêtres
     // Carte de selection de projet
     public void carteSelectionProjet(RegistreProjet registreProjet, RegistreEmploye registreEmploye) {
@@ -181,7 +177,7 @@ public class FenParent extends JFrame {
         currentCard = 1;
     }
     // Carte de gestion d'un projet
-    public void carteProjetEnCours(RegistreProjet registreProjet, RegistreTask registreTask) {
+    public void carteProjetEnCours(RegistreProjet registreProjet, RegistreTask registreTask, RegistreEmploye registreEmploye) {
         try {
             lblProjet.setText("Projet en cours: " + registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
         } catch (IndexOutOfBoundsException e) {
@@ -197,10 +193,21 @@ public class FenParent extends JFrame {
         txtNomProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
         txtNomProjet.setEnabled(false);
         txtDescProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getDescription());
-        txtScrumId.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId()));
         ftxtDateDebut.setText(format.format(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateDebut()));
         ftxtDateFin.setText(format.format(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateFin()));
         txtDureeSprint.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getDureeSprint()));
+
+        // Créer un régistre des employées de niveau ScrumMaster
+        RegistreEmploye regScrumMaster = registreEmploye.listeEmployeParPoste(registreEmploye, 0);
+        // Remplis le combo box avec les objets de type employé
+        jcbEmploye.removeAllItems();
+        remplirComboBox(regScrumMaster, jcbEmploye, 1);
+        if(currentCard == 3){
+            // Récupère l'employé du registre employé en utilisant le scrumMasterID du registre projet
+            Employe tmp = registreEmploye.getRegistreEmp().get(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId());
+            // Initialise la valeur par défaut du JCombobox
+            jcbEmploye.setSelectedItem(tmp);
+        }
 
         //Task
         //Vider le registre avant de repopuler avec le contenu du fichier
@@ -218,13 +225,20 @@ public class FenParent extends JFrame {
         currentCard = 3;
     }
     // Carte nouveau projet
-    public void carteNouveauProjet() {
+    public void carteNouveauProjet(RegistreEmploye registreEmploye) {
         lblProjet.setText("Nouveau projet");
 
         panProjetCreation.add(panProjetForm);
 
         cL.show(panCard, "2");
         reinitialiserFormProjet(txtNomProjet, txtDescProjet, txtScrumId, ftxtDateDebut, ftxtDateFin, txtDureeSprint);
+
+        // Créer un régistre des employées de niveau ScrumMaster
+        RegistreEmploye regScrumMaster = registreEmploye.listeEmployeParPoste(registreEmploye, 0);
+        // Remplis le combo box avec les objets de type employé
+        jcbEmploye.removeAllItems();
+        remplirComboBox(regScrumMaster, jcbEmploye, 1);
+
         setToolbarActif(2, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint, btnModifierSprint,
                 btnAjouterTask, btnModifierTask, btnDeleteTask);
         currentCard = 2;
@@ -235,16 +249,29 @@ public class FenParent extends JFrame {
         lblTasks.setText("Nouvelle Task");
         panTaskCreation.add(panTaskForm);
         cL.show(panCard, "4");
-        reinitialiserTaskForm(txtTaskPriority,txtDescTask,txtEmployeId);
+        reinitialiserFormTask(txtTaskPriority,txtDescTask,txtEmployeId);
         setToolbarActif(4, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint, btnModifierSprint,
                 btnAjouterTask, btnModifierTask, btnDeleteTask);
         currentCard =4;
         consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
-    public void reinitialiserTaskForm(JTextField txtTaskPriority,JTextField txtDescTask,JTextField txtEmployeId){
+
+    // Méthodes pour reinitialiser les champs des formulaires
+    public void reinitialiserFormTask(JTextField txtTaskPriority, JTextField txtDescTask, JTextField txtEmployeId){
         txtTaskPriority.setText("");
         txtDescTask.setText("");
         txtEmployeId.setText("");
+    }
+
+    public void reinitialiserFormProjet(JTextField txtNomProjet, JTextField txtDescProjet, JTextField txtScrumId,
+                                        JFormattedTextField ftxtDateDebut, JFormattedTextField ftxtDateFin,
+                                        JTextField txtDureeSprint) {
+        txtNomProjet.setText("");
+        txtDescProjet.setText("");
+        txtScrumId.setText("");
+        ftxtDateDebut.setText("");
+        ftxtDateFin.setText("");
+        txtDureeSprint.setText("");
     }
 
 }
