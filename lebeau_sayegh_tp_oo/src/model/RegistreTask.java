@@ -3,7 +3,6 @@ package model;
 
 import utils.TaskDejaExistException;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RegistreTask extends Registre {
@@ -30,7 +29,6 @@ public class RegistreTask extends Registre {
 
     private int verifierDoublons(Task t) {
         for (Task tmp : registreTasks) {
-            System.out.println("2");
             if (t.getDescription().equals(tmp.getDescription())) {
                 return getRegistreTasks().indexOf(tmp);
             }

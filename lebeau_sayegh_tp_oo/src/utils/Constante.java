@@ -22,7 +22,8 @@ public class Constante {
     public static final String[] POSTES = {"Scrum master", "Programmeur senior", "Programmeur junior"};
 
     public static final int[] TAILLE_COL_1 = {30, 350, 50, 20, 20, 20};
-    public static final int[] TAILLE_COL_2 = {10, 15, 600, 15};
+    public static final int[] TAILLE_COL_2 = {10, 10, 150, 15};
+    public static final int[] TAILLE_COL_3 = {150, 10, 10, 10};
 
     /*  ***************************************************************************************** */
 

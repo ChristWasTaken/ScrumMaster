@@ -43,9 +43,6 @@ public class AppCtr {
 //            }
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
         ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
-            for (Projet tmp : projet.getRegistrePro()) {
-                System.out.println(tmp);
-            }
 //        try {
 //            Task t1 = new Task(1, "Ajouter vos tasks ici - effacer ou modifier ce task.", 6);
 //            Task t2 = new Task(1, "blabl2", 6);
@@ -62,9 +59,6 @@ public class AppCtr {
 //            regTask.ajouterTask(t6);
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET+Constante.nomFichier[1],regTask,2 );
         ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[1], regTask, 2);
-            for (Task tmp : regTask.getRegistreTasks()) {
-                System.out.println(tmp);
-            }
 //        } catch (TaskDejaExistException e) {
 //            e.printStackTrace();
 //        }
@@ -121,9 +115,7 @@ public class AppCtr {
 //        }
 //        ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET+"Employes.dat",employe,0);
         ManipulationFichier.lire(Constante.REPERTOIRE_PROJET +"Employes.dat", employe,0);
-        for (Employe emp : employe.getRegistreEmp()) {
-            System.out.println(emp);
-        }
+
         FenApp fenetre;
 
         fenetre = new FenApp(projet, employe, regTask, registreSprint);

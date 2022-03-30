@@ -266,7 +266,7 @@ public class FenApp extends FenParent {
         // Fonction pour remplir la table par le model à faire
         scPaneTask = new JScrollPane(tblTask);
 
-        scPaneTask.setPreferredSize(new Dimension(300, 150));
+        scPaneTask.setPreferredSize(new Dimension(450, 150));
         setTailleColonneTable(tblTask, Constante.TAILLE_COL_2);
 
         // *** Table Sprint ***
@@ -280,14 +280,8 @@ public class FenApp extends FenParent {
 
         scPaneSprint = new JScrollPane(tblSprint);
 
-        scPaneSprint.setPreferredSize(new Dimension(765, 150));
-//        colmod = tblSprint.getColumnModel();
-//        tempCol0 = colmod.getColumn(0);
-//        tempCol0.setPreferredWidth(100);
-//        tempCol1 = colmod.getColumn(1);
-//        tempCol1.setPreferredWidth(250);
-//        tempCol2 = colmod.getColumn(2);
-//        tempCol2.setPreferredWidth(125);
+        scPaneSprint.setPreferredSize(new Dimension(450, 150));
+        setTailleColonneTable(tblSprint, Constante.TAILLE_COL_3);
 
         // *** Formulaires
 
@@ -598,13 +592,12 @@ public class FenApp extends FenParent {
                 if (currentCard == 4) {
 
                     if (registreTask.ajouterTask(tempTask, 0) == -1) {
-                        System.out.println(registreTask.getRegistreTasks().get(1));
-                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[1], registreTask, 2);
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
                 } else if (currentCard == 5) {
                     if (registreTask.ajouterTask(tempTask, 1) != -1) {
-                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[1], registreTask, 2);
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
                 }

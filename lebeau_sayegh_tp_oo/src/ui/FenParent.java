@@ -1,6 +1,5 @@
 package ui;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import io.ManipulationFichier;
 import model.*;
 import utils.Constante;
@@ -84,7 +83,6 @@ public class FenParent extends JFrame {
         for (int i = 0; i < nbrCol; i++) {
             column = table.getColumnModel().getColumn(i);
             column.setPreferredWidth(tmpColTable[i]);
-            System.out.println(tmpColTable[i]);
         }
     }
 
@@ -222,7 +220,6 @@ public class FenParent extends JFrame {
 
         // Récupère l'employé du registre employé en utilisant le scrumMasterID du registre projet
         Employe tmp = registreEmploye.getRegistreEmp().get(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId());
-        System.out.println(tmp);
         // Initialise la valeur par défaut du JCombobox
         jcbEmploye.setSelectedItem(tmp);
 
@@ -240,9 +237,6 @@ public class FenParent extends JFrame {
         registreSprint.getRegSprint().clear();
         try {
             ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[2], registreSprint, 3);
-            for (Sprint emp : registreSprint.getRegSprint()) {
-                System.out.println(emp);
-            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
