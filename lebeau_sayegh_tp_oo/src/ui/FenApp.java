@@ -122,6 +122,9 @@ public class FenApp extends FenParent {
         txtDescTask= new JTextField(50);
         txtEmployeId=new JTextField(20);
 
+        // Initialisation des comboBox
+        jcbEmploye = new JComboBox<>();
+
         // Formats de date
         format = new SimpleDateFormat("yyyy-MM-dd");
         formatDate = new DateFormatter(format);
@@ -269,8 +272,6 @@ public class FenApp extends FenParent {
         // *** Formulaires
 
 //        // Formulaire Projet
-
-        jcbEmploye = new JComboBox<>();
 
         panProjetForm = new JPanel(new GridLayout(7, 2));
         panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 250, 150));
@@ -422,7 +423,7 @@ public class FenApp extends FenParent {
                 RegistreEmploye regScrumMaster = registreEmploye.getScrumMaster(registreEmploye);
                 // Remplis le combo box avec les objets de type employé
                 jcbEmploye.removeAllItems();
-                remplirComboBox(regScrumMaster, jcbEmploye, 1);
+                remplirComboBox(regScrumMaster, jcbEmploye);
 
             } else {
                 int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Nouveau projet?",
@@ -432,7 +433,7 @@ public class FenApp extends FenParent {
                     carteNouveauProjet();
                     RegistreEmploye regScrumMaster = registreEmploye.getScrumMaster(registreEmploye);
                     jcbEmploye.removeAllItems();
-                    remplirComboBox(regScrumMaster, jcbEmploye, 1);
+                    remplirComboBox(regScrumMaster, jcbEmploye);
                 }
             }
         });
@@ -447,7 +448,7 @@ public class FenApp extends FenParent {
             RegistreEmploye regScrumMaster = registreEmploye.getScrumMaster(registreEmploye);
             // Remplis le combo box avec les objets de type employé
             jcbEmploye.removeAllItems();
-            remplirComboBox(regScrumMaster, jcbEmploye, 1);
+            remplirComboBox(regScrumMaster, jcbEmploye);
             consoleTxtArea.append("Chargement complété avec succès.\n");
         });
 

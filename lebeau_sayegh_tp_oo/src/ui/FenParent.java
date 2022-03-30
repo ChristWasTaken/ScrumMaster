@@ -32,7 +32,7 @@ public class FenParent extends JFrame {
     protected JMenu mnuFichier;
     protected JMenuItem miSortir, miConsole;
 
-    JComboBox<String> jcbEmploye;
+    JComboBox<Employe> jcbEmploye;
     SimpleDateFormat format;
     DateFormatter formatDate;
 
@@ -62,13 +62,10 @@ public class FenParent extends JFrame {
     protected int currentCard = 1;
     protected int indexProjetEnCours;
 
-    public void remplirComboBox(RegistreEmploye registreScrumMaster, JComboBox jcbEmploye, int type){
+    public void remplirComboBox(RegistreEmploye registreEmploye, JComboBox jcbEmploye){
 
-        switch (type){
-            case 1:
-               for (Employe emp : registreScrumMaster.getRegistreEmp()){
-                   jcbEmploye.addItem(emp);
-               }
+        for (Employe emp : registreEmploye.getRegistreEmp()){
+            jcbEmploye.addItem(emp);
         }
     }
     // ***** Méthode pour remplir les tables *****
@@ -198,6 +195,7 @@ public class FenParent extends JFrame {
         // Ajout du projet en cours au textFields
         reinitialiserFormProjet(txtNomProjet, txtDescProjet, txtScrumId, ftxtDateDebut, ftxtDateFin, txtDureeSprint);
         txtNomProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
+        txtNomProjet.setEnabled(false);
         txtDescProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getDescription());
         txtScrumId.setText(String.valueOf(registreProjet.getRegistrePro().get(indexProjetEnCours).getScrumMasterId()));
         ftxtDateDebut.setText(format.format(registreProjet.getRegistrePro().get(indexProjetEnCours).getDateDebut()));
