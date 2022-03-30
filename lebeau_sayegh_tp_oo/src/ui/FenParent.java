@@ -240,6 +240,8 @@ public class FenParent extends JFrame {
         reinitialiserTaskForm(txtTaskPriority,txtDescTask,txtEmployeId);
         setToolbarActif(4, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint, btnModifierSprint,
                 btnAjouterTask, btnModifierTask, btnDeleteTask);
+        currentCard =4;
+        consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
     public void reinitialiserTaskForm(JTextField txtTaskPriority,JTextField txtDescTask,JTextField txtEmployeId){
         txtTaskPriority.setText("");

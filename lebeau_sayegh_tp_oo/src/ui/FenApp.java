@@ -23,7 +23,6 @@
 
      //Should-Have:
      Exception générique pour les doublons au lieu de 4 différentes.
-     Combo box pour la date
 
 
 
@@ -41,7 +40,6 @@ import io.ManipulationFichier;
 import model.*;
 import utils.Constante;
 import utils.ProjetDejaPresentException;
-import utils.SaisieInvalideException;
 import utils.Utilitaire;
 
 import javax.swing.*;
@@ -277,6 +275,7 @@ public class FenApp extends FenParent {
         panProjetForm.add(lblDescProjet);
         panProjetForm.add(txtDescProjet);
         panProjetForm.add(lblScrumId);
+        panProjetForm.add(txtScrumId);
         panProjetForm.add(jcbEmploye);
         panProjetForm.add(lblDateDebut);
         panProjetForm.add(ftxtDateDebut);
@@ -299,7 +298,7 @@ public class FenApp extends FenParent {
         panTaskForm.add(txtDescTask);
         panTaskForm.add(txtEmployeId);
         panTaskForm.add(new JLabel());
-//        panTaskForm.add(btnEnregistrer);
+        panTaskForm.add(btnEnregistrerTask);
 
         // Formulaire Sprint
         // *** Code pour formulaire panSprintForm
@@ -546,6 +545,24 @@ public class FenApp extends FenParent {
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
+        });
+        btnEnregistrerTask.addActionListener(e -> {
+
+
+            Task tempTask = new Task(Integer.parseInt(txtTaskPriority.getText()),
+                    txtDescTask.getText(),Integer.parseInt(txtEmployeId.getText()));
+
+            try {
+                registreTask.ajouterTask(tempTask);
+                ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + Constante.nomFichier[0], consoleTxtArea);
+                ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
+                consoleTxtArea.append("Projet charger dans le registre avec succès.\n");
+            } catch (TaskDejaExistException ex) {
+                consoleTxtArea.append("Erreur, doublons présent\n");
+                ex.printStackTrace();
+            }
+            ManipulationFichier.effacerFichier(REPERTOIRE_PROJET + Constante.nomFichier[0], consoleTxtArea);
+            ManipulationFichier.ecrire(REPERTOIRE_PROJET + Constante.nomFichier[0], registreProjet, 1);
         });
 
         // Sauvegarder Formulaire Task
