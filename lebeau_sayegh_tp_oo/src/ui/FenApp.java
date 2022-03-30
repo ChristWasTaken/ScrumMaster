@@ -448,6 +448,20 @@ public class FenApp extends FenParent {
             }
         });
 
+        // Créer un Nouveau Task
+        btnAjouterTask.addActionListener(e -> {
+            if (currentCard != 4) {
+                carteNouvelleTask(registreEmploye);
+            } else {
+                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Nouveau projet?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    carteNouvelleTask(registreEmploye);
+                }
+            }
+        });
+
         // Charger un projet
         btnCharger.addActionListener(e -> {
             // Enregistrer l'index de la selection
@@ -455,7 +469,16 @@ public class FenApp extends FenParent {
             // Initialise la mise en page et les paramètres de la carte
             carteProjetEnCours(registreProjet, registreTask, registreEmploye, registreSprint);
 
-            consoleTxtArea.append("Chargement complété avec succès.\n");
+            consoleTxtArea.append("Chargement du projet complété avec succès.\n");
+        });
+        // Modifier un Task
+        //   *** Code pour
+        btnModifierTask.addActionListener(e -> {
+            //enregistrer l'index de la tache choisi
+            indexTaskEnCours =  tblTask.getSelectedRow();
+            //Initialise la mise en page et les parametre de la carte
+                carteModifierTask(registreTask, registreEmploye);
+            consoleTxtArea.append("Chargement de la tache complété avec succès");
         });
 
         // Supprimer un projet
@@ -478,50 +501,33 @@ public class FenApp extends FenParent {
                 consoleTxtArea.append("Suppression du projet annulée.\n");
             }
         });
+        //  Supprimer Task
+        //    *** Code pour btnDeleteTask
+        btnDeleteTask.addActionListener(e -> {
 
-        // Créer un Nouveau Task
-        btnAjouterTask.addActionListener(e -> {
-            if (currentCard != 4) {
-                carteNouvelleTask(registreEmploye);
-            } else {
-                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Nouveau projet?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-                if (result == JOptionPane.YES_OPTION) {
-                    carteNouvelleTask(registreEmploye);
+            int result = Utilitaire.popupOuiNon("La suppression des taches est final. Êtes-vous sur?", "Suppression " +
+                    "de tache");
+            if (result == JOptionPane.YES_OPTION) {
+                try {
+                    int i = tblTask.getSelectedRow();
+
+                    registreTask.effacerProjet(i);
+                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[1], registreProjet, 1);
+                    tableModel2.removeRow(i);
+
+                    consoleTxtArea.append("Suppression du projet complété.\n");
+                } catch (IndexOutOfBoundsException ex) {
+                    JOptionPane.showMessageDialog(null, "La ligne de la tache doit être correctement selectionné pour" +
+                            " pouvoir le supprimer.");
                 }
+            } else {
+                consoleTxtArea.append("Suppression de la tache annulée.\n");
             }
         });
 
-        // Modifier un Task
-        //   *** Code pour
-        btnModifierTask.addActionListener(e -> {
-            if (currentCard != 5) {
-                carteModifierTask(registreTask, registreEmploye);
-            }
-        });
 
-        // Supprimer Task
-        //   *** Code pour btnDeleteTask
-//        btnDeleteTask.addActionListener(e -> {
-//
-//            int result = Utilitaire.popupOuiNon("La suppression des projets est final. Êtes-vous sur?", "Suppression de projet");
-//            if (result == JOptionPane.YES_OPTION) {
-//                try {
-//                    int i = tblProjet.getSelectedRow();
-//                    ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet(), consoleTxtArea);
-//                    registreProjet.effacerProjet(i);
-//                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[1], registreProjet, 1);
-//                    tableModel.removeRow(i);
-//
-//                    consoleTxtArea.append("Suppression du projet complété.\n");
-//                } catch (IndexOutOfBoundsException ex) {
-//                    JOptionPane.showMessageDialog(null, "La ligne du projet doit être correctement selectionné pour pouvoir le supprimer.");
-//                }
-//            } else {
-//                consoleTxtArea.append("Suppression du projet annulée.\n");
-//            }
-//        });
+
+
         // Listener de Gestion de Sprint
 
         // Créer un Nouveau Sprint

@@ -59,7 +59,7 @@ public class FenParent extends JFrame {
     protected String[] nomColonnesSprint = Constante.TBL_SPRINT;
 
     protected int currentCard = 1;
-    protected int indexProjetEnCours;
+    protected int indexProjetEnCours,indexTaskEnCours;
 
 
     // méthode pour remplir un JCombobox avec une liste d'un registre
@@ -297,10 +297,11 @@ public class FenParent extends JFrame {
 
         //ajout du task en cours
         reinitialiserFormTask(txtTaskPriority,txtDescTask);
-        txtTaskPriority.setText(String.valueOf(registreTask.getRegistreTasks().get(indexProjetEnCours).getTaskPriority()));
-        txtDescTask.setText(registreTask.getRegistreTasks().get(indexProjetEnCours).getDescription());
+        txtTaskPriority.setText(String.valueOf(registreTask.getRegistreTasks().get(indexTaskEnCours).getTaskPriority()));
+        txtDescTask.setText(registreTask.getRegistreTasks().get(indexTaskEnCours).getDescription());
         ;
-        Employe tmp = registreEmploye.getRegistreEmp().get(registreTask.getRegistreTasks().get(indexProjetEnCours).getEmployeID());
+        Employe tmp =
+                registreEmploye.getRegistreEmp().get(registreTask.getRegistreTasks().get(indexTaskEnCours).getEmployeID());
         jcbEmploye2.setSelectedItem(tmp);
         setToolbarActif(4, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint, btnModifierSprint,
                 btnAjouterTask, btnModifierTask, btnDeleteTask);
