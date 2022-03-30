@@ -40,6 +40,7 @@ import io.ManipulationFichier;
 import model.*;
 import utils.Constante;
 import utils.ProjetDejaPresentException;
+import utils.TaskDejaExistException;
 import utils.Utilitaire;
 
 import javax.swing.*;
@@ -217,6 +218,9 @@ public class FenApp extends FenParent {
         btnEnregistrer.setToolTipText("Enregistrer le formulaire..");
         btnEnregistrer.setFont(Constante.F3);
         btnEnregistrer.setForeground(Color.GRAY);
+        btnEnregistrerTask = new JButton("Enregistrer", iconTaskSave);
+        btnEnregistrerTask.setBackground(Color.white);
+        btnEnregistrerSprint = new JButton("Enregistrer", iconSprintSave);
 
         // ***** Tables *****
 
@@ -275,7 +279,6 @@ public class FenApp extends FenParent {
         panProjetForm.add(lblDescProjet);
         panProjetForm.add(txtDescProjet);
         panProjetForm.add(lblScrumId);
-        panProjetForm.add(txtScrumId);
         panProjetForm.add(jcbEmploye);
         panProjetForm.add(lblDateDebut);
         panProjetForm.add(ftxtDateDebut);
@@ -298,20 +301,12 @@ public class FenApp extends FenParent {
         panTaskForm.add(txtDescTask);
         panTaskForm.add(txtEmployeId);
         panTaskForm.add(new JLabel());
-        panTaskForm.add(btnEnregistrerTask);
+//        panTaskForm.add(btnEnregistrerTask);
 
         // Formulaire Sprint
         // *** Code pour formulaire panSprintForm
 
         panSprintForm = new JPanel(new GridLayout(4, 2));
-
-
-
-
-        btnEnregistrerTask = new JButton("Enregistrer", iconTaskSave);
-        btnEnregistrer.setBackground(Color.white);
-        btnEnregistrerSprint = new JButton("Enregistrer", iconSprintSave);
-
 
         // *****Card Panels ****
 
@@ -547,7 +542,6 @@ public class FenApp extends FenParent {
             }
         });
         btnEnregistrerTask.addActionListener(e -> {
-
 
             Task tempTask = new Task(Integer.parseInt(txtTaskPriority.getText()),
                     txtDescTask.getText(),Integer.parseInt(txtEmployeId.getText()));
