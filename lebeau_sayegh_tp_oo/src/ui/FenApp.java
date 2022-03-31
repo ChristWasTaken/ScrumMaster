@@ -613,6 +613,7 @@ public class FenApp extends FenParent {
                 } else if (currentCard == 5) {
                     Task tempTask = registreTask.getRegistreTasks().get(indexTaskEnCours);
                     tempTask.setTaskPriority((Integer) jcbTask.getSelectedItem());
+                    tempTask.setEmployeID(jcbEmploye2.getSelectedIndex());
                     if (registreTask.ajouterTask(tempTask, 1) != -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
