@@ -45,7 +45,7 @@ public class FenParent extends JFrame {
     protected CardLayout cL;
 
     protected JPanel panGlobal, panCard, panEntete, panProjetForm, panTaskForm, panSprintForm, panButton,
-            panProjetEnCours, panProjetCreation, panBasDePage, panTaskCreation,panTaskCours, panSprintCreation;
+            panProjetEnCours, panProjetCreation, panBasDePage, panTaskCreation,panTaskCours, panSprintCreation, panSprintCours;
 
     protected JTable tblProjet, tblSprint, tblTask;
     protected JScrollPane scPaneProjet, scPaneSprint, scPaneTask, scPaneConsole;

@@ -308,6 +308,12 @@ public class FenApp extends FenParent {
         // Card Panel #5 panTaskCours
         panTaskCours = new JPanel(new BorderLayout());
 
+        // Card Panel # 6
+        panSprintCreation = new JPanel(new BorderLayout());
+
+        // Card Panel # 7
+        panSprintCours = new JPanel(new BorderLayout());
+
         // ***** Configuration de la Fenetre Global *****
 
         // *** Card Panel ***
@@ -323,6 +329,8 @@ public class FenApp extends FenParent {
         panCard.add(panProjetEnCours, "3");
         panCard.add(panTaskCreation, "4");
         panCard.add(panTaskCours, "5");
+        panCard.add(panSprintCreation, "6");
+        panCard.add(panSprintCours);
 
         // *** Entete ***
         lblProjet = new JLabel("Selection des projets");

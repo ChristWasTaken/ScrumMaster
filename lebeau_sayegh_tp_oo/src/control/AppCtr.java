@@ -26,7 +26,6 @@ public class AppCtr {
         RegistreTask regTask = new RegistreTask();
         RegistreSprint registreSprint = new RegistreSprint();
 
-
 //        try {
 //            Date projFin = sdf.parse("2022-07-26");
 //            Projet proj = new Projet("Scrum..Master", "Gérer des projets avec la méthode Scrum",1, Utilitaire.getTodayDate(),2);
@@ -46,7 +45,7 @@ public class AppCtr {
 //        } catch (TaskDejaExistException e) {
 //            e.printStackTrace();
 //        }
-
+//
 //        ArrayList<Integer> taskID = new ArrayList<>();
 //        taskID.add(0);
 //        Date projFin = Utilitaire.getTodayDate();
