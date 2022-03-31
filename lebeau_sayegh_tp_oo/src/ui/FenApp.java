@@ -505,12 +505,14 @@ public class FenApp extends FenParent {
         //   *** Code pour
         btnModifierTask.addActionListener(e -> {
             //enregistrer l'index de la tache choisi
+            indexTaskEnCours = 0;
             indexTaskEnCours = tblTask.getSelectedRow();
 
             //Initialise la mise en page et les parametre de la carte
-
-            carteModifierTask(registreTask, registreEmploye);
-            consoleTxtArea.append("Chargement de la tache complété avec succès.\n");
+            if (indexTaskEnCours != -1) {
+                carteModifierTask(registreTask, registreEmploye);
+                consoleTxtArea.append("Chargement de la tache complété avec succès.\n");
+            }
         });
 
         // Supprimer un projet
@@ -631,7 +633,7 @@ public class FenApp extends FenParent {
                 } else if (currentCard == 5) {
                     ArrayList<Task> tmpTask = registreTask.trierTask();
 
-                     tmpTask.get(indexTaskEnCours).setTaskPriority((Integer) jcbTask.getSelectedItem());
+                    tmpTask.get(indexTaskEnCours).setTaskPriority((Integer) jcbTask.getSelectedItem());
                     tmpTask.get(indexTaskEnCours).setEmployeID(jcbEmploye2.getSelectedIndex());
                     if (registreTask.ajouterTask(tmpTask.get(indexTaskEnCours), 1) != -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
