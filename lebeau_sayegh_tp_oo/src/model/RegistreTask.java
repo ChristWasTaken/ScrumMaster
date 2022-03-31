@@ -5,6 +5,9 @@ import utils.TaskDejaExistException;
 
 import java.util.ArrayList;
 
+import static model.Task.getNbrTask;
+import static model.Task.setNbrTask;
+
 public class RegistreTask extends Registre {
     private ArrayList<Task> registreTasks;
 
@@ -20,9 +23,9 @@ public class RegistreTask extends Registre {
         if (index!=-1 && operation==0) {
             throw new TaskDejaExistException("Doublons trouvé", t);
         }else if(index!=-1 &&operation ==1){
-            System.out.println(registreTasks.get(index));
+
             registreTasks.set(index,t);
-            System.out.println(registreTasks.get(index) + "après");
+
         } else {
             registreTasks.add(t);
         }
@@ -36,15 +39,13 @@ public class RegistreTask extends Registre {
                 tmpReg.add(tmp);
             }
         }
-        for (Task tmp : tmpReg){
-            System.out.println(tmp);
-        }
         return tmpReg;
     }
 
     private int verifierDoublons(Task t) {
         for (Task tmp : registreTasks) {
             if (t.getDescription().equals(tmp.getDescription())) {
+                setNbrTask(getNbrTask()-1);
                 return getRegistreTasks().indexOf(tmp);
             }
         }

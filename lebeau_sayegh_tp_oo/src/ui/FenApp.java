@@ -506,7 +506,9 @@ public class FenApp extends FenParent {
         btnModifierTask.addActionListener(e -> {
             //enregistrer l'index de la tache choisi
             indexTaskEnCours = tblTask.getSelectedRow();
+
             //Initialise la mise en page et les parametre de la carte
+
             carteModifierTask(registreTask, registreEmploye);
             consoleTxtArea.append("Chargement de la tache complété avec succès.\n");
         });
@@ -539,10 +541,10 @@ public class FenApp extends FenParent {
                     "de tache");
             if (result == JOptionPane.YES_OPTION) {
                 try {
-                    int i = tblTask.getSelectedRow();
+
                     ArrayList<Task> tmpTask = registreTask.trierTask();
-                    tmpTask.get(i).setTaskPriority(-1);
-                    tableModel2.removeRow(i);
+                    tmpTask.get(indexTaskEnCours).setTaskPriority(-1);
+                    tableModel2.removeRow(indexTaskEnCours);
                     ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1],
                             registreTask, 2);
 
@@ -627,10 +629,11 @@ public class FenApp extends FenParent {
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
                 } else if (currentCard == 5) {
-                    Task tempTask = registreTask.getRegistreTasks().get(indexTaskEnCours);
-                    tempTask.setTaskPriority((Integer) jcbTask.getSelectedItem());
-                    tempTask.setEmployeID(jcbEmploye2.getSelectedIndex());
-                    if (registreTask.ajouterTask(tempTask, 1) != -1) {
+                    ArrayList<Task> tmpTask = registreTask.trierTask();
+
+                     tmpTask.get(indexTaskEnCours).setTaskPriority((Integer) jcbTask.getSelectedItem());
+                    tmpTask.get(indexTaskEnCours).setEmployeID(jcbEmploye2.getSelectedIndex());
+                    if (registreTask.ajouterTask(tmpTask.get(indexTaskEnCours), 1) != -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
