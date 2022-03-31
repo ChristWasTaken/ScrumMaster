@@ -10,6 +10,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
@@ -64,17 +65,29 @@ public class FenParent extends JFrame {
 
 
     // méthode pour remplir un JCombobox avec une liste d'un registre
-    public void remplirComboBox(Registre regTmp, JComboBox jcbTemp, int type) {
+    public void remplirComboBox(Object o, JComboBox jcbTemp, int type) {
         switch (type) {
             case 1: {
-                RegistreEmploye registre = (RegistreEmploye) regTmp;
+                RegistreEmploye registre = (RegistreEmploye) o;
 
                 for (Employe emp : registre.getRegistreEmp()) {
                     jcbTemp.addItem(emp);
                 }
+                break;
+            }
+
+            case 2: {
+                String[] tableau = (String[]) o;
+
+                for(String emp: tableau){
+                    jcbTemp.addItem(emp);
+                }
+                break;
             }
         }
+
     }
+
 
     // ***** Méthode pour remplir les tables *****
     // Méthode pour configurere les champs de tables
@@ -293,7 +306,9 @@ public class FenParent extends JFrame {
         cL.show(panCard, "6");
         panSprintCreation.add(panSprintForm);
 
-    //    reinitialiserSprintForm(txtSpritDesc,), registreEmploye
+        jcbProgres.removeAllItems();
+        remplirComboBox(Constante.PROGRES_SPRINT, jcbProgres, 2);
+
         //populler le tableau de task
         registreTask.getRegistreTasks().clear();
         try {

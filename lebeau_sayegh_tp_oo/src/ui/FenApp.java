@@ -216,7 +216,7 @@ public class FenApp extends FenParent {
         btnEnregistrerProjet.setForeground(Color.GRAY);
         btnEnregistrerTask = new JButton("Enregistrer", iconTaskSave);
         btnEnregistrerTask.setBackground(Color.white);
-        btnEnregistrerSprint = new JButton("Enregistrer", iconSprintSave);
+        btnEnregistrerSprint = new JButton("Enregistrer", iconSave);
 
         // ***** Tables *****
 
@@ -300,7 +300,7 @@ public class FenApp extends FenParent {
         panTaskForm.add(btnEnregistrerTask);
 
         // Formulaire Sprint
-        panSprintForm = new JPanel(new GridLayout(4, 2));
+        panSprintForm = new JPanel(new GridLayout(5, 2));
         panSprintForm.add(lblDescSprint);
         panSprintForm.add(txtDescSprint);
         panSprintForm.add(lblDateDebutSprint);
@@ -309,6 +309,8 @@ public class FenApp extends FenParent {
         panSprintForm.add(ftxtDateFinSprint);
         panSprintForm.add(lblSprintProgres);
         panSprintForm.add(jcbProgres);
+        panSprintForm.add(new JLabel());
+        panSprintForm.add(btnEnregistrerSprint);
 
         // *****Card Panels ****
 
