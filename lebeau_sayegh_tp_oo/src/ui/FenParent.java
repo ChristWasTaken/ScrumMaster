@@ -277,7 +277,6 @@ public class FenParent extends JFrame {
         panTaskCreation.add(panTaskForm);
         cL.show(panCard, "4");
         reinitialiserFormTask(txtTaskPriority, txtDescTask);
-
         remplirComboBox(registreEmploye, jcbEmploye2, 1);
         Employe tmp = registreEmploye.getRegistreEmp().get(indexProjetEnCours);
         jcbEmploye2.setSelectedItem(tmp);
@@ -289,6 +288,25 @@ public class FenParent extends JFrame {
     //methode pour creer un sprint
     public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask){
         lblSprint.setText("Nouveau Sprint");
+        panSprintCreation.add(panSprintForm);
+        cL.show(panCard, "6");
+        reinitialiserSprintForm(txtSpritDesc,)
+        //populler le tableau de task
+        registreTask.getRegistreTasks().clear();
+        try {
+            ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1], registreTask, 2);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        remplirTableTask(tableModel2, registreTask, consoleTxtArea , registreEmploye);
+
+
+
+
+
+
+        currentCard =5;
+        consoleTxtArea.append("Remplir le formulaire de sprint et appuyer sur enregistrer");
     }
 
     // methode pour carte modifier Task
@@ -301,6 +319,7 @@ public class FenParent extends JFrame {
         }
         panTaskCours.add(panTaskForm, BorderLayout.NORTH);
         panTaskForm.setBorder((BorderFactory.createEmptyBorder(10, 50, 500, 150)));
+        cL.show(panCard,"5");
         //ajout du task en cours
         reinitialiserFormTask(txtTaskPriority,txtDescTask);
         txtTaskPriority.setText(String.valueOf(registreTask.getRegistreTasks().get(indexTaskEnCours).getTaskPriority()));
