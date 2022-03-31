@@ -417,11 +417,29 @@ public class FenApp extends FenParent {
             if (currentCard != 4) {
                 carteNouvelleTask(registreEmploye);
             } else {
-                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Nouveau projet?",
+                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.",
+                        "Retour vers le projet?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
                     carteNouvelleTask(registreEmploye);
+                }
+            }
+        });
+        // Listener de Gestion de Sprint
+
+        // Créer un Nouveau Sprint
+        //   *** Code pour btnAjouterSprint
+        btnAjouterSprint.addActionListener(e -> {
+            if (currentCard != 6) {
+                carteNouveauSprint(registreSprint, registreTask);
+            } else {
+                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.",
+                        "Retour vers le projet?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    carteNouveauSprint(registreSprint, registreTask);
                 }
             }
         });
@@ -439,9 +457,9 @@ public class FenApp extends FenParent {
         //   *** Code pour
         btnModifierTask.addActionListener(e -> {
             //enregistrer l'index de la tache choisi
-            indexTaskEnCours =  tblTask.getSelectedRow();
+            indexTaskEnCours = tblTask.getSelectedRow();
             //Initialise la mise en page et les parametre de la carte
-                carteModifierTask(registreTask, registreEmploye);
+            carteModifierTask(registreTask, registreEmploye);
             consoleTxtArea.append("Chargement de la tache complété avec succès");
         });
 
@@ -489,13 +507,6 @@ public class FenApp extends FenParent {
             }
         });
 
-
-
-
-        // Listener de Gestion de Sprint
-
-        // Créer un Nouveau Sprint
-        //   *** Code pour btnAjouterSprint
 
         // Modifier un Sprint
         //   *** Code pour btnModifierSprint
@@ -553,7 +564,7 @@ public class FenApp extends FenParent {
                 ex.printStackTrace();
             }
         });
-
+        //sauvegarder le formulaire Task
         btnEnregistrerTask.addActionListener(e -> {
 
             Task tempTask = new Task(Integer.parseInt(txtTaskPriority.getText()),
@@ -577,11 +588,10 @@ public class FenApp extends FenParent {
             }
         });
 
-        // Sauvegarder Formulaire Task
-        //   *** Code pour btnEnregistrerTask
 
         //Sauvegarder Formulaire Sprint
         //   *** Code pour btnEnregistrerSprint
+
 
         // *** Choix du menu ***
         // SHOULD HAVE

@@ -4,12 +4,13 @@ package model;
 import utils.Utilitaire;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Sprint implements Serializable {
 
 
-    private int[] taskID;
+    private ArrayList<Integer> taskID;
     private String description;
     private Date dateDebut;
     private Date dateFin;
@@ -18,7 +19,7 @@ public class Sprint implements Serializable {
     public Sprint() {
     }
 
-    public Sprint(int[] taskID,String description,  Date dateFin, boolean progres) {
+    public Sprint(ArrayList<Integer> taskID, String description, Date dateFin, boolean progres) {
         this.taskID = taskID;
         this.description = description;
         this.dateDebut = Utilitaire.getTodayDate();
@@ -27,11 +28,11 @@ public class Sprint implements Serializable {
     }
 
 
-    public int[] getTaskID() {
+    public ArrayList<Integer> getTaskID() {
         return taskID;
     }
 
-    public void setTaskID(int[] taskID) {
+    public void setTaskID(ArrayList<Integer> taskID) {
         this.taskID = taskID;
     }
 

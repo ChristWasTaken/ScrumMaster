@@ -286,7 +286,12 @@ public class FenParent extends JFrame {
         currentCard = 4;
         consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
+    //methode pour creer un sprint
+    public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask){
+        lblSprint.setText("Nouveau Sprint");
+    }
 
+    // methode pour carte modifier Task
     public void carteModifierTask(RegistreTask registreTask, RegistreEmploye registreEmploye) {
         try {
             lblTasks.setText("Task en cours: " + registreTask.getRegistreTasks().get(indexProjetEnCours).getDescription());
@@ -296,7 +301,6 @@ public class FenParent extends JFrame {
         }
         panTaskCours.add(panTaskForm, BorderLayout.NORTH);
         panTaskForm.setBorder((BorderFactory.createEmptyBorder(10, 50, 500, 150)));
-
         //ajout du task en cours
         reinitialiserFormTask(txtTaskPriority,txtDescTask);
         txtTaskPriority.setText(String.valueOf(registreTask.getRegistreTasks().get(indexTaskEnCours).getTaskPriority()));
