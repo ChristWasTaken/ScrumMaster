@@ -1,4 +1,10 @@
 /*
+
+        Ajout Gestion de projet
+        Gérer l'exception task/sprint vide
+        Gérer la réinitialisation de task/sprint sprès modif
+
+
      Exception de saisie Invalide pour les formulaires.
      Faire la vérification de saisie et d'exception pour les formulaires.
 
@@ -73,9 +79,13 @@ public class FenApp extends FenParent {
         lblEmpId = new JLabel("Choisir l'employer");
         lblSprint = new JLabel("Sprints restant au projet");
         lblSprint.setFont(Constante.F2);
-
         lblTasks = new JLabel("Taches restantes au projet");
         lblTasks.setFont(Constante.F2);
+        lblTaskId = new JLabel("Ajouter/Retiré des tasks de ce sprint en utilisant les flèches.");
+        lblDescSprint = new JLabel("Description du sprint: ");
+        lblDateDebutSprint = new JLabel(" Date de début: ");
+        lblDateFinSprint = new JLabel("Date de fin: ");
+        lblSprintProgres = new JLabel(" Progrès: ");
 
         lblSepProjet = new JLabel("Projet");
         lblSepProjet.setFont(Constante.F4);
@@ -97,16 +107,21 @@ public class FenApp extends FenParent {
         txtTaskPriority = new JTextField(3);
         txtDescTask = new JTextField(50);
         txtEmployeId = new JTextField(20);
+        txtDescSprint = new JTextField(50);
+
 
         // Initialisation des comboBox
         jcbEmploye = new JComboBox<>();
         jcbEmploye2 = new JComboBox<>();
+        jcbProgres = new JComboBox<>();
 
         // Formats de date
         format = new SimpleDateFormat("yyyy-MM-dd");
         formatDate = new DateFormatter(format);
         ftxtDateDebut = new JFormattedTextField(formatDate);
         ftxtDateFin = new JFormattedTextField(formatDate);
+        ftxtDateDebutSprint = new JFormattedTextField(formatDate);
+        ftxtDateFinSprint = new JFormattedTextField(formatDate);
 
 
         // ***** Entete *****
@@ -285,9 +300,15 @@ public class FenApp extends FenParent {
         panTaskForm.add(btnEnregistrerTask);
 
         // Formulaire Sprint
-        // *** Code pour formulaire panSprintForm
-
         panSprintForm = new JPanel(new GridLayout(4, 2));
+        panSprintForm.add(lblDescSprint);
+        panSprintForm.add(txtDescSprint);
+        panSprintForm.add(lblDateDebutSprint);
+        panSprintForm.add(ftxtDateDebutSprint);
+        panSprintForm.add(lblDateFinSprint);
+        panSprintForm.add(ftxtDateFinSprint);
+        panSprintForm.add(lblSprintProgres);
+        panSprintForm.add(jcbProgres);
 
         // *****Card Panels ****
 
@@ -313,10 +334,9 @@ public class FenApp extends FenParent {
         panSprintCreation = new JPanel(new BorderLayout());
 
         // Card Panel # 7
-        //panSprintCours = new JPanel(new BorderLayout());
+        panSprintCours = new JPanel(new BorderLayout());
 
         // ***** Configuration de la Fenetre Global *****
-
         // *** Card Panel ***
 
         // Initialisation du cardPanel
@@ -331,7 +351,7 @@ public class FenApp extends FenParent {
         panCard.add(panTaskCreation, "4");
         panCard.add(panTaskCours, "5");
         panCard.add(panSprintCreation, "6");
-        //    panCard.add(panSprintCours);
+//        panCard.add(panSprintCours, "7");
 
         // *** Entete ***
         lblProjet = new JLabel("Selection des projets");
