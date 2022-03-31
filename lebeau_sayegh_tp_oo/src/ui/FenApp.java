@@ -115,7 +115,7 @@ public class FenApp extends FenParent {
         jcbEmploye = new JComboBox<>();
         jcbEmploye2 = new JComboBox<>();
         jcbProgres = new JComboBox<>();
-
+        jcbTask = new JComboBox<>();
         // Formats de date
         format = new SimpleDateFormat("yyyy-MM-dd");
         formatDate = new DateFormatter(format);
@@ -292,7 +292,7 @@ public class FenApp extends FenParent {
         panTaskForm = new JPanel(new GridLayout(4, 2));
         panTaskForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 500, 200));
         panTaskForm.add(lblTaskPriority);
-        panTaskForm.add(txtTaskPriority);
+        panTaskForm.add(jcbTask);
         panTaskForm.add(lblDeskTask);
         panTaskForm.add(txtDescTask);
         panTaskForm.add(lblEmpId);
@@ -604,7 +604,7 @@ public class FenApp extends FenParent {
             try {
                 verifierStringVide(txtDescTask.getText(), 5);
                 if (currentCard == 4) {
-                    Task tempTask = new Task(Integer.parseInt(txtTaskPriority.getText()), txtDescTask.getText(),
+                    Task tempTask = new Task((Integer) jcbTask.getSelectedItem(), txtDescTask.getText(),
                             jcbEmploye2.getSelectedIndex());
                     if (registreTask.ajouterTask(tempTask, 0) == -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
@@ -612,6 +612,7 @@ public class FenApp extends FenParent {
                     }
                 } else if (currentCard == 5) {
                     Task tempTask = registreTask.getRegistreTasks().get(indexTaskEnCours);
+                    tempTask.setTaskPriority((Integer) jcbTask.getSelectedItem());
                     if (registreTask.ajouterTask(tempTask, 1) != -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");

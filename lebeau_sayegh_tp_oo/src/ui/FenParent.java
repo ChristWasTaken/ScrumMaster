@@ -14,8 +14,7 @@ import java.lang.reflect.Array;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
-import static utils.Constante.REPERTOIRE_PROJET;
-import static utils.Constante.nomFichier;
+import static utils.Constante.*;
 
 
 public class FenParent extends JFrame {
@@ -34,7 +33,7 @@ public class FenParent extends JFrame {
     protected JMenu mnuFichier;
     protected JMenuItem miSortir, miConsole;
 
-    JComboBox<Employe> jcbTask,jcbEmploye, jcbEmploye2, jcbProgres;
+    JComboBox<Employe> jcbTask, jcbEmploye, jcbEmploye2, jcbProgres;
     SimpleDateFormat format;
     DateFormatter formatDate;
 
@@ -301,7 +300,8 @@ public class FenParent extends JFrame {
         panTaskCreation.add(panTaskForm);
         cL.show(panCard, "4");
         txtDescTask.setEnabled(true);
-        reinitialiserFormTask(txtTaskPriority, txtDescTask);
+        reinitialiserFormTask(txtDescTask);
+        remplirComboBox(PRIORITY, jcbTask, 3);
         remplirComboBox(registreEmploye, jcbEmploye2, 1);
         Employe tmp = registreEmploye.getRegistreEmp().get(indexProjetEnCours);
         jcbEmploye2.setSelectedItem(tmp);
@@ -318,6 +318,7 @@ public class FenParent extends JFrame {
         panSprintCreation.add(panSprintForm);
 
         jcbProgres.removeAllItems();
+
         remplirComboBox(Constante.PROGRES_SPRINT, jcbProgres, 2);
 
         //populler le tableau de task
@@ -345,14 +346,16 @@ public class FenParent extends JFrame {
         panTaskForm.setBorder((BorderFactory.createEmptyBorder(10, 50, 500, 150)));
         cL.show(panCard, "5");
         //ajout du task en cours
-        reinitialiserFormTask(txtTaskPriority, txtDescTask);
+        reinitialiserFormTask(txtDescTask);
         txtDescTask.setEnabled(false);
-        jcbTask.removeAllItems();
-//        txtTaskPriority.setText(String.valueOf(registreTask.getRegistreTasks().get(indexTaskEnCours).getTaskPriority()));
+
+        remplirComboBox(PRIORITY, jcbTask, 3);
+
+        jcbTask.setSelectedItem(registreTask.getRegistreTasks().get(indexProjetEnCours).getTaskPriority());
+
         txtDescTask.setText(registreTask.getRegistreTasks().get(indexTaskEnCours).getDescription());
         remplirComboBox(registreEmploye, jcbEmploye2, 1);
         Employe tmp = registreEmploye.getRegistreEmp().get(registreTask.getRegistreTasks().get(indexTaskEnCours).getEmployeID());
-        System.out.println(tmp);
         jcbEmploye2.setSelectedItem(tmp);
         setToolbarActif(4, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint, btnModifierSprint,
                 btnAjouterTask, btnModifierTask, btnDeleteTask);
@@ -361,8 +364,8 @@ public class FenParent extends JFrame {
     }
 
     // Méthodes pour reinitialiser les champs des formulaires
-    public void reinitialiserFormTask(JTextField txtTaskPriority, JTextField txtDescTask) {
-        txtTaskPriority.setText("");
+    public void reinitialiserFormTask(JTextField txtDescTask) {
+        jcbTask.removeAllItems();
         txtDescTask.setText("");
         jcbEmploye2.removeAllItems();
     }
