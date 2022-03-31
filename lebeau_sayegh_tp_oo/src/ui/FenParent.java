@@ -34,7 +34,7 @@ public class FenParent extends JFrame {
     protected JMenu mnuFichier;
     protected JMenuItem miSortir, miConsole;
 
-    JComboBox<Employe> jcbEmploye, jcbEmploye2, jcbProgres;
+    JComboBox<Employe> jcbTask,jcbEmploye, jcbEmploye2, jcbProgres;
     SimpleDateFormat format;
     DateFormatter formatDate;
 
@@ -347,7 +347,8 @@ public class FenParent extends JFrame {
         //ajout du task en cours
         reinitialiserFormTask(txtTaskPriority, txtDescTask);
         txtDescTask.setEnabled(false);
-        txtTaskPriority.setText(String.valueOf(registreTask.getRegistreTasks().get(indexTaskEnCours).getTaskPriority()));
+        jcbTask.removeAllItems();
+//        txtTaskPriority.setText(String.valueOf(registreTask.getRegistreTasks().get(indexTaskEnCours).getTaskPriority()));
         txtDescTask.setText(registreTask.getRegistreTasks().get(indexTaskEnCours).getDescription());
         remplirComboBox(registreEmploye, jcbEmploye2, 1);
         Employe tmp = registreEmploye.getRegistreEmp().get(registreTask.getRegistreTasks().get(indexTaskEnCours).getEmployeID());
