@@ -290,7 +290,7 @@ public class FenParent extends JFrame {
         lblSprint.setText("Nouveau Sprint");
         panSprintCreation.add(panSprintForm);
         cL.show(panCard, "6");
-//        reinitialiserSprintForm(txtSpritDesc,)
+    //    reinitialiserSprintForm(txtSpritDesc,), registreEmploye
         //populler le tableau de task
         registreTask.getRegistreTasks().clear();
         try {
@@ -298,7 +298,7 @@ public class FenParent extends JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-//        remplirTableTask(tableModel2, registreTask, consoleTxtArea , registreEmploye);
+//        remplirTableTask(tableModel2, registreTask, consoleTxtArea );
 
 
 
@@ -313,7 +313,6 @@ public class FenParent extends JFrame {
     public void carteModifierTask(RegistreTask registreTask, RegistreEmploye registreEmploye) {
         try {
             lblTasks.setText("Task en cours: " + registreTask.getRegistreTasks().get(indexProjetEnCours).getDescription());
-            cL.show(panCard, "5");
         } catch (IndexOutOfBoundsException e) {
             consoleTxtArea.append("Erreur de chargement. Selectionner la ligne du projet à charger.\n");
             e.printStackTrace();
