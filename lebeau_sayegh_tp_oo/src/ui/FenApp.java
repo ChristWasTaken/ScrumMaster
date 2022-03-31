@@ -25,7 +25,6 @@
 
 package ui;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import io.ManipulationFichier;
 import model.*;
 import utils.*;
@@ -537,7 +536,7 @@ public class FenApp extends FenParent {
                     ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1],
                             registreTask, 2);
 
-//                    consoleTxtArea.append("Suppression de la tache complété.\n");
+                    consoleTxtArea.append("Suppression de la tache complété.\n");
                 } catch (IndexOutOfBoundsException ex) {
                     JOptionPane.showMessageDialog(null, "La ligne de la tache doit être correctement selectionné pour" +
                             " pouvoir le supprimer.\n");

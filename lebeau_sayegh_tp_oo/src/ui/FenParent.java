@@ -15,6 +15,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 
 import static utils.Constante.REPERTOIRE_PROJET;
+import static utils.Constante.nomFichier;
 
 
 public class FenParent extends JFrame {
@@ -133,9 +134,11 @@ public class FenParent extends JFrame {
         tableModel2.setRowCount(0);
 
         for (Task tmp : registreTask.getRegistreTasks()) {
+            System.out.println(tmp.toString());
             if (tmp.getTaskPriority() != -1) {
                 String employe = registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getNom() + registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getPrenom();
                 Object[] row = {tmp.getTaskID(), tmp.getTaskPriority(), tmp.getDescription(), employe};
+
                 tableModel2.addRow(row);
             }
         }
