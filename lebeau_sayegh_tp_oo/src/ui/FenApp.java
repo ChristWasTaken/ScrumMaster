@@ -526,6 +526,7 @@ public class FenApp extends FenParent {
                     tmp.setTaskPriority(-1);
                     ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1],
                             registreTask, 2);
+
                     consoleTxtArea.append("Suppression de la tache complété.\n");
                 } catch (IndexOutOfBoundsException ex) {
                     JOptionPane.showMessageDialog(null, "La ligne de la tache doit être correctement selectionné pour" +
