@@ -20,7 +20,9 @@ public class RegistreTask extends Registre {
         if (index!=-1 && operation==0) {
             throw new TaskDejaExistException("Doublons trouvé", t);
         }else if(index!=-1 &&operation ==1){
+            System.out.println(registreTasks.get(index));
             registreTasks.set(index,t);
+            System.out.println(registreTasks.get(index) + "après");
         } else {
             registreTasks.add(t);
         }

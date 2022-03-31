@@ -46,15 +46,15 @@ public class FenParent extends JFrame {
 
     protected CardLayout cL;
 
-    protected JPanel panGlobal, panCard, panEntete, panProjetForm, panTaskForm, panSprintForm, panButton,
+    protected JPanel panGlobal, panCard, panEntete, panProjetForm, panTaskForm, panSprintForm, panButton, panButtonTaskSelect,
             panProjetEnCours, panProjetCreation, panBasDePage, panTaskCreation, panTaskCours, panSprintCreation, panSprintCours;
 
-    protected JTable tblProjet, tblSprint, tblTask;
-    protected JScrollPane scPaneProjet, scPaneSprint, scPaneTask, scPaneConsole;
+    protected JTable tblProjet, tblSprint, tblTask, tblTaskSelection;
+    protected JScrollPane scPaneProjet, scPaneSprint, scPaneTask, scPaneConsole, scPaneTaskSelection;
 
     protected TableColumn tempCol0, tempCol1, tempCol2;
     protected TableColumnModel colmod;
-    protected DefaultTableModel tableModel, tableModel2, tableModel3;
+    protected DefaultTableModel tableModel, tableModel2, tableModel3, tableModel4;
 
     protected String[] nomColonnesProjet = Constante.TBL_PROJET;
     protected String[] nomColonnesTask = Constante.TBL_TASK;
@@ -136,7 +136,7 @@ public class FenParent extends JFrame {
     // méthode pour remplir les table de task
     public void remplirTableTask(DefaultTableModel tableModel2, RegistreTask registreTask, JTextArea consoleTxtArea, RegistreEmploye registreEmploye) {
         tableModel2.setRowCount(0);
-
+        System.out.println("test");
         for (Task tmp : registreTask.getRegistreTasks()) {
             System.out.println(tmp.toString());
             if (tmp.getTaskPriority() != -1) {
@@ -227,6 +227,9 @@ public class FenParent extends JFrame {
         panProjetEnCours.add(scPaneTask, BorderLayout.EAST);
         panProjetEnCours.add(scPaneSprint, BorderLayout.WEST);
 
+        scPaneTask.setPreferredSize(new Dimension(450, 150));
+        setTailleColonneTable(tblTask, Constante.TAILLE_COL_2);
+
 
         // Ajout du projet en cours au textFields
         reinitialiserFormProjet(txtNomProjet, txtDescProjet, txtScrumId, ftxtDateDebut, ftxtDateFin, txtDureeSprint);
@@ -253,6 +256,7 @@ public class FenParent extends JFrame {
         //Vider le registre avant de repopuler avec le contenu du fichier
         registreTask.getRegistreTasks().clear();
         try {
+            System.out.println(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1]);
             ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1], registreTask, 2);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -312,25 +316,36 @@ public class FenParent extends JFrame {
     }
 
     //methode pour creer un sprint
-    public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask) {
+    public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask, RegistreEmploye registreEmploye) {
         lblSprint.setText("Nouveau Sprint");
         cL.show(panCard, "6");
-        panSprintCreation.add(panSprintForm);
+        panSprintCreation.add(panSprintForm, BorderLayout.NORTH);
+        panSprintCreation.add(scPaneTaskSelection, BorderLayout.EAST);
+        panSprintCreation.add(scPaneTask, BorderLayout.WEST);
+        panSprintCreation.add(panButtonTaskSelect, BorderLayout.CENTER);
+        panButtonTaskSelect.add(btnAjouterTask,BorderLayout.NORTH);
+        panButtonTaskSelect.add(btnDeleteTask, BorderLayout.CENTER);
+
+        scPaneTaskSelection.setPreferredSize(new Dimension(425, 150));
+        setTailleColonneTable(tblTaskSelection, TAILLE_COL_4);
+
+        scPaneTask.setPreferredSize(new Dimension(425, 150));
+        setTailleColonneTable(tblTask, Constante.TAILLE_COL_4);
 
         jcbProgres.removeAllItems();
 
         remplirComboBox(Constante.PROGRES_SPRINT, jcbProgres, 2);
 
-        //populler le tableau de task
+        //populer le tableau des Tasks du projet
         registreTask.getRegistreTasks().clear();
         try {
             ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1], registreTask, 2);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-//        remplirTableTask(tableModel2, registreTask, consoleTxtArea );
+        remplirTableTask(tableModel2, registreTask, consoleTxtArea, registreEmploye );
 
-        currentCard = 5;
+        currentCard = 6;
         consoleTxtArea.append("Remplir le formulaire de sprint et appuyer sur enregistrer\n");
     }
 

@@ -25,6 +25,7 @@
 
 package ui;
 
+import com.jgoodies.common.collect.ArrayListModel;
 import io.ManipulationFichier;
 import model.*;
 import utils.*;
@@ -264,6 +265,20 @@ public class FenApp extends FenParent {
         scPaneSprint.setPreferredSize(new Dimension(450, 150));
         setTailleColonneTable(tblSprint, Constante.TAILLE_COL_3);
 
+        // ** Table de selection de task (Sprint)
+
+        tableModel4 = new DefaultTableModel();
+        tableModel4.setColumnIdentifiers(nomColonnesTask);
+        // Table
+        tblTaskSelection = new JTable();
+        tblTaskSelection.setModel(tableModel4);
+        // Permet la selection d'une colonne seulement
+        tblTaskSelection.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // Fonction pour remplir la table par le model à faire
+        scPaneTaskSelection = new JScrollPane(tblTaskSelection);
+
+
         // *** Formulaires
 
 //        // Formulaire Projet
@@ -335,6 +350,7 @@ public class FenApp extends FenParent {
 
         // Card Panel # 6
         panSprintCreation = new JPanel(new BorderLayout());
+        panButtonTaskSelect = new JPanel(new BorderLayout());
 
         // Card Panel # 7
         panSprintCours = new JPanel(new BorderLayout());
@@ -464,14 +480,14 @@ public class FenApp extends FenParent {
         //   *** Code pour btnAjouterSprint
         btnAjouterSprint.addActionListener(e -> {
             if (currentCard != 6) {
-                carteNouveauSprint(registreSprint, registreTask);
+                carteNouveauSprint(registreSprint, registreTask, registreEmploye);
             } else {
                 int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.",
                         "Retour vers le projet?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
-                    carteNouveauSprint(registreSprint, registreTask);
+                    carteNouveauSprint(registreSprint, registreTask, registreEmploye);
                 }
             }
         });

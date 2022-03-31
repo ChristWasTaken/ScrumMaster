@@ -25,6 +25,7 @@ public class Constante {
     public static final int[] TAILLE_COL_1 = {30, 350, 50, 20, 20, 20};
     public static final int[] TAILLE_COL_2 = {6, 15, 230, 70};
     public static final int[] TAILLE_COL_3 = {180, 20, 15, 6};
+    public static final int[] TAILLE_COL_4 = {6,15, 210, 70};
     public static final int[] PRIORITY ={1,2,3,4,5,6,7,8,9};
 
     /*  ***************************************************************************************** */

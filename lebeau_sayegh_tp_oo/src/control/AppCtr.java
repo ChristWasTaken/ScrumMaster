@@ -2,12 +2,11 @@ package control;
 
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrastIJTheme;
 import io.ManipulationFichier;
-import model.RegistreEmploye;
-import model.RegistreProjet;
-import model.RegistreSprint;
-import model.RegistreTask;
+import model.*;
 import ui.FenApp;
 import utils.Constante;
+import utils.ProjetDejaPresentException;
+import utils.Utilitaire;
 
 import javax.swing.*;
 
@@ -26,12 +25,10 @@ public class AppCtr {
         RegistreTask regTask = new RegistreTask();
         RegistreSprint registreSprint = new RegistreSprint();
 
-//        try {
-//            Date projFin = sdf.parse("2022-07-26");
-//            Projet proj = new Projet("Scrum..Master", "Gérer des projets avec la méthode Scrum",1, Utilitaire.getTodayDate(),2);
-//            try{
+//            Projet proj = new Projet("Scrum..Master", "Gérer des projets avec la méthode Scrum", 1, Utilitaire.getTodayDate(), 2);
+//            try {
 //                projet.ajouterProjet(proj, 1);
-//            }catch (ProjetDejaPresentException e) {
+//            } catch (ProjetDejaPresentException e) {
 //                e.printStackTrace();
 //            }
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
@@ -45,7 +42,9 @@ public class AppCtr {
 //        } catch (TaskDejaExistException e) {
 //            e.printStackTrace();
 //        }
-//
+
+
+
 //        ArrayList<Integer> taskID = new ArrayList<>();
 //        taskID.add(0);
 //        Date projFin = Utilitaire.getTodayDate();
@@ -55,12 +54,6 @@ public class AppCtr {
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2] ,registreSprint, 3);
 //        } catch (SprintDejaPresentException e) {
 //            e.printStackTrace();
-//        }
-
-
-//        System.out.println(taskID.size() + taskID.get(0).toString());
-//        for (Sprint tmp : registreSprint.getRegSprint()){
-//            System.out.println(tmp);
 //        }
 
 
