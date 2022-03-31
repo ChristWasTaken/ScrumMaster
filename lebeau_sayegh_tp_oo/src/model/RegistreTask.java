@@ -52,7 +52,7 @@ public class RegistreTask extends Registre {
     }
 
 
-    public void effacerProjet(int i) {
-        registreTasks.remove(i);
+    public void effacerTask(int index) {
+        registreTasks.remove(index);
     }
 }

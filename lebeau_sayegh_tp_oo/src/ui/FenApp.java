@@ -32,6 +32,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import static utils.Constante.*;
+import static utils.Utilitaire.verifierStringVide;
 
 @SuppressWarnings("FieldCanBeLocal")
 
@@ -312,7 +313,7 @@ public class FenApp extends FenParent {
         panSprintCreation = new JPanel(new BorderLayout());
 
         // Card Panel # 7
-        panSprintCours = new JPanel(new BorderLayout());
+        //panSprintCours = new JPanel(new BorderLayout());
 
         // ***** Configuration de la Fenetre Global *****
 
@@ -330,7 +331,7 @@ public class FenApp extends FenParent {
         panCard.add(panTaskCreation, "4");
         panCard.add(panTaskCours, "5");
         panCard.add(panSprintCreation, "6");
-        panCard.add(panSprintCours);
+        //    panCard.add(panSprintCours);
 
         // *** Entete ***
         lblProjet = new JLabel("Selection des projets");
@@ -501,8 +502,12 @@ public class FenApp extends FenParent {
                 try {
                     int i = tblTask.getSelectedRow();
 
-                    registreTask.effacerProjet(i);
-                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[1], registreProjet, 1);
+                    registreTask.effacerTask(i);
+                    for (Task tmp : registreTask.getRegistreTasks()) {
+                        System.out.println(tmp);
+                    }
+                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreProjet, 1);
+
                     tableModel2.removeRow(i);
 
                     consoleTxtArea.append("Suppression du projet complété.\n");
@@ -534,7 +539,7 @@ public class FenApp extends FenParent {
 
                 if (temp != null) {
                     int duree = Integer.parseInt(txtDureeSprint.getText());
-                    Utilitaire.verifierDureeSprint(duree);
+                    Utilitaire.verifierIntervalle(duree, 2, 12);
                     tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), temp.getEmployeID(), format.parse(ftxtDateDebut.getText()),
                             format.parse(ftxtDateFin.getText()), duree);
                 }
@@ -578,14 +583,17 @@ public class FenApp extends FenParent {
             Task tempTask = new Task(Integer.parseInt(txtTaskPriority.getText()),
                     txtDescTask.getText(), jcbEmploye2.getSelectedIndex());
             try {
+                verifierStringVide(txtDescTask.getText(), 5);
                 if (currentCard == 4) {
 
                     if (registreTask.ajouterTask(tempTask, 0) == -1) {
+                        System.out.println('4');
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
                 } else if (currentCard == 5) {
                     if (registreTask.ajouterTask(tempTask, 1) != -1) {
+                        System.out.println("ici5");
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
@@ -593,6 +601,12 @@ public class FenApp extends FenParent {
             } catch (TaskDejaExistException ex) {
                 consoleTxtArea.append("Erreur, doublons présent\n");
                 ex.printStackTrace();
+            } catch (SaisieInvalideException ex1) {
+                JOptionPane.showMessageDialog(null, ex1.getMessage(), "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
+                ex1.printStackTrace();
+            } catch (NumberFormatException ex2) {
+                JOptionPane.showMessageDialog(null, "La priorité est un nombre de 1 à 9",
+                        "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
             }
         });
 

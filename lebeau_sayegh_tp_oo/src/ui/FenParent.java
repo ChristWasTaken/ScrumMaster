@@ -276,6 +276,7 @@ public class FenParent extends JFrame {
         lblTasks.setText("Nouvelle Task");
         panTaskCreation.add(panTaskForm);
         cL.show(panCard, "4");
+        txtDescTask.setEnabled(true);
         reinitialiserFormTask(txtTaskPriority, txtDescTask);
         remplirComboBox(registreEmploye, jcbEmploye2, 1);
         Employe tmp = registreEmploye.getRegistreEmp().get(indexProjetEnCours);
@@ -306,7 +307,7 @@ public class FenParent extends JFrame {
 
 
         currentCard =5;
-        consoleTxtArea.append("Remplir le formulaire de sprint et appuyer sur enregistrer");
+        consoleTxtArea.append("Remplir le formulaire de sprint et appuyer sur enregistrer\n");
     }
 
     // methode pour carte modifier Task
@@ -322,16 +323,17 @@ public class FenParent extends JFrame {
         cL.show(panCard,"5");
         //ajout du task en cours
         reinitialiserFormTask(txtTaskPriority,txtDescTask);
+        txtDescTask.setEnabled(false);
         txtTaskPriority.setText(String.valueOf(registreTask.getRegistreTasks().get(indexTaskEnCours).getTaskPriority()));
         txtDescTask.setText(registreTask.getRegistreTasks().get(indexTaskEnCours).getDescription());
-        ;
-        Employe tmp =
-                registreEmploye.getRegistreEmp().get(registreTask.getRegistreTasks().get(indexTaskEnCours).getEmployeID());
+        remplirComboBox(registreEmploye, jcbEmploye2, 1);
+        Employe tmp = registreEmploye.getRegistreEmp().get(registreTask.getRegistreTasks().get(indexTaskEnCours).getEmployeID());
+        System.out.println(tmp);
         jcbEmploye2.setSelectedItem(tmp);
         setToolbarActif(4, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint, btnModifierSprint,
                 btnAjouterTask, btnModifierTask, btnDeleteTask);
         currentCard =5;
-        consoleTxtArea.append("Modifier la tache et appuyer sur Enregistrer");
+        consoleTxtArea.append("Modifier la tache et appuyer sur Enregistrer\n");
     }
 
     // Méthodes pour reinitialiser les champs des formulaires

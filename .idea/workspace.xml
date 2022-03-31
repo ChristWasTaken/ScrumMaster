@@ -6,17 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="af98649d-91ed-461d-b6ad-21ec4427ffe5" name="Changes" comment="5.2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/control/AppCtr.class" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/control/AppCtr.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/io/ManipulationFichier.class" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/io/ManipulationFichier.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/model/RegistreNotes.class" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/model/RegistreNotes.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/model/RegistreProjet.class" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/model/RegistreProjet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/model/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/model/Task.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/ui/FenProjet.class" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/ui/FenProjet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/utils/Constante.class" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/utils/Constante.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/dataFiles/Projets/Dimanche/tasks.dat" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/dataFiles/Projets/Dimanche/tasks.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/ui/FenApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/ui/FenApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/ui/FenParent.class" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/ui/FenParent.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/utils/Utilitaire.class" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/out/production/lebeau_sayegh_tp_oo/utils/Utilitaire.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/control/AppCtr.java" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/control/AppCtr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/io/ManipulationFichier.java" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/io/ManipulationFichier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/model/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/model/RegistreTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/model/RegistreTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/ui/FenApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/ui/FenApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/ui/FenParent.java" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/ui/FenParent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/utils/Utilitaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/lebeau_sayegh_tp_oo/src/utils/Utilitaire.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +27,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="26lVrsqb1ExGew8NqoLoj131fYD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

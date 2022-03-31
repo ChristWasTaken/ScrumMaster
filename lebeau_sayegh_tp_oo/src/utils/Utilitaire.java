@@ -20,9 +20,14 @@ public class Utilitaire {
                 JOptionPane.QUESTION_MESSAGE);
     }
 
-    public static void verifierDureeSprint(int duree) throws SaisieInvalideException{
-        if(duree < 2 || duree > 12){
-            throw new SaisieInvalideException("La durée des sprints doient être entre 2 et 12 semaines.");
+    public static void verifierIntervalle(int nombre, int min, int max) throws SaisieInvalideException{
+        if(nombre < min || nombre > max){
+            throw new SaisieInvalideException("L'intervalle doient être entre "+ min+" et "+ max+" semaines.");
+        }
+    }
+    public static void verifierStringVide(String s, int longueur) throws SaisieInvalideException{
+        if(s.length()<longueur){
+            throw new SaisieInvalideException("Le champs dois contenir au minimum "+ longueur+ " caractere");
         }
     }
 
