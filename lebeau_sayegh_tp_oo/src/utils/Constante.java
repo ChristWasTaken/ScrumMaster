@@ -20,6 +20,7 @@ public class Constante {
 
 
     public static final String[] POSTES = {"Scrum master", "Programmeur senior", "Programmeur junior"};
+    public static final String[] PROGRES_SPRINT = {"En cours", "Complété"};
 
     public static final int[] TAILLE_COL_1 = {30, 350, 50, 20, 20, 20};
     public static final int[] TAILLE_COL_2 = {6, 15, 230, 70};

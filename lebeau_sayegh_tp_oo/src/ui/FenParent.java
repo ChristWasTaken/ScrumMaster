@@ -20,18 +20,19 @@ public class FenParent extends JFrame {
 
 
     protected JLabel lblSepProjet, lblSepTask, lblSepSprint, lblProjet, lblTitre, lblRights, lblSprint, lblTasks,
-            lblNomProjet, lblDescProjet, lblScrumId, lblTaskPriority, lblDeskTask, lblEmpId,
-            lblDateDebut, lblDateFin, lblDureeSprint, lblConsole;
-    protected JTextField txtNomProjet, txtDescProjet, txtScrumId, txtDureeSprint, txtTaskPriority, txtDescTask, txtEmployeId;
+            lblNomProjet, lblDescProjet, lblScrumId, lblTaskPriority, lblDeskTask, lblEmpId, lblTaskId, lblDescSprint,
+            lblDateDebut, lblDateFin, lblDureeSprint, lblConsole, lblDateDebutSprint, lblDateFinSprint, lblSprintProgres;
+    protected JTextField txtNomProjet, txtDescProjet, txtScrumId, txtDureeSprint, txtTaskPriority, txtDescTask, txtEmployeId,
+            txtDescSprint;
     protected JTextArea consoleTxtArea;
 
-    protected JFormattedTextField ftxtDateDebut, ftxtDateFin;
+    protected JFormattedTextField ftxtDateDebut, ftxtDateFin, ftxtDateDebutSprint, ftxtDateFinSprint;
 
     protected JMenuBar menuBar;
     protected JMenu mnuFichier;
     protected JMenuItem miSortir, miConsole;
 
-    JComboBox<Employe> jcbEmploye, jcbEmploye2;
+    JComboBox<Employe> jcbEmploye, jcbEmploye2, jcbProgres;
     SimpleDateFormat format;
     DateFormatter formatDate;
 
@@ -289,8 +290,9 @@ public class FenParent extends JFrame {
     //methode pour creer un sprint
     public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask){
         lblSprint.setText("Nouveau Sprint");
-        panSprintCreation.add(panSprintForm);
         cL.show(panCard, "6");
+        panSprintCreation.add(panSprintForm);
+
     //    reinitialiserSprintForm(txtSpritDesc,), registreEmploye
         //populler le tableau de task
         registreTask.getRegistreTasks().clear();
@@ -300,11 +302,6 @@ public class FenParent extends JFrame {
             ex.printStackTrace();
         }
 //        remplirTableTask(tableModel2, registreTask, consoleTxtArea );
-
-
-
-
-
 
         currentCard =5;
         consoleTxtArea.append("Remplir le formulaire de sprint et appuyer sur enregistrer\n");

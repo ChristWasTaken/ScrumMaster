@@ -9,7 +9,6 @@ import java.util.Date;
 
 public class Sprint implements Serializable {
 
-
     private ArrayList<Integer> taskID;
     private String description;
     private Date dateDebut;
