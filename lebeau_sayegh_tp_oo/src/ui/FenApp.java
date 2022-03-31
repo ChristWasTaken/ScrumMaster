@@ -501,19 +501,15 @@ public class FenApp extends FenParent {
             if (result == JOptionPane.YES_OPTION) {
                 try {
                     int i = tblTask.getSelectedRow();
-
-                    registreTask.effacerTask(i);
-                    for (Task tmp : registreTask.getRegistreTasks()) {
-                        System.out.println(tmp);
-                    }
-                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreProjet, 1);
-
                     tableModel2.removeRow(i);
-
-                    consoleTxtArea.append("Suppression du projet complété.\n");
+                    Task tmp = registreTask.getRegistreTasks().get(i);
+                    tmp.setTaskPriority(-1);
+                    ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1],
+                            registreTask, 2);
+                    consoleTxtArea.append("Suppression de la tache complété.\n");
                 } catch (IndexOutOfBoundsException ex) {
                     JOptionPane.showMessageDialog(null, "La ligne de la tache doit être correctement selectionné pour" +
-                            " pouvoir le supprimer.");
+                            " pouvoir le supprimer.\n");
                 }
             } else {
                 consoleTxtArea.append("Suppression de la tache annulée.\n");

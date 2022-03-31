@@ -31,6 +31,7 @@ public class ManipulationFichier{
 
             //lire le size
             int taille = ois.readInt();
+
             //Parcourir le fichier selon le size qui a été lu
             switch (index) {
                 case 0 -> {
