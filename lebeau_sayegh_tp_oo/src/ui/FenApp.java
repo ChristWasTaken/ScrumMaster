@@ -524,15 +524,9 @@ public class FenApp extends FenParent {
             if (result == JOptionPane.YES_OPTION) {
                 try {
                     int i = tblTask.getSelectedRow();
-
                     ArrayList<Task> tmpTask = registreTask.trierTask();
-
                     tmpTask.get(i).setTaskPriority(-1);
                     tableModel2.removeRow(i);
-                    for (Task tmp : tmpTask){
-                        System.out.println(tmp);
-                    }
-
                     ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1],
                             registreTask, 2);
 
@@ -606,17 +600,18 @@ public class FenApp extends FenParent {
         //sauvegarder le formulaire Task
         btnEnregistrerTask.addActionListener(e -> {
 
-            Task tempTask = new Task(Integer.parseInt(txtTaskPriority.getText()),
-                    txtDescTask.getText(), jcbEmploye2.getSelectedIndex());
+
             try {
                 verifierStringVide(txtDescTask.getText(), 5);
                 if (currentCard == 4) {
-
+                    Task tempTask = new Task(Integer.parseInt(txtTaskPriority.getText()), txtDescTask.getText(),
+                            jcbEmploye2.getSelectedIndex());
                     if (registreTask.ajouterTask(tempTask, 0) == -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
                 } else if (currentCard == 5) {
+                    Task tempTask = registreTask.getRegistreTasks().get(indexTaskEnCours);
                     if (registreTask.ajouterTask(tempTask, 1) != -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");

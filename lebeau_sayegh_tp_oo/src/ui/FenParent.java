@@ -68,7 +68,7 @@ public class FenParent extends JFrame {
     // méthode pour remplir un JCombobox avec une liste d'un registre
     public void remplirComboBox(Object o, JComboBox jcbTemp, int type) {
         switch (type) {
-            case 1: {
+            case 1 -> {
                 RegistreEmploye registre = (RegistreEmploye) o;
 
                 for (Employe emp : registre.getRegistreEmp()) {
@@ -76,14 +76,19 @@ public class FenParent extends JFrame {
                 }
                 break;
             }
-
-            case 2: {
+            case 2 -> {
                 String[] tableau = (String[]) o;
 
                 for (String emp : tableau) {
                     jcbTemp.addItem(emp);
                 }
                 break;
+            }
+            case 3 -> {
+                int[] intTab = (int[]) o;
+                for (int tmp : intTab) {
+                    jcbTemp.addItem(tmp);
+                }
             }
         }
 
