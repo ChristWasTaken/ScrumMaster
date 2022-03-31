@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Constante {
     //**** Constantes de manipulation de fichier ****
-    public static final String[] nomFichier = {"Projets.dat", "\\tasks.dat", "\\sprints.dat"};
+    public static final String[] nomFichier = {"Projets.dat", "\\tasks.dat", "\\sprints.dat", "Employes.dat"};
 
     public static final String REPERTOIRE_PROJET = "dataFiles\\Projets\\";
     public static final String[] REPERTOIRE_IMAGE ={"src/images/iconRetour.png","src/images/iconNewProjet.png",

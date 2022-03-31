@@ -29,34 +29,24 @@ public class AppCtr {
 
 //        try {
 //            Date projFin = sdf.parse("2022-07-26");
-//            Projet proj2 = new Projet("bibi", "blabla", 1,Utilitaire.getTodayDate(),4);
 //            Projet proj = new Projet("Scrum..Master", "Gérer des projets avec la méthode Scrum",1, Utilitaire.getTodayDate(),2);
-//
 //            try{
-//                System.out.println(proj);
-//
 //                projet.ajouterProjet(proj, 1);
-////                projet.ajouterProjet(proj2);
-//
 //            }catch (ProjetDejaPresentException e) {
 //                e.printStackTrace();
 //            }
-//            for (Projet tmp : projet.getRegistrePro()) {
-//                System.out.println(tmp);
-//            }
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
-        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
+
+
 //        try {
 //            Task t1 = new Task(1, "Ajouter vos tasks ici - effacer ou modifier ce task.", 6);
-//            regTask.ajouterTask(t1, 1);
+//            regTask.ajouterTask(t1, 0);
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET+Constante.nomFichier[1],regTask,2 );
 //
 //        } catch (TaskDejaExistException e) {
 //            e.printStackTrace();
 //        }
-        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[1], regTask, 2);
-//
-//
+
 //        ArrayList<Integer> taskID = new ArrayList<>();
 //        taskID.add(0);
 //        Date projFin = Utilitaire.getTodayDate();
@@ -67,7 +57,7 @@ public class AppCtr {
 //        } catch (SprintDejaPresentException e) {
 //            e.printStackTrace();
 //        }
-            ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2], registreSprint, 3);
+
 
 //        System.out.println(taskID.size() + taskID.get(0).toString());
 //        for (Sprint tmp : registreSprint.getRegSprint()){
@@ -103,7 +93,10 @@ public class AppCtr {
 //            e.printStackTrace();
 //        }
 //        ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET+"Employes.dat",employe,0);
-        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET +"Employes.dat", employe,0);
+        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[1], regTask, 2);
+        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
+        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET +Constante.nomFichier[3], employe,0);
+        ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2], registreSprint, 3);
 
         FenApp fenetre;
 
