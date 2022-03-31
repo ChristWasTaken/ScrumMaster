@@ -25,6 +25,7 @@
 
 package ui;
 
+import com.jgoodies.common.collect.ArrayListModel;
 import io.ManipulationFichier;
 import model.*;
 import utils.*;
@@ -36,6 +37,7 @@ import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import static utils.Constante.*;
 import static utils.Utilitaire.verifierStringVide;
@@ -523,13 +525,19 @@ public class FenApp extends FenParent {
             if (result == JOptionPane.YES_OPTION) {
                 try {
                     int i = tblTask.getSelectedRow();
+
+                    ArrayList<Task> tmpTask = registreTask.trierTask();
+
+                    tmpTask.get(i).setTaskPriority(-1);
                     tableModel2.removeRow(i);
-                    Task tmp = registreTask.getRegistreTasks().get(i);
-                    tmp.setTaskPriority(-1);
+                    for (Task tmp : tmpTask){
+                        System.out.println(tmp);
+                    }
+
                     ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1],
                             registreTask, 2);
 
-                    consoleTxtArea.append("Suppression de la tache complété.\n");
+//                    consoleTxtArea.append("Suppression de la tache complété.\n");
                 } catch (IndexOutOfBoundsException ex) {
                     JOptionPane.showMessageDialog(null, "La ligne de la tache doit être correctement selectionné pour" +
                             " pouvoir le supprimer.\n");
@@ -606,13 +614,11 @@ public class FenApp extends FenParent {
                 if (currentCard == 4) {
 
                     if (registreTask.ajouterTask(tempTask, 0) == -1) {
-                        System.out.println('4');
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
                 } else if (currentCard == 5) {
                     if (registreTask.ajouterTask(tempTask, 1) != -1) {
-                        System.out.println("ici5");
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }

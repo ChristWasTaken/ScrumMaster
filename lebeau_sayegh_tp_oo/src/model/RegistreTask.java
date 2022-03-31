@@ -27,6 +27,19 @@ public class RegistreTask extends Registre {
         return index;
     }
 
+    public ArrayList<Task> trierTask(){
+        ArrayList<Task> tmpReg = new ArrayList<>();
+        for(Task tmp : registreTasks){
+            if(tmp.getTaskPriority() != -1){
+                tmpReg.add(tmp);
+            }
+        }
+        for (Task tmp : tmpReg){
+            System.out.println(tmp);
+        }
+        return tmpReg;
+    }
+
     private int verifierDoublons(Task t) {
         for (Task tmp : registreTasks) {
             if (t.getDescription().equals(tmp.getDescription())) {
