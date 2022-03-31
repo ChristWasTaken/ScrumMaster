@@ -624,7 +624,7 @@ public class FenApp extends FenParent {
                 JOptionPane.showMessageDialog(null, ex1.getMessage(), "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
                 ex1.printStackTrace();
             } catch (NumberFormatException ex2) {
-                JOptionPane.showMessageDialog(null, "La priorité est un nombre de 1 à 9",
+                JOptionPane.showMessageDialog(null, "La priorité est un nombre de 1 à 9\n",
                         "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
             }
         });

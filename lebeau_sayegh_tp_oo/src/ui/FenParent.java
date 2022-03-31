@@ -47,7 +47,7 @@ public class FenParent extends JFrame {
     protected CardLayout cL;
 
     protected JPanel panGlobal, panCard, panEntete, panProjetForm, panTaskForm, panSprintForm, panButton,
-            panProjetEnCours, panProjetCreation, panBasDePage, panTaskCreation,panTaskCours, panSprintCreation, panSprintCours;
+            panProjetEnCours, panProjetCreation, panBasDePage, panTaskCreation, panTaskCours, panSprintCreation, panSprintCours;
 
     protected JTable tblProjet, tblSprint, tblTask;
     protected JScrollPane scPaneProjet, scPaneSprint, scPaneTask, scPaneConsole;
@@ -61,7 +61,7 @@ public class FenParent extends JFrame {
     protected String[] nomColonnesSprint = Constante.TBL_SPRINT;
 
     protected int currentCard = 1;
-    protected int indexProjetEnCours,indexTaskEnCours;
+    protected int indexProjetEnCours, indexTaskEnCours;
 
 
     // méthode pour remplir un JCombobox avec une liste d'un registre
@@ -79,7 +79,7 @@ public class FenParent extends JFrame {
             case 2: {
                 String[] tableau = (String[]) o;
 
-                for(String emp: tableau){
+                for (String emp : tableau) {
                     jcbTemp.addItem(emp);
                 }
                 break;
@@ -91,7 +91,7 @@ public class FenParent extends JFrame {
 
     // ***** Méthode pour remplir les tables *****
     // Méthode pour configurere les champs de tables
-    public static void setTailleColonneTable(JTable table, int[] tmpColTable){
+    public static void setTailleColonneTable(JTable table, int[] tmpColTable) {
         int nbrCol = table.getColumnCount();
         TableColumn column = null;
         for (int i = 0; i < nbrCol; i++) {
@@ -125,7 +125,7 @@ public class FenParent extends JFrame {
                     formatDate.format(tmp.getDateFin()), tmp.isProgres()};
             tableModel3.addRow(row);
         }
-        consoleTxtArea.append("Tableau des sprints créé avec succes");
+        consoleTxtArea.append("Tableau des sprints créé avec succes\n");
     }
 
     // méthode pour remplir les table de task
@@ -133,9 +133,11 @@ public class FenParent extends JFrame {
         tableModel2.setRowCount(0);
 
         for (Task tmp : registreTask.getRegistreTasks()) {
-            String employe = registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getNom() + registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getPrenom();
-            Object[] row = {tmp.getTaskID(), tmp.getTaskPriority(), tmp.getDescription(), employe};
-            tableModel2.addRow(row);
+            if (tmp.getTaskPriority() != -1) {
+                String employe = registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getNom() + registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getPrenom();
+                Object[] row = {tmp.getTaskID(), tmp.getTaskPriority(), tmp.getDescription(), employe};
+                tableModel2.addRow(row);
+            }
         }
         consoleTxtArea.append("Tableau des taches créé avec succes.\n");
     }
@@ -248,7 +250,7 @@ public class FenParent extends JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        remplirTableTask(tableModel2, registreTask, consoleTxtArea , registreEmploye);
+        remplirTableTask(tableModel2, registreTask, consoleTxtArea, registreEmploye);
 
         registreSprint.getRegSprint().clear();
         try {
@@ -300,8 +302,9 @@ public class FenParent extends JFrame {
         currentCard = 4;
         consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
+
     //methode pour creer un sprint
-    public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask){
+    public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask) {
         lblSprint.setText("Nouveau Sprint");
         cL.show(panCard, "6");
         panSprintCreation.add(panSprintForm);
@@ -318,7 +321,7 @@ public class FenParent extends JFrame {
         }
 //        remplirTableTask(tableModel2, registreTask, consoleTxtArea );
 
-        currentCard =5;
+        currentCard = 5;
         consoleTxtArea.append("Remplir le formulaire de sprint et appuyer sur enregistrer\n");
     }
 
@@ -332,9 +335,9 @@ public class FenParent extends JFrame {
         }
         panTaskCours.add(panTaskForm, BorderLayout.NORTH);
         panTaskForm.setBorder((BorderFactory.createEmptyBorder(10, 50, 500, 150)));
-        cL.show(panCard,"5");
+        cL.show(panCard, "5");
         //ajout du task en cours
-        reinitialiserFormTask(txtTaskPriority,txtDescTask);
+        reinitialiserFormTask(txtTaskPriority, txtDescTask);
         txtDescTask.setEnabled(false);
         txtTaskPriority.setText(String.valueOf(registreTask.getRegistreTasks().get(indexTaskEnCours).getTaskPriority()));
         txtDescTask.setText(registreTask.getRegistreTasks().get(indexTaskEnCours).getDescription());
@@ -344,12 +347,12 @@ public class FenParent extends JFrame {
         jcbEmploye2.setSelectedItem(tmp);
         setToolbarActif(4, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint, btnModifierSprint,
                 btnAjouterTask, btnModifierTask, btnDeleteTask);
-        currentCard =5;
+        currentCard = 5;
         consoleTxtArea.append("Modifier la tache et appuyer sur Enregistrer\n");
     }
 
     // Méthodes pour reinitialiser les champs des formulaires
-    public void reinitialiserFormTask(JTextField txtTaskPriority, JTextField txtDescTask ) {
+    public void reinitialiserFormTask(JTextField txtTaskPriority, JTextField txtDescTask) {
         txtTaskPriority.setText("");
         txtDescTask.setText("");
         jcbEmploye2.removeAllItems();
