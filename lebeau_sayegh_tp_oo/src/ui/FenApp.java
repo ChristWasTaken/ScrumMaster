@@ -460,7 +460,7 @@ public class FenApp extends FenParent {
             indexTaskEnCours = tblTask.getSelectedRow();
             //Initialise la mise en page et les parametre de la carte
             carteModifierTask(registreTask, registreEmploye);
-            consoleTxtArea.append("Chargement de la tache complété avec succès");
+            consoleTxtArea.append("Chargement de la tache complété avec succès.\n");
         });
 
         // Supprimer un projet
