@@ -498,7 +498,6 @@ public class FenApp extends FenParent {
             indexProjetEnCours = tblProjet.getSelectedRow();
             // Initialise la mise en page et les paramètres de la carte
             carteProjetEnCours(registreProjet, registreTask, registreEmploye, registreSprint);
-
             consoleTxtArea.append("Chargement du projet complété avec succès.\n");
         });
         // Modifier un Task
@@ -507,8 +506,12 @@ public class FenApp extends FenParent {
             //enregistrer l'index de la tache choisi
             indexTaskEnCours = tblTask.getSelectedRow();
             //Initialise la mise en page et les parametre de la carte
-            carteModifierTask(registreTask, registreEmploye);
-            consoleTxtArea.append("Chargement de la tache complété avec succès.\n");
+            if (indexTaskEnCours != -1) {
+                carteModifierTask(registreTask, registreEmploye);
+                consoleTxtArea.append("Chargement de la tache complété avec succès.\n");
+            } else {
+                consoleTxtArea.append("Choisissez une Tache à modifier\n");
+            }
         });
 
         // Supprimer un projet

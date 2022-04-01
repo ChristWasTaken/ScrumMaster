@@ -13,6 +13,7 @@ import java.awt.*;
 import java.lang.reflect.Array;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import static utils.Constante.*;
 
@@ -136,9 +137,8 @@ public class FenParent extends JFrame {
     // méthode pour remplir les table de task
     public void remplirTableTask(DefaultTableModel tableModel2, RegistreTask registreTask, JTextArea consoleTxtArea, RegistreEmploye registreEmploye) {
         tableModel2.setRowCount(0);
-        System.out.println("test");
         for (Task tmp : registreTask.getRegistreTasks()) {
-            System.out.println(tmp.toString());
+
             if (tmp.getTaskPriority() != -1) {
                 String employe = registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getNom() + registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getPrenom();
                 Object[] row = {tmp.getTaskID(), tmp.getTaskPriority(), tmp.getDescription(), employe};
@@ -256,7 +256,6 @@ public class FenParent extends JFrame {
         //Vider le registre avant de repopuler avec le contenu du fichier
         registreTask.getRegistreTasks().clear();
         try {
-            System.out.println(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1]);
             ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1], registreTask, 2);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -363,12 +362,10 @@ public class FenParent extends JFrame {
         //ajout du task en cours
         reinitialiserFormTask(txtDescTask);
         txtDescTask.setEnabled(false);
-
         remplirComboBox(PRIORITY, jcbTask, 3);
-
         jcbTask.setSelectedItem(registreTask.getRegistreTasks().get(indexProjetEnCours).getTaskPriority());
-
-        txtDescTask.setText(registreTask.getRegistreTasks().get(indexTaskEnCours).getDescription());
+        ArrayList<Task> tmpTsk = registreTask.trierTask();
+        txtDescTask.setText(tmpTsk.get(indexTaskEnCours).getDescription());
         remplirComboBox(registreEmploye, jcbEmploye2, 1);
         Employe tmp = registreEmploye.getRegistreEmp().get(registreTask.getRegistreTasks().get(indexTaskEnCours).getEmployeID());
         jcbEmploye2.setSelectedItem(tmp);
