@@ -1,8 +1,7 @@
 /*
 
-        Ajout Gestion de projet pour afficher le nombre de sprints + complété + restant
         Gérer l'exception task/sprint vide
-        Gérer la réinitialisation de task/sprint près modif
+        Gérer la réinitialisation de task/sprint après modif
 
         IndexOutofbound exception ne doit pas être géré mais le code corrigé. (getselectedrow donne -1 quand aucune selection)
 
@@ -18,7 +17,6 @@
      Exception générique pour les doublons au lieu de 4 différentes.
 
      //Could-Have:
-     Menu de haut de page pour les cartes. (J'ai juste configurer sortir et view)
      Méthode générique pour remplir les 3 tables.
      Traiter les notes
      Création d'employé
