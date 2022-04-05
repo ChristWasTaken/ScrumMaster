@@ -214,8 +214,6 @@ public class ManipulationFichier{
     public static void effacerFichiersProjet(String projet, JTextArea console) {
         String dirName = Constante.REPERTOIRE_PROJET + projet;
         File directory = new File(dirName);
-        try {
-
             if (directory.exists()) {
                 effacerRepertoire(directory);
                 directory.delete();
@@ -224,9 +222,7 @@ public class ManipulationFichier{
             else {
                 console.append("Répertoire inexistant:"+ directory+"\n");
             }
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
+
     }
 
 

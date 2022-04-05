@@ -526,8 +526,9 @@ public class FenApp extends FenParent {
         // Supprimer un projet
         btnDelete.addActionListener(e -> {
             int index = tblProjet.getSelectedRow();
-            int result = Utilitaire.popupOuiNon("La suppression des projets est final. Êtes-vous sur?", "Suppression de projet");
+
             if (index != -1) {
+                int result = Utilitaire.popupOuiNon("La suppression des projets est final. Êtes-vous sur?", "Suppression de projet");
                 if (result == JOptionPane.YES_OPTION) {
 
                     int i = tblProjet.getSelectedRow();
@@ -550,9 +551,10 @@ public class FenApp extends FenParent {
         //    *** Code pour btnDeleteTask
         btnDeleteTask.addActionListener(e -> {
             int i = tblTask.getSelectedRow();
-            int result = Utilitaire.popupOuiNon("La suppression des taches est final. Êtes-vous sur?", "Suppression " +
-                    "de tache");
+
             if (i != -1) {
+                int result = Utilitaire.popupOuiNon("La suppression des taches est final. Êtes-vous sur?", "Suppression " +
+                        "de tache");
                 if (result == JOptionPane.YES_OPTION) {
                     ArrayList<Task> tmpTask = registreTask.trierTask();
                     tmpTask.get(i).setTaskPriority(-1);
@@ -629,7 +631,7 @@ public class FenApp extends FenParent {
             try {
                 verifierStringVide(txtDescTask.getText(), 5);
                 if (currentCard == 4) {
-                    Task tempTask = new Task((Integer) jcbTask.getSelectedItem(), txtDescTask.getText(),
+                    Task tempTask = new Task(Integer.parseInt(String.valueOf(jcbTask.getSelectedItem())), txtDescTask.getText(),
                             jcbEmploye2.getSelectedIndex());
                     if (registreTask.ajouterTask(tempTask, 0) == -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
@@ -637,7 +639,7 @@ public class FenApp extends FenParent {
                     }
                 } else if (currentCard == 5) {
                     Task tempTask = registreTask.getRegistreTasks().get(indexTaskEnCours);
-                    tempTask.setTaskPriority((Integer) jcbTask.getSelectedItem());
+                    tempTask.setTaskPriority(Integer.parseInt(String.valueOf(jcbTask.getSelectedItem())));
                     tempTask.setEmployeID(jcbEmploye2.getSelectedIndex());
                     if (registreTask.ajouterTask(tempTask, 1) != -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
@@ -663,12 +665,10 @@ public class FenApp extends FenParent {
 
         // *** Choix du menu ***
         miSortir.addActionListener(e -> {
-
             int result = Utilitaire.popupOuiNon("Voulez vous vraiment Quitter?", "Quitter?");
             if (result == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
-
         });
 
         miConsole.addActionListener(e -> {
