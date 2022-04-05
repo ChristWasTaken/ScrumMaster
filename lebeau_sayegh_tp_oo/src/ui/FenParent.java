@@ -183,11 +183,12 @@ public class FenParent extends JFrame {
 
     // Carte de gestion d'un projet
     public void carteProjetEnCours(RegistreProjet registreProjet, RegistreTask registreTask, RegistreEmploye registreEmploye, RegistreSprint registreSprint) {
-        try {
+        int i= tblProjet.getSelectedRow();
+        if(i!=-1){
             lblProjet.setText("Projet en cours: " + registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
-        } catch (IndexOutOfBoundsException e) {
+        } else{
             consoleTxtArea.append("Erreur de chargement. Selectionner la ligne du projet à charger.\n");
-            e.printStackTrace();
+
         }
 
         panProjetEnCours.add(panProjetForm, BorderLayout.NORTH);
@@ -320,11 +321,11 @@ public class FenParent extends JFrame {
 
     // methode pour carte modifier Task
     public void carteModifierTask(RegistreTask registreTask, RegistreEmploye registreEmploye) {
-        try {
+        int i = tblTask.getSelectedRow();
+        if(i!=-1){
             lblTasks.setText("Task en cours: " + registreTask.getRegistreTasks().get(indexProjetEnCours).getDescription());
-        } catch (IndexOutOfBoundsException e) {
+        } else {
             consoleTxtArea.append("Erreur de chargement. Selectionner la ligne du projet à charger.\n");
-            e.printStackTrace();
         }
         panTaskCours.add(panTaskForm);
         panTaskForm.setBorder((BorderFactory.createEmptyBorder(10, 50, 300, 150)));

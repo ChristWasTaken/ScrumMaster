@@ -3,8 +3,6 @@
         Gérer l'exception task/sprint vide
         Gérer la réinitialisation de task/sprint après modif
 
-        IndexOutofbound exception ne doit pas être géré mais le code corrigé. (getselectedrow donne -1 quand aucune selection)
-
 
      Exception de saisie Invalide pour les formulaires.
      Faire la vérification de saisie et d'exception pour les formulaires.
@@ -498,11 +496,17 @@ public class FenApp extends FenParent {
 
         // Charger un projet
         btnChargerProjet.addActionListener(e -> {
+            int i = tblProjet.getSelectedRow();
             // Enregistrer l'index de la selection
-            indexProjetEnCours = tblProjet.getSelectedRow();
-            // Initialise la mise en page et les paramètres de la carte
-            carteProjetEnCours(registreProjet, registreTask, registreEmploye, registreSprint);
-            consoleTxtArea.append("Chargement du projet complété avec succès.\n");
+            if (i != -1) {
+                indexProjetEnCours = tblProjet.getSelectedRow();
+                // Initialise la mise en page et les paramètres de la carte
+                carteProjetEnCours(registreProjet, registreTask, registreEmploye, registreSprint);
+                consoleTxtArea.append("Chargement du projet complété avec succès.\n");
+            } else {
+                JOptionPane.showMessageDialog(null, "La ligne du projet doit être correctement selectionné pour " +
+                        "pouvoir le charger.\n");
+            }
         });
         // Modifier un Task
         //   *** Code pour
@@ -514,16 +518,18 @@ public class FenApp extends FenParent {
                 carteModifierTask(registreTask, registreEmploye);
                 consoleTxtArea.append("Chargement de la tache complété avec succès.\n");
             } else {
-                consoleTxtArea.append("Choisissez une Tache à modifier\n");
+                consoleTxtArea.append("La ligne de la tache doit être correctement selectionné pour pouvoir la " +
+                        "modifier.\n");
             }
         });
 
         // Supprimer un projet
         btnDelete.addActionListener(e -> {
-
+            int index = tblProjet.getSelectedRow();
             int result = Utilitaire.popupOuiNon("La suppression des projets est final. Êtes-vous sur?", "Suppression de projet");
-            if (result == JOptionPane.YES_OPTION) {
-                try {
+            if (index != -1) {
+                if (result == JOptionPane.YES_OPTION) {
+
                     int i = tblProjet.getSelectedRow();
                     ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet(), consoleTxtArea);
                     registreProjet.effacerProjet(i);
@@ -531,35 +537,35 @@ public class FenApp extends FenParent {
                     tableModel.removeRow(i);
 
                     consoleTxtArea.append("Suppression du projet complété.\n");
-                } catch (IndexOutOfBoundsException ex) {
-                    JOptionPane.showMessageDialog(null, "La ligne du projet doit être correctement selectionné pour pouvoir le supprimer.");
+                } else {
+                    consoleTxtArea.append("Suppression du projet annulée.\n");
                 }
             } else {
-                consoleTxtArea.append("Suppression du projet annulée.\n");
+                JOptionPane.showMessageDialog(null, "La ligne du projet doit être correctement selectionné pour " +
+                        "pouvoir le supprimer.\n");
+
             }
         });
         //  Supprimer Task
         //    *** Code pour btnDeleteTask
         btnDeleteTask.addActionListener(e -> {
-
+            int i = tblTask.getSelectedRow();
             int result = Utilitaire.popupOuiNon("La suppression des taches est final. Êtes-vous sur?", "Suppression " +
                     "de tache");
-            if (result == JOptionPane.YES_OPTION) {
-                try {
-                    int i = tblTask.getSelectedRow();
+            if (i != -1) {
+                if (result == JOptionPane.YES_OPTION) {
                     ArrayList<Task> tmpTask = registreTask.trierTask();
                     tmpTask.get(i).setTaskPriority(-1);
                     tableModel2.removeRow(i);
                     ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1],
                             registreTask, 2);
-
                     consoleTxtArea.append("Suppression de la tache complété.\n");
-                } catch (IndexOutOfBoundsException ex) {
-                    JOptionPane.showMessageDialog(null, "La ligne de la tache doit être correctement selectionné pour" +
-                            " pouvoir le supprimer.\n");
+                } else {
+                    consoleTxtArea.append("Suppression de la tache annulée.\n");
                 }
             } else {
-                consoleTxtArea.append("Suppression de la tache annulée.\n");
+                JOptionPane.showMessageDialog(null, "La ligne de la tache doit être correctement selectionné pour" +
+                        " pouvoir le supprimer.\n");
             }
         });
 
@@ -656,7 +662,6 @@ public class FenApp extends FenParent {
 
 
         // *** Choix du menu ***
-        // SHOULD HAVE
         miSortir.addActionListener(e -> {
 
             int result = Utilitaire.popupOuiNon("Voulez vous vraiment Quitter?", "Quitter?");
