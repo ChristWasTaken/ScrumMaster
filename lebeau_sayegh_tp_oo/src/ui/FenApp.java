@@ -1,11 +1,7 @@
 /*
 
-        Gérer l'exception task/sprint vide
+
         Gérer la réinitialisation de task/sprint après modif
-
-
-     Exception de saisie Invalide pour les formulaires.
-     Faire la vérification de saisie et d'exception pour les formulaires.
 
      Code pour btnAjouterSprint
      Code pour btnModifierSprint
@@ -301,11 +297,8 @@ public class FenApp extends FenParent {
         panProjetForm.add(txtDureeSprint);
         panProjetForm.add(panDonneeSprint);
         panProjetForm.add(btnEnregistrerProjet);
-
-
         // Formulaire Task
         // *** Code pour formulaire panTaskForm
-
         panTaskForm = new JPanel(new GridLayout(4, 2));
         panTaskForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 300, 200));
         panTaskForm.add(lblTaskPriority);
@@ -331,40 +324,27 @@ public class FenApp extends FenParent {
         panSprintForm.add(btnEnregistrerSprint);
 
         // *****Card Panels ****
-
         // Card Panel # 1 - Selection de projet (Menu principal COULD HAVE)
-
         //Utilise seulement le scPaneProjet pour sélectionner un projet pour l'instant. (reste va dans le COULD HAVE)
-
         // Card Panel # 2 - Formulaire nouveau projet
-
         panProjetCreation = new JPanel(new BorderLayout());
-
         // Card Panel # 3 - Gestion de projet
-
         panProjetEnCours = new JPanel(new BorderLayout());
-
         // Card Panel #4 panTaskCreation
         panTaskCreation = new JPanel(new BorderLayout());
-
         // Card Panel #5 panTaskCours
         panTaskCours = new JPanel(new BorderLayout());
-
         // Card Panel # 6
         panSprintCreation = new JPanel(new BorderLayout());
         panButtonTaskSelect = new JPanel(new BorderLayout());
-
         // Card Panel # 7
         panSprintCours = new JPanel(new BorderLayout());
-
         // ***** Configuration de la Fenetre Global *****
         // *** Card Panel ***
-
         // Initialisation du cardPanel
         panCard = new JPanel();
         cL = new CardLayout();
         panCard.setLayout(cL);
-
         // Ajout des panneaux au card panel
         panCard.add(scPaneProjet, "1");
         panCard.add(panProjetCreation, "2");
@@ -372,38 +352,28 @@ public class FenApp extends FenParent {
         panCard.add(panTaskCreation, "4");
         panCard.add(panTaskCours, "5");
         panCard.add(panSprintCreation, "6");
-//        panCard.add(panSprintCours, "7");
-
+        //  panCard.add(panSprintCours, "7");
         // *** Entete ***
         lblProjet = new JLabel("Selection des projets");
         lblProjet.setFont(Constante.F2);
-
         panEntete = new JPanel(new FlowLayout(FlowLayout.LEFT, 80, 10));
         panEntete.add(lblProjet);
-
-//        panEntete.add(panTitre);
-//        panEntete.setBorder(BorderFactory.createEmptyBorder(0, 8,0,0));
-
+        //  panEntete.add(panTitre);
+        //  panEntete.setBorder(BorderFactory.createEmptyBorder(0, 8,0,0));
         // *** Bas de page ***
         lblTitre = new JLabel("Scrum..Master");
         lblTitre.setFont(Constante.F3);
         lblRights = new JLabel("Tout droits réservés. ©");
         lblRights.setFont(Constante.F4);
-
-
         consoleTxtArea = new JTextArea(5, 45);
         consoleTxtArea.setEditable(false);
         scPaneConsole = new JScrollPane(consoleTxtArea);
-
         DefaultCaret caret = (DefaultCaret) consoleTxtArea.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-
-
         panBasDePage = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 10));
         panBasDePage.add(scPaneConsole);
         panBasDePage.add(lblTitre);
         panBasDePage.add(lblRights);
-
         // Initialisation du Layout Global
         panGlobal = new JPanel(new BorderLayout());
         panGlobal.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 10));
@@ -411,28 +381,22 @@ public class FenApp extends FenParent {
         panGlobal.add(panEntete, BorderLayout.NORTH);
         panGlobal.add(panCard, BorderLayout.CENTER);
         panGlobal.add(panBasDePage, BorderLayout.SOUTH);
-
         // Configuration du panneau par defaut
         setToolbarActif(1, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint,
                 btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
         // Fonction pour remplir la table par le model
         remplirTableProjet(tableModel, registreProjet, registreEmploye, consoleTxtArea);
-
         //
         getContentPane().add(panGlobal);
     }
 
-
     private void setListeners() {
-
         // *** Bouton de la toolbar ***
-
         // Retour à la selection de projet
         btnRetour.addActionListener(e -> {
             if (currentCard != 1) {
-                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Retour au menu précedant?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
+                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.",
+                        "Retour au menu précedant?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
                     if (currentCard == 2 || currentCard == 3) {
                         consoleTxtArea.append("Retour à la selection de projet.\n");
@@ -446,40 +410,32 @@ public class FenApp extends FenParent {
                 consoleTxtArea.append("Aucun retour en arrière possible de cette fenêtre.\n");
             }
         });
-
         // Créer un nouveau projet - formulaire
         btnNouveauProjet.addActionListener(a -> {
             if (currentCard != 2) {
                 // Initialise la mise en page et les paramètres de la carte
                 carteNouveauProjet(registreEmploye);
             } else {
-                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.", "Nouveau projet?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
+                int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.",
+                        "Nouveau projet?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
                     carteNouveauProjet(registreEmploye);
                 }
             }
         });
-
         // Créer un Nouveau Task
         btnAjouterTask.addActionListener(e -> {
             if (currentCard != 4) {
                 carteNouvelleTask(registreEmploye);
             } else {
                 int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.",
-                        "Retour vers le projet?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
+                        "Retour vers le projet?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
                     carteNouvelleTask(registreEmploye);
                 }
             }
         });
-        // Listener de Gestion de Sprint
-
         // Créer un Nouveau Sprint
-        //   *** Code pour btnAjouterSprint
         btnAjouterSprint.addActionListener(e -> {
             if (currentCard != 6) {
                 carteNouveauSprint(registreSprint, registreTask, registreEmploye);
@@ -493,7 +449,6 @@ public class FenApp extends FenParent {
                 }
             }
         });
-
         // Charger un projet
         btnChargerProjet.addActionListener(e -> {
             int i = tblProjet.getSelectedRow();
@@ -509,7 +464,6 @@ public class FenApp extends FenParent {
             }
         });
         // Modifier un Task
-        //   *** Code pour
         btnModifierTask.addActionListener(e -> {
             //enregistrer l'index de la tache choisi
             indexTaskEnCours = tblTask.getSelectedRow();
@@ -522,21 +476,20 @@ public class FenApp extends FenParent {
                         "modifier.\n");
             }
         });
-
         // Supprimer un projet
         btnDelete.addActionListener(e -> {
             int index = tblProjet.getSelectedRow();
-
             if (index != -1) {
-                int result = Utilitaire.popupOuiNon("La suppression des projets est final. Êtes-vous sur?", "Suppression de projet");
+                int result = Utilitaire.popupOuiNon("La suppression des projets est final. Êtes-vous sur?",
+                        "Suppression de projet");
                 if (result == JOptionPane.YES_OPTION) {
 
                     int i = tblProjet.getSelectedRow();
-                    ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet(), consoleTxtArea);
+                    ManipulationFichier.effacerFichiersProjet(registreProjet.getRegistrePro().get(i).getNomProjet(),
+                            consoleTxtArea);
                     registreProjet.effacerProjet(i);
                     ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
                     tableModel.removeRow(i);
-
                     consoleTxtArea.append("Suppression du projet complété.\n");
                 } else {
                     consoleTxtArea.append("Suppression du projet annulée.\n");
@@ -544,17 +497,15 @@ public class FenApp extends FenParent {
             } else {
                 JOptionPane.showMessageDialog(null, "La ligne du projet doit être correctement selectionné pour " +
                         "pouvoir le supprimer.\n");
-
             }
         });
         //  Supprimer Task
-        //    *** Code pour btnDeleteTask
         btnDeleteTask.addActionListener(e -> {
             int i = tblTask.getSelectedRow();
 
             if (i != -1) {
-                int result = Utilitaire.popupOuiNon("La suppression des taches est final. Êtes-vous sur?", "Suppression " +
-                        "de tache");
+                int result = Utilitaire.popupOuiNon("La suppression des taches est final. Êtes-vous sur?",
+                        "Suppression de tache");
                 if (result == JOptionPane.YES_OPTION) {
                     ArrayList<Task> tmpTask = registreTask.trierTask();
                     tmpTask.get(i).setTaskPriority(-1);
@@ -583,38 +534,32 @@ public class FenApp extends FenParent {
 
         // Sauvegarder Formulaire Projet
         btnEnregistrerProjet.addActionListener(e -> {
-
             try {
                 Employe temp = (Employe) jcbEmploye.getSelectedItem();
                 Projet tempProj = null;
-
                 if (temp != null) {
                     int duree = Integer.parseInt(txtDureeSprint.getText());
                     Utilitaire.verifierIntervalle(duree, 2, 12);
-                    tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), temp.getEmployeID(), format.parse(ftxtDateDebut.getText()),
-                            format.parse(ftxtDateFin.getText()), duree);
+                    tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), temp.getEmployeID(),
+                            format.parse(ftxtDateDebut.getText()), format.parse(ftxtDateFin.getText()), duree);
                 }
                 if (currentCard == 2) {
-
                     if (registreProjet.ajouterProjet(tempProj, 0) == -1) {
                         ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
-                        consoleTxtArea.append("Nouveau projet créer. Retourner à la page précédente pour lui accèder.\n");
+                        consoleTxtArea.append("Nouveau projet créer. Retourner à la page " +
+                                "précédente pour lui accèder.\n");
                     }
-
                 } else if (currentCard == 3) {
-
                     if (registreProjet.ajouterProjet(tempProj, 1) != -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
-                        consoleTxtArea.append("Les changements au projet: " + txtNomProjet.getText() + " sont sauvegardés.\n");
+                        consoleTxtArea.append("Les changements au projet: " + txtNomProjet.getText() +
+                                " sont sauvegardés.\n");
                     } else {
                         ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
                     }
                 }
-            } catch (NumberFormatException ex2) {
-                JOptionPane.showMessageDialog(null, "Les sprints sont des semaines saisie en entier seulement.",
-                        "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
             } catch (ParseException | ProjetDejaPresentException ex) {
                 ex.printStackTrace();
             } catch (SaisieInvalideException ex) {
@@ -631,10 +576,11 @@ public class FenApp extends FenParent {
             try {
                 verifierStringVide(txtDescTask.getText(), 5);
                 if (currentCard == 4) {
-                    Task tempTask = new Task(Integer.parseInt(String.valueOf(jcbTask.getSelectedItem())), txtDescTask.getText(),
-                            jcbEmploye2.getSelectedIndex());
+                    Task tempTask = new Task(Integer.parseInt(String.valueOf(jcbTask.getSelectedItem())),
+                            txtDescTask.getText(),jcbEmploye2.getSelectedIndex());
                     if (registreTask.ajouterTask(tempTask, 0) == -1) {
-                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1],
+                                registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
                 } else if (currentCard == 5) {
@@ -642,7 +588,8 @@ public class FenApp extends FenParent {
                     tempTask.setTaskPriority(Integer.parseInt(String.valueOf(jcbTask.getSelectedItem())));
                     tempTask.setEmployeID(jcbEmploye2.getSelectedIndex());
                     if (registreTask.ajouterTask(tempTask, 1) != -1) {
-                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1], registreTask, 2);
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1],
+                                registreTask, 2);
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
                 }
@@ -652,9 +599,6 @@ public class FenApp extends FenParent {
             } catch (SaisieInvalideException ex1) {
                 JOptionPane.showMessageDialog(null, ex1.getMessage(), "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
                 ex1.printStackTrace();
-            } catch (NumberFormatException ex2) {
-                JOptionPane.showMessageDialog(null, "La priorité est un nombre de 1 à 9\n",
-                        "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -682,10 +626,4 @@ public class FenApp extends FenParent {
         });
 
     }
-
-
-    // ***** Méthodes de la fenêtre *****
-
-
-    // ***** Gestion des card *****
 }

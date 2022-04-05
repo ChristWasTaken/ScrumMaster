@@ -20,8 +20,6 @@ import static utils.Constante.*;
 
 
 public class FenParent extends JFrame {
-
-
     protected JLabel lblSepProjet, lblSepTask, lblSepSprint, lblProjet, lblTitre, lblRights, lblTasks,
             lblNomProjet, lblDescProjet, lblScrumId, lblTaskPriority, lblDeskTask, lblEmpId, lblTaskId, lblDescSprint,
             lblDateDebut, lblDateFin, lblDureeSprint, lblConsole, lblDateDebutSprint, lblDateFinSprint, lblSprintProgres,
@@ -108,20 +106,27 @@ public class FenParent extends JFrame {
         }
     }
 
-    public void afficherDonneeSprint(){
+    public void afficherDonneeSprint() {
         //Transforme les dates en LocalDate
         LocalDate dateDebut = LocalDate.parse(ftxtDateDebut.getText());
         LocalDate dateFin = LocalDate.parse(ftxtDateFin.getText());
         // Recoit le nombre de sprint de la durée spécifié
         int nbrSemaine = Utilitaire.calculerNombreSemaine(dateDebut, dateFin);
-        int nbrSprint = Utilitaire.calculerNombreSprint(nbrSemaine, Integer.parseInt(txtDureeSprint.getText()));
-        lblNbrSemaine.setText("Nombre de semaines au projet: " + nbrSemaine + " - Sprints: "+ tblSprint.getRowCount() +"/"+nbrSprint);
-        lblNbrSemaine.setFont(Constante.F5);
+
+        try {
+            int nbrSprint = Utilitaire.calculerNombreSprint(nbrSemaine, Integer.parseInt(txtDureeSprint.getText()));
+            lblNbrSemaine.setText("Nombre de semaines au projet: " + nbrSemaine + " - Sprints: " +
+                    tblSprint.getRowCount() + "/" + nbrSprint);
+            lblNbrSemaine.setFont(Constante.F5);
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Les sprints sont des semaines saisie en entier seulement.",
+                    "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // méthode remplir Projet
-    public void remplirTableProjet(DefaultTableModel tableModel, RegistreProjet registreProjet, RegistreEmploye registreEmploye,
-                                          JTextArea consoleTxtArea) {
+    public void remplirTableProjet(DefaultTableModel tableModel, RegistreProjet registreProjet,
+                                   RegistreEmploye registreEmploye, JTextArea consoleTxtArea) {
         Format formatDate = new SimpleDateFormat("yyyy-MM-dd");
         tableModel.setRowCount(0);
         for (Projet tmp : registreProjet.getRegistrePro()) {
@@ -141,27 +146,26 @@ public class FenParent extends JFrame {
         tableModel3.setRowCount(0);
         String progres;
         for (Sprint tmp : registreSprint.getRegSprint()) {
-            if(tmp.isProgres() == true){
+            if (tmp.isProgres() == true) {
                 progres = PROGRES_SPRINT[1];
-            }else{
+            } else {
                 progres = PROGRES_SPRINT[0];
             }
             Object[] row = {tmp.getDescription(), formatDate.format(tmp.getDateDebut()),
-                    formatDate.format(tmp.getDateFin()), progres };
+                    formatDate.format(tmp.getDateFin()), progres};
             tableModel3.addRow(row);
         }
         consoleTxtArea.append("Tableau des sprints créé avec succes\n");
     }
 
     // méthode pour remplir les table de task
-    public void remplirTableTask(DefaultTableModel tableModel2, RegistreTask registreTask, JTextArea consoleTxtArea, RegistreEmploye registreEmploye) {
+    public void remplirTableTask(DefaultTableModel tableModel2, RegistreTask registreTask, JTextArea consoleTxtArea,
+                                 RegistreEmploye registreEmploye) {
         tableModel2.setRowCount(0);
         for (Task tmp : registreTask.getRegistreTasks()) {
-
             if (tmp.getTaskPriority() != -1) {
                 String employe = registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getNom() + registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getPrenom();
                 Object[] row = {tmp.getTaskID(), tmp.getTaskPriority(), tmp.getDescription(), employe};
-
                 tableModel2.addRow(row);
             }
         }
@@ -182,11 +186,12 @@ public class FenParent extends JFrame {
     }
 
     // Carte de gestion d'un projet
-    public void carteProjetEnCours(RegistreProjet registreProjet, RegistreTask registreTask, RegistreEmploye registreEmploye, RegistreSprint registreSprint) {
-        int i= tblProjet.getSelectedRow();
-        if(i!=-1){
+    public void carteProjetEnCours(RegistreProjet registreProjet, RegistreTask registreTask,
+                                   RegistreEmploye registreEmploye, RegistreSprint registreSprint) {
+        int i = tblProjet.getSelectedRow();
+        if (i != -1) {
             lblProjet.setText("Projet en cours: " + registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
-        } else{
+        } else {
             consoleTxtArea.append("Erreur de chargement. Selectionner la ligne du projet à charger.\n");
 
         }
@@ -263,8 +268,8 @@ public class FenParent extends JFrame {
         jcbEmploye.removeAllItems();
         remplirComboBox(regScrumMaster, jcbEmploye, 1);
 
-        setToolbarActif(2, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint, btnModifierSprint,
-                btnAjouterTask, btnModifierTask, btnDeleteTask);
+        setToolbarActif(2, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint,
+                btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
         currentCard = 2;
         consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
@@ -280,20 +285,21 @@ public class FenParent extends JFrame {
         remplirComboBox(registreEmploye, jcbEmploye2, 1);
         Employe tmp = registreEmploye.getRegistreEmp().get(indexProjetEnCours);
         jcbEmploye2.setSelectedItem(tmp);
-        setToolbarActif(4, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint, btnModifierSprint,
-                btnAjouterTask, btnModifierTask, btnDeleteTask);
+        setToolbarActif(4, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint,
+                btnDeleteSprint, btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
         currentCard = 4;
         consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
 
     //methode pour creer un sprint
-    public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask, RegistreEmploye registreEmploye) {
+    public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask,
+                                   RegistreEmploye registreEmploye) {
         cL.show(panCard, "6");
         panSprintCreation.add(panSprintForm, BorderLayout.NORTH);
         panSprintCreation.add(scPaneTaskSelection, BorderLayout.EAST);
         panSprintCreation.add(scPaneTask, BorderLayout.WEST);
         panSprintCreation.add(panButtonTaskSelect, BorderLayout.CENTER);
-        panButtonTaskSelect.add(btnAjouterTask,BorderLayout.NORTH);
+        panButtonTaskSelect.add(btnAjouterTask, BorderLayout.NORTH);
         panButtonTaskSelect.add(btnDeleteTask, BorderLayout.CENTER);
 
         scPaneTaskSelection.setPreferredSize(new Dimension(425, 150));
@@ -309,11 +315,12 @@ public class FenParent extends JFrame {
         //populer le tableau des Tasks du projet
         registreTask.getRegistreTasks().clear();
         try {
-            ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1], registreTask, 2);
+            ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1],
+                    registreTask, 2);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        remplirTableTask(tableModel2, registreTask, consoleTxtArea, registreEmploye );
+        remplirTableTask(tableModel2, registreTask, consoleTxtArea, registreEmploye);
 
         currentCard = 6;
         consoleTxtArea.append("Remplir le formulaire de sprint et appuyer sur enregistrer\n");
@@ -322,7 +329,7 @@ public class FenParent extends JFrame {
     // methode pour carte modifier Task
     public void carteModifierTask(RegistreTask registreTask, RegistreEmploye registreEmploye) {
         int i = tblTask.getSelectedRow();
-        if(i!=-1){
+        if (i != -1) {
             lblTasks.setText("Task en cours: " + registreTask.getRegistreTasks().get(indexProjetEnCours).getDescription());
         } else {
             consoleTxtArea.append("Erreur de chargement. Selectionner la ligne du projet à charger.\n");
@@ -340,8 +347,8 @@ public class FenParent extends JFrame {
         remplirComboBox(registreEmploye, jcbEmploye2, 1);
         Employe tmp = registreEmploye.getRegistreEmp().get(registreTask.getRegistreTasks().get(indexTaskEnCours).getEmployeID());
         jcbEmploye2.setSelectedItem(tmp);
-        setToolbarActif(4, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint, btnModifierSprint,
-                btnAjouterTask, btnModifierTask, btnDeleteTask);
+        setToolbarActif(4, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint,
+                btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
         currentCard = 5;
         consoleTxtArea.append("Modifier la tache et appuyer sur Enregistrer\n");
     }
