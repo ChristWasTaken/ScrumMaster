@@ -1,8 +1,10 @@
 /*
 
-        Ajout Gestion de projet
+        Ajout Gestion de projet pour afficher le nombre de sprints + complété + restant
         Gérer l'exception task/sprint vide
-        Gérer la réinitialisation de task/sprint sprès modif
+        Gérer la réinitialisation de task/sprint près modif
+
+        IndexOutofbound exception ne doit pas être géré mais le code corrigé. (getselectedrow donne -1 quand aucune selection)
 
 
      Exception de saisie Invalide pour les formulaires.
@@ -25,7 +27,6 @@
 
 package ui;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import io.ManipulationFichier;
 import model.*;
 import utils.*;
@@ -37,6 +38,7 @@ import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static utils.Constante.*;
@@ -79,8 +81,6 @@ public class FenApp extends FenParent {
         lblTaskPriority = new JLabel("Définir la priorité");
         lblDeskTask = new JLabel("Description:");
         lblEmpId = new JLabel("Choisir l'employer");
-        lblSprint = new JLabel("Sprints restant au projet");
-        lblSprint.setFont(Constante.F2);
         lblTasks = new JLabel("Taches restantes au projet");
         lblTasks.setFont(Constante.F2);
         lblTaskId = new JLabel("Ajouter/Retiré des tasks de ce sprint en utilisant les flèches.");
@@ -88,6 +88,11 @@ public class FenApp extends FenParent {
         lblDateDebutSprint = new JLabel(" Date de début: ");
         lblDateFinSprint = new JLabel("Date de fin: ");
         lblSprintProgres = new JLabel(" Progrès: ");
+
+        lblSprint = new JLabel("");
+        lblSprint.setFont(Constante.F2);
+        lblNbrSemaine = new JLabel("");
+        lblNbreSprint = new JLabel("");
 
         lblSepProjet = new JLabel("Projet");
         lblSepProjet.setFont(Constante.F4);
@@ -169,10 +174,10 @@ public class FenApp extends FenParent {
         // Initialisation des boutons
         btnRetour = new JButton(iconRetour);
         btnRetour.setToolTipText("Retour au menu précédant..");
-        btnNew = new JButton(iconNew);
-        btnNew.setToolTipText("Nouveau Projet..");
-        btnCharger = new JButton(iconCharger);
-        btnCharger.setToolTipText("Charger le Projet Sélectionné..");
+        btnNouveauProjet = new JButton(iconNew);
+        btnNouveauProjet.setToolTipText("Nouveau Projet..");
+        btnChargerProjet = new JButton(iconCharger);
+        btnChargerProjet.setToolTipText("Charger le Projet Sélectionné..");
         btnDelete = new JButton(iconDelete);
         btnDelete.setToolTipText("Supprimer le Projet Sélectionné..");
         btnAjouterTask = new JButton(iconAjouterTask);
@@ -195,8 +200,8 @@ public class FenApp extends FenParent {
         tbMenu.add(btnRetour);
         tbMenu.addSeparator();
         tbMenu.add(lblSepProjet);
-        tbMenu.add(btnNew);
-        tbMenu.add(btnCharger);
+        tbMenu.add(btnNouveauProjet);
+        tbMenu.add(btnChargerProjet);
         tbMenu.add(btnDelete);
         tbMenu.addSeparator();
         tbMenu.add(lblSepTask);
@@ -282,6 +287,7 @@ public class FenApp extends FenParent {
         // *** Formulaires
 
 //        // Formulaire Projet
+        panDonneeSprint = new JPanel();
 
         panProjetForm = new JPanel(new GridLayout(7, 2));
         panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 250, 150));
@@ -297,7 +303,7 @@ public class FenApp extends FenParent {
         panProjetForm.add(ftxtDateFin);
         panProjetForm.add(lblDureeSprint);
         panProjetForm.add(txtDureeSprint);
-        panProjetForm.add(new JLabel());
+        panProjetForm.add(panDonneeSprint);
         panProjetForm.add(btnEnregistrerProjet);
 
 
@@ -305,7 +311,7 @@ public class FenApp extends FenParent {
         // *** Code pour formulaire panTaskForm
 
         panTaskForm = new JPanel(new GridLayout(4, 2));
-        panTaskForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 500, 200));
+        panTaskForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 300, 200));
         panTaskForm.add(lblTaskPriority);
         panTaskForm.add(jcbTask);
         panTaskForm.add(lblDeskTask);
@@ -411,7 +417,7 @@ public class FenApp extends FenParent {
         panGlobal.add(panBasDePage, BorderLayout.SOUTH);
 
         // Configuration du panneau par defaut
-        setToolbarActif(1, btnNew, btnCharger, btnDelete, btnAjouterSprint, btnDeleteSprint,
+        setToolbarActif(1, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint,
                 btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
         // Fonction pour remplir la table par le model
         remplirTableProjet(tableModel, registreProjet, registreEmploye, consoleTxtArea);
@@ -446,7 +452,7 @@ public class FenApp extends FenParent {
         });
 
         // Créer un nouveau projet - formulaire
-        btnNew.addActionListener(a -> {
+        btnNouveauProjet.addActionListener(a -> {
             if (currentCard != 2) {
                 // Initialise la mise en page et les paramètres de la carte
                 carteNouveauProjet(registreEmploye);
@@ -493,7 +499,7 @@ public class FenApp extends FenParent {
         });
 
         // Charger un projet
-        btnCharger.addActionListener(e -> {
+        btnChargerProjet.addActionListener(e -> {
             // Enregistrer l'index de la selection
             indexProjetEnCours = tblProjet.getSelectedRow();
             // Initialise la mise en page et les paramètres de la carte
@@ -582,39 +588,35 @@ public class FenApp extends FenParent {
                     tempProj = new Projet(txtNomProjet.getText(), txtDescProjet.getText(), temp.getEmployeID(), format.parse(ftxtDateDebut.getText()),
                             format.parse(ftxtDateFin.getText()), duree);
                 }
-
                 if (currentCard == 2) {
-                    try {
-                        if (registreProjet.ajouterProjet(tempProj, 0) == -1) {
-                            ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
-                            ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
-                            consoleTxtArea.append("Nouveau projet créer. Retourner à la page précédente pour lui accèder.\n");
-                        }
-                    } catch (ProjetDejaPresentException ex) {
-                        consoleTxtArea.append("Projet déja présent, Changer le nom du projet pour le sauvegarder.\n");
+
+                    if (registreProjet.ajouterProjet(tempProj, 0) == -1) {
+                        ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
+                        consoleTxtArea.append("Nouveau projet créer. Retourner à la page précédente pour lui accèder.\n");
                     }
+
                 } else if (currentCard == 3) {
-                    try {
-                        if (registreProjet.ajouterProjet(tempProj, 1) != -1) {
-                            ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
-                            consoleTxtArea.append("Les changements au projet: " + txtNomProjet.getText() + " sont sauvegardés.\n");
-                        } else {
-                            ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
-                            ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
-                        }
-                    } catch (ProjetDejaPresentException ex) {
-                        ex.printStackTrace();
+
+                    if (registreProjet.ajouterProjet(tempProj, 1) != -1) {
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
+                        consoleTxtArea.append("Les changements au projet: " + txtNomProjet.getText() + " sont sauvegardés.\n");
+                    } else {
+                        ManipulationFichier.nouveauProjet(txtNomProjet.getText(), consoleTxtArea);
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
                     }
                 }
             } catch (NumberFormatException ex2) {
                 JOptionPane.showMessageDialog(null, "Les sprints sont des semaines saisie en entier seulement.",
                         "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
-            } catch (ParseException ex) {
+            } catch (ParseException | ProjetDejaPresentException ex) {
                 ex.printStackTrace();
             } catch (SaisieInvalideException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
             }
+
+            afficherDonneeSprint();
         });
         //sauvegarder le formulaire Task
         btnEnregistrerTask.addActionListener(e -> {

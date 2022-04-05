@@ -3,6 +3,8 @@ package utils;
 import javax.swing.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -29,6 +31,18 @@ public class Utilitaire {
         if(s.length()<longueur){
             throw new SaisieInvalideException("Le champs dois contenir au minimum "+ longueur+ " caractere");
         }
+    }
+
+    public static int calculerNombreSemaine(LocalDate dateDebut, LocalDate dateFin){
+
+        return (int)(ChronoUnit.DAYS.between(dateDebut, dateFin))/7;
+    }
+
+    public static int calculerNombreSprint(int nbrSem, int dureeSprint){
+        System.out.println(nbrSem);
+        System.out.println(dureeSprint);
+
+        return nbrSem/dureeSprint;
     }
 
 

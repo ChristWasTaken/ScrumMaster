@@ -34,5 +34,6 @@ public class Constante {
     public static final Font F2 = new Font(java.awt.Font.SANS_SERIF, java.awt.Font.BOLD, 18);
     public static final Font F3 = new Font(java.awt.Font.SANS_SERIF, Font.BOLD, 14);
     public static final Font F4 = new Font(java.awt.Font.SANS_SERIF, Font.PLAIN, 10);
+    public static final Font F5 = new Font(java.awt.Font.SANS_SERIF, Font.BOLD, 12);
 }
 
