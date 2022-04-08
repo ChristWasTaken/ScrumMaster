@@ -35,6 +35,16 @@ public class RegistreSprint extends Registre {
         return true;
     }
 
+    public ArrayList<Integer> rechercheTasksSprint(){
+        ArrayList<Integer> tmpList = new ArrayList<>();
+        for(Sprint tmp : regSprint){
+            for(int emp : tmp.getTaskID()){
+                tmpList.add(emp);
+            }
+        }
+        return tmpList;
+    }
+
     public ArrayList<Sprint> getRegSprint() {
         return regSprint;
     }

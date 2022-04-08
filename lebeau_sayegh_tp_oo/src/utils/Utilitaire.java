@@ -39,9 +39,6 @@ public class Utilitaire {
     }
 
     public static int calculerNombreSprint(int nbrSem, int dureeSprint){
-        System.out.println(nbrSem);
-        System.out.println(dureeSprint);
-
         return nbrSem/dureeSprint;
     }
 

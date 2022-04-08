@@ -27,6 +27,56 @@ public class RegistreTask extends Registre {
         return index;
     }
 
+    public ArrayList<Task> chercherTaskList(ArrayList<Integer> tmpList, int option){
+        ArrayList<Task> tmpReg = new ArrayList<>();
+
+        switch (option) {
+            case 0 -> {
+                System.out.println("case0");
+                for (Task tmp : registreTasks) {
+                    for (Integer i : tmpList) {
+                        if (tmp.getTaskID() == i) {
+                            tmpReg.add(tmp);
+                        }
+                    }
+                }
+                for (Task emp : tmpReg) {
+                    System.out.println(emp);
+                }
+                break;
+            }
+            case 1 -> {
+
+                if (tmpList.size() == 0) {
+                    System.out.println("case1A");
+                    for (Task tmp : registreTasks) {
+                        tmpReg.add(tmp);
+                    }
+                } else {
+                    for (Integer i : tmpList) {
+                        System.out.println("case1B");
+                        for (Task tmp : registreTasks) {
+                            if (tmp.getTaskID() != i) {
+                                System.out.println(i);
+                                System.out.println(tmp.getTaskID());
+                                System.out.println("ajout + " + tmp.getTaskID());
+                                tmpReg.add(tmp);
+                            } else {
+                                System.out.println(tmp.getTaskID() + " est trouvé");
+                            }
+                        }
+                    }
+
+                }
+                for (Task emp : tmpReg) {
+                    System.out.println(emp.getTaskID());
+                }
+            }
+        }
+
+        return tmpReg;
+    }
+
     public ArrayList<Task> trierTask(){
         ArrayList<Task> tmpReg = new ArrayList<>();
         for(Task tmp : registreTasks){

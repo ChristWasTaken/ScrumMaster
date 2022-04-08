@@ -6,9 +6,12 @@ import model.*;
 import ui.FenApp;
 import utils.Constante;
 import utils.ProjetDejaPresentException;
+import utils.SprintDejaPresentException;
 import utils.Utilitaire;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Date;
 
 @SuppressWarnings("FieldCanBeLocal")
 
@@ -46,9 +49,16 @@ public class AppCtr {
 
 
 //        ArrayList<Integer> taskID = new ArrayList<>();
-//        taskID.add(0);
+////        taskID.add(0);
+////        taskID.add(1);
+////        taskID.add(5);
 //        Date projFin = Utilitaire.getTodayDate();
 //        Sprint spt = new Sprint(taskID, "Ajouter vos Sprints ici - effacer ou modificer ce sprint", projFin, true);
+////        taskID.clear();
+////        taskID.add(2);
+////        taskID.add(7);
+////        taskID.add(3);
+////        Sprint spt2 = new Sprint(taskID, "Ajouter vos Sprints ici - effacer ou modificer ce sprint", projFin, true);
 //        try {
 //            registreSprint.ajouterSprint(spt);
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2] ,registreSprint, 3);

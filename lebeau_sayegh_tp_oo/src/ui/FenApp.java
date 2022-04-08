@@ -24,13 +24,15 @@ import model.*;
 import utils.*;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static utils.Constante.*;
@@ -62,6 +64,8 @@ public class FenApp extends FenParent {
 
     private void setWidget() {
 
+        assgignedTaskList = new ArrayList<>();
+
         // Initialisation des labels
 
         lblNomProjet = new JLabel("Nom du projet: ");
@@ -80,6 +84,8 @@ public class FenApp extends FenParent {
         lblDateDebutSprint = new JLabel(" Date de début: ");
         lblDateFinSprint = new JLabel("Date de fin: ");
         lblSprintProgres = new JLabel(" Progrès: ");
+        lblConsigneSprint = new JLabel("           Selectionné les taches et utiliser les fléches pour les assigner.");
+        lblConsigneSprint.setFont(Constante.F5);
 
         lblSprint = new JLabel("");
         lblSprint.setFont(Constante.F2);
@@ -121,6 +127,7 @@ public class FenApp extends FenParent {
         ftxtDateFin = new JFormattedTextField(formatDate);
         ftxtDateDebutSprint = new JFormattedTextField(formatDate);
         ftxtDateFinSprint = new JFormattedTextField(formatDate);
+        ftxtDateFinSprint.setEnabled(false);
 
 
         // ***** Entete *****
@@ -162,6 +169,8 @@ public class FenApp extends FenParent {
         iconDeleteSprint = new ImageIcon(REPERTOIRE_IMAGE[9]);
         iconSave = new ImageIcon(REPERTOIRE_IMAGE[10]);
         iconTaskSave = new ImageIcon(REPERTOIRE_IMAGE[10]);
+        iconAddTask = new ImageIcon(REPERTOIRE_IMAGE[11]);
+        iconRemoveTask = new ImageIcon(REPERTOIRE_IMAGE[12]);
 
         // Initialisation des boutons
         btnRetour = new JButton(iconRetour);
@@ -184,6 +193,10 @@ public class FenApp extends FenParent {
         btnModifierSprint.setToolTipText("Modifier un sprint..");
         btnDeleteSprint = new JButton(iconDeleteSprint);
         btnDeleteSprint.setToolTipText("Supprimer un sprint..");
+        btnAjouterTaskSprint = new JButton(iconAddTask);
+        btnAjouterTaskSprint.setToolTipText("Ajouter un task au sprint en cours..");
+        btnRetirerTaskSprint = new JButton(iconRemoveTask);
+        btnRetirerTaskSprint.setToolTipText("Retirer un task au sprint en cours..");
 
         // Pnneau du toolbar
         panButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -245,6 +258,7 @@ public class FenApp extends FenParent {
         // Fonction pour remplir la table par le model à faire
         scPaneTask = new JScrollPane(tblTask);
 
+        scPaneTask.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5,5,5,0), BorderFactory.createTitledBorder("Taches")));
         scPaneTask.setPreferredSize(new Dimension(450, 150));
         setTailleColonneTable(tblTask, Constante.TAILLE_COL_2);
 
@@ -259,7 +273,8 @@ public class FenApp extends FenParent {
 
         scPaneSprint = new JScrollPane(tblSprint);
 
-        scPaneSprint.setPreferredSize(new Dimension(450, 150));
+        scPaneSprint.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5,5,5,0), BorderFactory.createTitledBorder("Projets")));
+        scPaneSprint.setPreferredSize(new Dimension(450,150));
         setTailleColonneTable(tblSprint, Constante.TAILLE_COL_3);
 
         // ** Table de selection de task (Sprint)
@@ -274,6 +289,8 @@ public class FenApp extends FenParent {
 
         // Fonction pour remplir la table par le model à faire
         scPaneTaskSelection = new JScrollPane(tblTaskSelection);
+        scPaneTaskSelection.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5,5,5,0), BorderFactory.createTitledBorder("Taches selectionné pour ce sprint.")));
+        scPaneTaskSelection.setPreferredSize(new Dimension(450,150));
 
 
         // *** Formulaires
@@ -320,7 +337,7 @@ public class FenApp extends FenParent {
         panSprintForm.add(ftxtDateFinSprint);
         panSprintForm.add(lblSprintProgres);
         panSprintForm.add(jcbProgres);
-        panSprintForm.add(new JLabel());
+        panSprintForm.add(lblConsigneSprint);
         panSprintForm.add(btnEnregistrerSprint);
 
         // *****Card Panels ****
@@ -401,7 +418,7 @@ public class FenApp extends FenParent {
                     if (currentCard == 2 || currentCard == 3) {
                         consoleTxtArea.append("Retour à la selection de projet.\n");
                         carteSelectionProjet(registreProjet, registreEmploye);
-                    } else if (currentCard == 4 || currentCard == 5) {
+                    } else if (currentCard == 4 || currentCard == 5 || currentCard == 6) {
                         consoleTxtArea.append("Retour à la gestion de projet.\n");
                         carteProjetEnCours(registreProjet, registreTask, registreEmploye, registreSprint);
                     }
@@ -449,6 +466,51 @@ public class FenApp extends FenParent {
                 }
             }
         });
+
+        btnAjouterTaskSprint.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int indexSelectedtask = tblTask.getSelectedRow();
+                int selectedTaskID = (Integer)tblTask.getValueAt(indexSelectedtask, 0);
+
+                boolean flag = false;
+                for (int i = 0; i < assgignedTaskList.size(); i++){
+                    if(selectedTaskID == assgignedTaskList.get(i)){
+                        flag = true;
+                    }
+                }
+                if(!flag){
+                    assgignedTaskList.add(selectedTaskID);
+                    presentSprintTaskList.add(selectedTaskID);
+                    ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
+
+                    tblTaskSelection.removeAll();
+                    remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
+                    consoleTxtArea.append("Tache ajouté au sprint\n");
+                }
+            }
+        });
+
+        btnRetirerTaskSprint.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int indexSelectedtask = tblTaskSelection.getSelectedRow();
+                int selectedTaskID = (Integer)tblTaskSelection.getValueAt(indexSelectedtask, 0);
+
+                for (int i = 0; i < assgignedTaskList.size(); i++){
+                    if(selectedTaskID == assgignedTaskList.get(i)){
+                        assgignedTaskList.remove(i);
+                        presentSprintTaskList.remove(i);
+
+                        ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
+                        tblTaskSelection.removeAll();
+                        remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
+                    }
+                }
+                consoleTxtArea.append("Tache retiré du sprint\n");
+            }
+        });
+
         // Charger un projet
         btnChargerProjet.addActionListener(e -> {
             int i = tblProjet.getSelectedRow();
@@ -571,7 +633,6 @@ public class FenApp extends FenParent {
         });
         //sauvegarder le formulaire Task
         btnEnregistrerTask.addActionListener(e -> {
-
 
             try {
                 verifierStringVide(txtDescTask.getText(), 5);

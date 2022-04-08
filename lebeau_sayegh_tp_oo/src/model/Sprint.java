@@ -27,6 +27,20 @@ public class Sprint implements Serializable {
     }
 
 
+    public void ajouterTaskID(int task){
+        taskID.add(task);
+    }
+
+    public void retirerTaskID(int task){
+        int index = 0;
+        for (int tmp : taskID){
+            if(task == tmp){
+                taskID.remove(index);
+            }
+            index++;
+        }
+    }
+
     public ArrayList<Integer> getTaskID() {
         return taskID;
     }
@@ -35,16 +49,16 @@ public class Sprint implements Serializable {
         this.taskID = taskID;
     }
 
-    public Date getDateDebut() {
-        return dateDebut;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDateDebut() {
+        return dateDebut;
     }
 
     public void setDateDebut(Date dateDebut) {
