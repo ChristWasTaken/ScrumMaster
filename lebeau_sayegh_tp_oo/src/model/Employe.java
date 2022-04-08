@@ -1,23 +1,18 @@
 package model;
 
 import java.io.Serializable;
+
 @SuppressWarnings("FieldCanBeLocal")
 
 public class Employe implements Serializable {
-    private static int nbrEmploye=0;
+    private static int nbrEmploye = 0;
     private String nom, prenom, poste;
     private int employeID;
 
-    public int getEmployeID() {
-        return employeID;
+
+    public Employe() {
     }
 
-    public void setEmployeID(int employeID) {
-        this.employeID = employeID;
-    }
-
-    public Employe() {}
-    //
     public Employe(String nom, String prenom, String poste) {
         this.employeID = nbrEmploye;
         nbrEmploye++;
@@ -46,12 +41,22 @@ public class Employe implements Serializable {
         return poste;
     }
 
+    public int getEmployeID() {
+        return employeID;
+    }
+
+    public void setEmployeID(int employeID) {
+        this.employeID = employeID;
+    }
+
+
     public void setPoste(String poste) {
         this.poste = poste;
     }
+
     @Override
     public String toString() {
-        return  "ID: " + employeID + " - " + prenom + " " + nom;
+        return "ID: " + employeID + " - " + prenom + " " + nom;
     }
 
 }

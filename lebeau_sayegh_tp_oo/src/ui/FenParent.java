@@ -130,9 +130,11 @@ public class FenParent extends JFrame {
         Format formatDate = new SimpleDateFormat("yyyy-MM-dd");
         tableModel.setRowCount(0);
         for (Projet tmp : registreProjet.getRegistrePro()) {
-            Object[] row = {tmp.getNomProjet(), tmp.getDescription(), registreEmploye.getRegistreEmp().get(tmp.getScrumMasterId()).getPrenom() + " "
-                    + registreEmploye.getRegistreEmp().get(tmp.getScrumMasterId()).getNom(), formatDate.format(tmp.getDateDebut()),
-                    formatDate.format(tmp.getDateFin()), Integer.toString(tmp.getDureeSprint())};
+            Object[] row = {tmp.getNomProjet(), tmp.getDescription(),
+                    registreEmploye.getRegistreEmp().get(tmp.getScrumMasterId()).getPrenom() + " "
+                    + registreEmploye.getRegistreEmp().get(tmp.getScrumMasterId()).getNom(),
+                    formatDate.format(tmp.getDateDebut()), formatDate.format(tmp.getDateFin()),
+                    Integer.toString(tmp.getDureeSprint())};
             tableModel.addRow(row);
         }
         consoleTxtArea.append("Tableau des projets créé avec succes.\nSelectionner un projet et appuyer sur modifier " +
