@@ -1,6 +1,5 @@
 package model;
 
-
 import utils.DoublonException;
 
 import java.util.ArrayList;
@@ -47,7 +46,6 @@ public class RegistreTask extends Registre {
             case 1 -> {
 
                 if (tmpList.size() == 0) {
-
                     for (Task tmp : registreTasks) {
                         tmpReg.add(tmp);
                     }
@@ -68,7 +66,6 @@ public class RegistreTask extends Registre {
                 }
             }
         }
-
         return tmpReg;
     }
 
@@ -105,7 +102,6 @@ public class RegistreTask extends Registre {
     public void setRegistreTasks(ArrayList<Task> registreTasks) {
         this.registreTasks = registreTasks;
     }
-
 
     public void effacerTask(int index) {
         registreTasks.remove(index);

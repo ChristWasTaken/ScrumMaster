@@ -1,8 +1,5 @@
 package model;
 
-
-import utils.Utilitaire;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +22,6 @@ public class Sprint implements Serializable {
         this.dateFin = dateFin;
         this.progres = progres;
     }
-
 
     public void ajouterTaskID(int task){
         taskID.add(task);

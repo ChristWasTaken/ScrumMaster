@@ -1,6 +1,5 @@
 package model;
 
-
 import utils.DoublonException;
 
 import java.util.ArrayList;

@@ -4,7 +4,6 @@ package model;
 import utils.DoublonException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class RegistreSprint extends Registre {
     private ArrayList<Sprint> regSprint;

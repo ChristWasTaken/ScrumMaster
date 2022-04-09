@@ -1,18 +1,9 @@
 package utils;
 
-import model.Projet;
-import model.RegistreProjet;
-import model.RegistreSprint;
-import model.Sprint;
-
 import javax.swing.*;
-
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
-import java.util.ArrayList;
 
 
 @SuppressWarnings("FieldCanBeLocal")

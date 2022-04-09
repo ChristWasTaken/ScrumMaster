@@ -1,15 +1,5 @@
-/*
-
-     //Could-Have:
-     Méthode générique pour remplir les 3 tables.
-     Traiter les notes
-     Création d'employé
-     Ajouter détails à la Carte 1
-       */
-
 package ui;
 
-import io.ManipulationFichier;
 import model.*;
 import utils.*;
 
@@ -19,18 +9,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import static utils.Constante.*;
-import static utils.Utilitaire.calculerMaxSprint;
-import static utils.Utilitaire.verifierStringVide;
+
 
 @SuppressWarnings("FieldCanBeLocal")
 
@@ -53,7 +36,6 @@ public class FenApp extends FenParent {
         setResizable(false);
 
         setWidget();
-
     }
 
     private void setWidget() {
@@ -107,7 +89,6 @@ public class FenApp extends FenParent {
         txtDescTask = new JTextField(50);
         txtEmployeId = new JTextField(20);
         txtDescSprint = new JTextField(50);
-
 
         // Initialisation des comboBox
         jcbEmploye = new JComboBox<>();
@@ -267,7 +248,7 @@ public class FenApp extends FenParent {
 
         scPaneSprint = new JScrollPane(tblSprint);
 
-        scPaneSprint.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0), BorderFactory.createTitledBorder("Projets")));
+        scPaneSprint.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0), BorderFactory.createTitledBorder("Sprints")));
         scPaneSprint.setPreferredSize(new Dimension(450, 150));
         setTailleColonneTable(tblSprint, Constante.TAILLE_COL_3);
 
@@ -286,10 +267,9 @@ public class FenApp extends FenParent {
         scPaneTaskSelection.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0), BorderFactory.createTitledBorder("Taches selectionné pour ce sprint.")));
         scPaneTaskSelection.setPreferredSize(new Dimension(450, 150));
 
-
         // *** Formulaires
 
-//        // Formulaire Projet
+        // Formulaire Projet
         panDonneeSprint = new JPanel();
 
         panProjetForm = new JPanel(new GridLayout(7, 2));
@@ -350,6 +330,7 @@ public class FenApp extends FenParent {
         panButtonTaskSelect = new JPanel(new BorderLayout());
         // Card Panel # 7
         panSprintCours = new JPanel(new BorderLayout());
+
         // ***** Configuration de la Fenetre Global *****
         // *** Card Panel ***
         // Initialisation du cardPanel
@@ -369,8 +350,7 @@ public class FenApp extends FenParent {
         lblProjet.setFont(Constante.F2);
         panEntete = new JPanel(new FlowLayout(FlowLayout.LEFT, 80, 10));
         panEntete.add(lblProjet);
-        //  panEntete.add(panTitre);
-        //  panEntete.setBorder(BorderFactory.createEmptyBorder(0, 8,0,0));
+
         // *** Bas de page ***
         lblTitre = new JLabel("Scrum..Master");
         lblTitre.setFont(Constante.F3);

@@ -117,10 +117,6 @@ public class FenListener extends FenApp {
                         assignedTaskList.add(selectedTaskID);
                         presentSprintTaskList.add(selectedTaskID);
                         reinitialiserTables(registreTask, registreEmploye);
-//                        ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
-//
-//                        tblTaskSelection.removeAll();
-//                        remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
                         consoleTxtArea.append("Tache ajouté au sprint\n");
                     }
                 }
@@ -143,9 +139,9 @@ public class FenListener extends FenApp {
                             remplirTableTaskSprint(tableModel2, tmpTask, consoleTxtArea, registreEmploye);
                             tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
                             remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
+                            consoleTxtArea.append("Tache retiré du sprint\n");
                         }
                     }
-                    consoleTxtArea.append("Tache retiré du sprint\n");
                 }
             }
         });
@@ -239,7 +235,7 @@ public class FenListener extends FenApp {
         btnDeleteSprint.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int i = tblProjet.getSelectedRow();
+                int i = tblSprint.getSelectedRow();
 
                 if (i != -1) {
                     int result = Utilitaire.popupOuiNon("La suppression d'un sprint est final. Êtes-vous sur?",
@@ -356,7 +352,6 @@ public class FenListener extends FenApp {
                             JOptionPane.showMessageDialog(null, "Vous avez creer le maximum de Sprint", "Trop de sprint",
                                     JOptionPane.WARNING_MESSAGE);
                         }
-
                     }
                 } catch (ParseException | DoublonException ex) {
                     ex.printStackTrace();
@@ -366,7 +361,6 @@ public class FenListener extends FenApp {
 
         // *** Choix du menu ***
         miSortir.addActionListener(e ->
-
         {
             int result = Utilitaire.popupOuiNon("Voulez vous vraiment Quitter?", "Quitter?");
             if (result == JOptionPane.YES_OPTION) {
@@ -375,7 +369,6 @@ public class FenListener extends FenApp {
         });
 
         miConsole.addActionListener(e ->
-
         {
             if (scPaneConsole.isVisible()) {
                 scPaneConsole.setVisible(false);

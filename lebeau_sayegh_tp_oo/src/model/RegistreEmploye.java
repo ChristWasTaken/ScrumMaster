@@ -13,7 +13,6 @@ public class RegistreEmploye extends Registre {
 
     public RegistreEmploye() { this.registreEmp = new ArrayList<>(); }
 
-
     public void ajouterEmp(Employe emp) throws DoublonException {
         if (this.verifierDoublon(emp)) {
             throw new DoublonException("Doublon trouvé!!", emp,0);
@@ -30,7 +29,6 @@ public class RegistreEmploye extends Registre {
             if (!var2.hasNext()) {
                 return false;
             }
-
             tmp = (Employe) var2.next();
         } while (!emp.equals(tmp));
 
@@ -41,7 +39,6 @@ public class RegistreEmploye extends Registre {
         RegistreEmploye tmpReg = new RegistreEmploye();
 
         for (Employe tmp : registreEmploye.getRegistreEmp()) {
-
             if(tmp.getPoste().equals(Constante.POSTES[posteId])){
                 try {
                     tmpReg.ajouterEmp(tmp);
@@ -52,7 +49,6 @@ public class RegistreEmploye extends Registre {
         }
         return tmpReg;
     }
-
 
     public ArrayList<Employe> getRegistreEmp() {
         return registreEmp;

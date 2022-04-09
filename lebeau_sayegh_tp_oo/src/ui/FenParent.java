@@ -8,7 +8,6 @@ import utils.Utilitaire;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.text.Format;
@@ -18,10 +17,7 @@ import java.util.ArrayList;
 
 import static utils.Constante.*;
 
-
 public class FenParent extends JFrame {
-
-    protected Sprint sprintEnCours;
 
     protected JLabel lblSepProjet, lblSepTask, lblSepSprint, lblProjet, lblTitre, lblRights, lblTasks,
             lblNomProjet, lblDescProjet, lblScrumId, lblTaskPriority, lblDeskTask, lblEmpId, lblTaskId, lblDescSprint,
@@ -57,8 +53,6 @@ public class FenParent extends JFrame {
     protected JTable tblProjet, tblSprint, tblTask, tblTaskSelection;
     protected JScrollPane scPaneProjet, scPaneSprint, scPaneTask, scPaneConsole, scPaneTaskSelection;
 
-    protected TableColumn tempCol0, tempCol1, tempCol2;
-    protected TableColumnModel colmod;
     protected DefaultTableModel tableModel, tableModel2, tableModel3, tableModel4;
 
     protected String[] nomColonnesProjet = Constante.TBL_PROJET;
@@ -69,7 +63,6 @@ public class FenParent extends JFrame {
     protected int indexProjetEnCours, indexTaskEnCours, indexSprintEnCours;
     protected ArrayList<Integer> presentSprintTaskList;
     protected ArrayList<Integer> assignedTaskList;
-
 
     // méthode pour remplir un JCombobox avec une liste d'un registre
     public void remplirComboBox(Object o, JComboBox jcbTemp, int type) {
@@ -97,9 +90,7 @@ public class FenParent extends JFrame {
                 }
             }
         }
-
     }
-
 
     // ***** Méthode pour remplir les tables *****
     // Méthode pour configurere les champs de tables
@@ -184,7 +175,6 @@ public class FenParent extends JFrame {
     public void remplirTableTaskSprint(DefaultTableModel tableModel, ArrayList<Task> registreTask, JTextArea consoleTxtArea, RegistreEmploye registreEmploye) {
         tableModel.setRowCount(0);
         for (Task tmp : registreTask) {
-
             if (tmp.getTaskPriority() != -1) {
                 String employe = registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getNom() + registreEmploye.getRegistreEmp().get(tmp.getEmployeID()).getPrenom();
                 Object[] row = {tmp.getTaskID(), tmp.getTaskPriority(), tmp.getDescription(), employe};
@@ -203,7 +193,6 @@ public class FenParent extends JFrame {
         cL.show(panCard, "1");
         setToolbarActif(1, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint, btnDeleteSprint,
                 btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
-
         currentCard = 1;
     }
 
@@ -217,7 +206,6 @@ public class FenParent extends JFrame {
             consoleTxtArea.append("Erreur de chargement. Selectionner la ligne du projet à charger.\n");
 
         }
-
         presentSprintTaskList = registreSprint.rechercheTasksSprint();
 
         panProjetEnCours.add(panProjetForm, BorderLayout.NORTH);
@@ -267,7 +255,6 @@ public class FenParent extends JFrame {
         remplirTableSprint(tableModel3, registreSprint, consoleTxtArea);
 
         afficherDonneeSprint();
-
         panDonneeSprint.add(lblNbrSemaine);
 
         cL.show(panCard, "3");
@@ -286,9 +273,9 @@ public class FenParent extends JFrame {
         cL.show(panCard, "2");
         reinitialiserFormProjet();
         txtNomProjet.setEnabled(true);
-//         Créer un régistre des employées de niveau ScrumMaster
+//        Créer un régistre des employées de niveau ScrumMaster
         RegistreEmploye regScrumMaster = registreEmploye.listeEmployeParPoste(registreEmploye, 0);
-//         Remplis le combo box avec les objets de type employé
+//        Remplis le combo box avec les objets de type employé
         jcbEmploye.removeAllItems();
         remplirComboBox(regScrumMaster, jcbEmploye, 1);
 
@@ -317,7 +304,6 @@ public class FenParent extends JFrame {
 
     //methode pour creer un sprint
     public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask, RegistreEmploye registreEmploye) {
-
         presentSprintTaskList = new ArrayList<>();
         assignedTaskList.clear();
         assignedTaskList = registreSprint.rechercheTasksSprint();
@@ -343,9 +329,7 @@ public class FenParent extends JFrame {
         //populer le tableau des Tasks du projet
         registreTask.getRegistreTasks().clear();
         ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1], registreTask, 2);
-
         ArrayList<Task> tmpTask = registreTask.chercherTaskList(assignedTaskList, 1);
-
         tableModel2.setRowCount(0);
         tableModel4.setRowCount(0);
         remplirTableTaskSprint(tableModel2, tmpTask, consoleTxtArea, registreEmploye );
@@ -400,7 +384,6 @@ public class FenParent extends JFrame {
         reinitialiserFormSprint();
 
         txtDescSprint.setText(registreSprint.getRegSprint().get(indexSprintEnCours).getDescription());
-
         ftxtDateDebutSprint.setText(format.format(registreSprint.getRegSprint().get(indexSprintEnCours).getDateDebut()));
         ftxtDateFinSprint.setText(format.format(registreSprint.getRegSprint().get(indexSprintEnCours).getDateFin()));
 
@@ -410,14 +393,12 @@ public class FenParent extends JFrame {
 
         scPaneTaskSelection.setPreferredSize(new Dimension(425, 150));
         setTailleColonneTable(tblTaskSelection, TAILLE_COL_4);
-
         scPaneTask.setPreferredSize(new Dimension(425, 150));
         setTailleColonneTable(tblTask, Constante.TAILLE_COL_4);
+
         //populer le tableau des Tasks du projet
         registreTask.getRegistreTasks().clear();
-
         ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1], registreTask, 2);
-
         reinitialiserTables(registreTask, registreEmploye);
 
         setToolbarActif(5, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint, btnDeleteSprint,
@@ -441,13 +422,11 @@ public class FenParent extends JFrame {
         txtDescTask.setText("");
         jcbEmploye2.removeAllItems();
     }
-
     public void reinitialiserFormSprint() {
         txtDescSprint.setText("");
         ftxtDateDebutSprint.setText("");
         ftxtDateFinSprint.setText("");
     }
-
     public void reinitialiserFormProjet() {
         txtNomProjet.setText("");
         txtDescProjet.setText("");
@@ -518,5 +497,4 @@ public class FenParent extends JFrame {
             }
         }
     }
-
 }

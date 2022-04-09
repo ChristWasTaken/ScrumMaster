@@ -83,8 +83,6 @@ public class ManipulationFichier{
                 }
             }
         }
-
-
     }
     //Ecriture d'un fichier binaire
     public static void ecrire(String fichier, Object reg, int index) {
@@ -237,7 +235,6 @@ public class ManipulationFichier{
 
     public static void effacerRepertoire(File file)
     {
-
         // Efface tout les sous répertoire et fichiers du répertoire parent
         for (File subfile : file.listFiles()) {
 

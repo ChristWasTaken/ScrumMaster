@@ -1,7 +1,5 @@
 package model;
 
-
-
 import java.util.ArrayList;
 
 public class RegistreNotes extends Registre {
@@ -10,8 +8,6 @@ public class RegistreNotes extends Registre {
     public RegistreNotes() {
         this.registreNotes = new ArrayList<>();
     }
-
-
 
     public void ajouterNotes(Notes note) {
         this.registreNotes.add(note);
