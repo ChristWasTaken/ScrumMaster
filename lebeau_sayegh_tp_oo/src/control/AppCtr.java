@@ -4,6 +4,7 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrast
 import io.ManipulationFichier;
 import model.*;
 import ui.FenApp;
+import ui.FenListener;
 import utils.Constante;
 import utils.DoublonException;
 import utils.Utilitaire;
@@ -48,16 +49,16 @@ public class AppCtr {
 
 //
 //        ArrayList<Integer> taskID = new ArrayList<>();
-//        taskID.add(0);
-//        taskID.add(1);
-//        taskID.add(5);
+////        taskID.add(0);
+////        taskID.add(1);
+////        taskID.add(5);
 //        Date projFin = Utilitaire.getTodayDate();
 //        Sprint spt = new Sprint(taskID, "Ajouter vos Sprints ici - effacer ou modificer ce sprint", projFin, projFin, 0);
 //        taskID.clear();
-//        taskID.add(2);
-//        taskID.add(7);
-//        taskID.add(3);
-////        Sprint spt2 = new Sprint(taskID, "Ajouter vos Sprints ici - effacer ou modificer ce sprint", projFin, true);
+////        taskID.add(2);
+////        taskID.add(7);
+////        taskID.add(3);
+//////        Sprint spt2 = new Sprint(taskID, "Ajouter vos Sprints ici - effacer ou modificer ce sprint", projFin, true);
 //        try {
 //            registreSprint.ajouterSprint(spt);
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2] ,registreSprint, 3);
@@ -98,7 +99,7 @@ public class AppCtr {
         ManipulationFichier.lire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[2], registreSprint, 3);
 
         FenApp fenetre;
-        fenetre = new FenApp(projet, employe, regTask, registreSprint);
+        fenetre = new FenListener(projet, employe, regTask, registreSprint);
         fenetre.setVisible(true);
     }
 }
