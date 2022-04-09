@@ -30,7 +30,7 @@ public class AppCtr {
 //            Projet proj = new Projet("Scrum..Master", "Gérer des projets avec la méthode Scrum", 1, Utilitaire.getTodayDate(), 2);
 //            try {
 //                projet.ajouterProjet(proj, 1);
-//            } catch (ProjetDejaPresentException e) {
+//            } catch (DoublonException e) {
 //                e.printStackTrace();
 //            }
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET + Constante.nomFichier[0], projet, 1);
@@ -41,22 +41,22 @@ public class AppCtr {
 //            regTask.ajouterTask(t1, 0);
 //            ManipulationFichier.ecrire(Constante.REPERTOIRE_PROJET+Constante.nomFichier[1],regTask,2 );
 //
-//        } catch (TaskDejaExistException e) {
+//        } catch (DoublonException e) {
 //            e.printStackTrace();
 //        }
 
 
 //
 //        ArrayList<Integer> taskID = new ArrayList<>();
-////        taskID.add(0);
-////        taskID.add(1);
-////        taskID.add(5);
+//        taskID.add(0);
+//        taskID.add(1);
+//        taskID.add(5);
 //        Date projFin = Utilitaire.getTodayDate();
 //        Sprint spt = new Sprint(taskID, "Ajouter vos Sprints ici - effacer ou modificer ce sprint", projFin, projFin, 0);
-////        taskID.clear();
-////        taskID.add(2);
-////        taskID.add(7);
-////        taskID.add(3);
+//        taskID.clear();
+//        taskID.add(2);
+//        taskID.add(7);
+//        taskID.add(3);
 ////        Sprint spt2 = new Sprint(taskID, "Ajouter vos Sprints ici - effacer ou modificer ce sprint", projFin, true);
 //        try {
 //            registreSprint.ajouterSprint(spt);

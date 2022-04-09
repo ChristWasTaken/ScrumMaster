@@ -23,11 +23,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import static utils.Constante.*;
+import static utils.Utilitaire.calculerMaxSprint;
 import static utils.Utilitaire.verifierStringVide;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -250,7 +252,7 @@ public class FenApp extends FenParent {
         // Fonction pour remplir la table par le model à faire
         scPaneTask = new JScrollPane(tblTask);
 
-        scPaneTask.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5,5,5,0), BorderFactory.createTitledBorder("Taches")));
+        scPaneTask.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0), BorderFactory.createTitledBorder("Taches")));
         scPaneTask.setPreferredSize(new Dimension(450, 150));
         setTailleColonneTable(tblTask, Constante.TAILLE_COL_2);
 
@@ -265,8 +267,8 @@ public class FenApp extends FenParent {
 
         scPaneSprint = new JScrollPane(tblSprint);
 
-        scPaneSprint.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5,5,5,0), BorderFactory.createTitledBorder("Projets")));
-        scPaneSprint.setPreferredSize(new Dimension(450,150));
+        scPaneSprint.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0), BorderFactory.createTitledBorder("Projets")));
+        scPaneSprint.setPreferredSize(new Dimension(450, 150));
         setTailleColonneTable(tblSprint, Constante.TAILLE_COL_3);
 
         // ** Table de selection de task (Sprint)
@@ -281,8 +283,8 @@ public class FenApp extends FenParent {
 
         // Fonction pour remplir la table par le model à faire
         scPaneTaskSelection = new JScrollPane(tblTaskSelection);
-        scPaneTaskSelection.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5,5,5,0), BorderFactory.createTitledBorder("Taches selectionné pour ce sprint.")));
-        scPaneTaskSelection.setPreferredSize(new Dimension(450,150));
+        scPaneTaskSelection.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0), BorderFactory.createTitledBorder("Taches selectionné pour ce sprint.")));
+        scPaneTaskSelection.setPreferredSize(new Dimension(450, 150));
 
 
         // *** Formulaires
@@ -446,9 +448,18 @@ public class FenApp extends FenParent {
         });
         // Créer un Nouveau Sprint - formulaire
         btnNouveauSprint.addActionListener(e -> {
+            LocalDate dateDebut = LocalDate.parse(ftxtDateDebut.getText());
+            LocalDate dateFin = LocalDate.parse(ftxtDateFin.getText());
+            // Recoit le nombre de sprint de la durée spécifié
+            int nbrSemaine = Utilitaire.calculerNombreSemaine(dateDebut, dateFin);
             if (currentCard != 6) {
-                reinitialiserFormSprint();
-                carteNouveauSprint(registreSprint, registreTask, registreEmploye);
+                if (calculerMaxSprint(registreSprint.getRegSprint().size(),Utilitaire.calculerNombreSprint(nbrSemaine, Integer.parseInt(txtDureeSprint.getText())))) {
+                    reinitialiserFormSprint();
+                    carteNouveauSprint(registreSprint, registreTask, registreEmploye);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Vous avez creer le maximum de Sprint", "Trop de sprint",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             } else {
                 int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.",
                         "Retour vers le projet?",
@@ -465,16 +476,16 @@ public class FenApp extends FenParent {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int indexSelectedtask = tblTask.getSelectedRow();
-                int selectedTaskID = (Integer)tblTask.getValueAt(indexSelectedtask, 0);
+                int selectedTaskID = (Integer) tblTask.getValueAt(indexSelectedtask, 0);
 
-                if(indexSelectedtask != -1){
+                if (indexSelectedtask != -1) {
                     boolean flag = false;
-                    for (int i = 0; i < assgignedTaskList.size(); i++){
-                        if(selectedTaskID == assgignedTaskList.get(i)){
+                    for (int i = 0; i < assgignedTaskList.size(); i++) {
+                        if (selectedTaskID == assgignedTaskList.get(i)) {
                             flag = true;
                         }
                     }
-                    if(!flag){
+                    if (!flag) {
                         assgignedTaskList.add(selectedTaskID);
                         presentSprintTaskList.add(selectedTaskID);
                         reinitialiserTables(registreTask, registreEmploye);
@@ -492,12 +503,12 @@ public class FenApp extends FenParent {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int indexSelectedtask = tblTaskSelection.getSelectedRow();
-                System.out.println( " retirer un task - list assgined: " + assgignedTaskList);
-                int selectedTaskID = (Integer)tblTaskSelection.getValueAt(indexSelectedtask, 0);
+                System.out.println(" retirer un task - list assgined: " + assgignedTaskList);
+                int selectedTaskID = (Integer) tblTaskSelection.getValueAt(indexSelectedtask, 0);
                 System.out.println("ligne à retirer: " + indexSelectedtask + " | task à retirer: " + selectedTaskID);
-                if(selectedTaskID != -1){
-                    for (int i = 0; i < assgignedTaskList.size(); i++){
-                        if(selectedTaskID == assgignedTaskList.get(i)){
+                if (selectedTaskID != -1) {
+                    for (int i = 0; i < assgignedTaskList.size(); i++) {
+                        if (selectedTaskID == assgignedTaskList.get(i)) {
                             System.out.println(" loop: " + i + "select: " + selectedTaskID + " = " + assgignedTaskList.get(i));
                             assgignedTaskList.remove(i);
                             presentSprintTaskList.remove(indexSelectedtask);
@@ -545,7 +556,7 @@ public class FenApp extends FenParent {
             // Enregistre l'index registre du sprint sélectionné
             indexSprintEnCours = tblSprint.getSelectedRow();
             //valide la selection d'un sprint
-            if(indexSprintEnCours != -1){
+            if (indexSprintEnCours != -1) {
                 carteModifierSprint(registreSprint, registreTask, registreEmploye);
                 consoleTxtArea.append("Chargement du sprint complété avec succès. \n");
             } else {
@@ -604,17 +615,17 @@ public class FenApp extends FenParent {
             public void actionPerformed(ActionEvent e) {
                 int i = tblProjet.getSelectedRow();
 
-                if(i != -1){
+                if (i != -1) {
                     int result = Utilitaire.popupOuiNon("La suppression d'un sprint est final. Êtes-vous sur?",
                             "Suppression de sprint");
-                    if(result == JOptionPane.YES_OPTION) {
+                    if (result == JOptionPane.YES_OPTION) {
                         registreSprint.supprimerSprint(i);
                         tableModel3.removeRow(i);
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[2],
                                 registreSprint, 3);
                         consoleTxtArea.append("Suppression du sprint complété.\n");
                         System.out.println("taille sprint reg:" + registreSprint.getRegSprint().size());
-                    }else{
+                    } else {
                         consoleTxtArea.append("Suppression du sprint annulée.\n");
                     }
                 } else {
@@ -670,7 +681,7 @@ public class FenApp extends FenParent {
                 verifierStringVide(txtDescTask.getText(), 5);
                 if (currentCard == 4) {
                     Task tempTask = new Task(Integer.parseInt(String.valueOf(jcbTask.getSelectedItem())),
-                            txtDescTask.getText(),jcbEmploye2.getSelectedIndex());
+                            txtDescTask.getText(), jcbEmploye2.getSelectedIndex());
                     if (registreTask.ajouterTask(tempTask, 0) == -1) {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[1],
                                 registreTask, 2);
@@ -698,27 +709,34 @@ public class FenApp extends FenParent {
         btnEnregistrerSprint.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
+                LocalDate dateDebut = LocalDate.parse(ftxtDateDebut.getText());
+                LocalDate dateFin = LocalDate.parse(ftxtDateFin.getText());
+                // Recoit le nombre de sprint de la durée spécifié
+                int nbrSemaine = Utilitaire.calculerNombreSemaine(dateDebut, dateFin);
                 try {
-                    if(currentCard == 6 || currentCard == 7){
-                        String tmpDesc = txtDescSprint.getText();
-                        Date tmpdateDebut = format.parse(ftxtDateDebutSprint.getText());
-                        System.out.println(tmpdateDebut);
-                        Calendar tmpCal = Calendar.getInstance();
-                        tmpCal.setTime(tmpdateDebut);
-                        tmpCal.add(Calendar.WEEK_OF_MONTH, registreProjet.getRegistrePro().get(indexProjetEnCours).getDureeSprint());
-                        Date tmpDateFin = tmpCal.getTime();
-                        System.out.println(tmpCal.getTime());
-                        int tmpProg = jcbProgres.getSelectedIndex();
-                        Sprint tmpSprint = new Sprint(presentSprintTaskList, tmpDesc, tmpdateDebut, tmpDateFin, tmpProg);
-                        System.out.println(tmpSprint);
-                        registreSprint.ajouterSprint(tmpSprint);
-                        System.out.println("registre sprint: " + registreSprint.getRegSprint().size());
-                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[2],
-                                registreSprint, 3);
-                    }
+                    if (currentCard == 6 || currentCard == 7) {
+                        if (calculerMaxSprint(registreSprint.getRegSprint().size(),Utilitaire.calculerNombreSprint(nbrSemaine, Integer.parseInt(txtDureeSprint.getText())))) {
+                            String tmpDesc = txtDescSprint.getText();
+                            Date tmpdateDebut = format.parse(ftxtDateDebutSprint.getText());
+                            System.out.println(tmpdateDebut);
+                            Calendar tmpCal = Calendar.getInstance();
+                            tmpCal.setTime(tmpdateDebut);
+                            tmpCal.add(Calendar.WEEK_OF_MONTH, registreProjet.getRegistrePro().get(indexProjetEnCours).getDureeSprint());
+                            Date tmpDateFin = tmpCal.getTime();
+                            System.out.println(tmpCal.getTime());
+                            int tmpProg = jcbProgres.getSelectedIndex();
+                            Sprint tmpSprint = new Sprint(presentSprintTaskList, tmpDesc, tmpdateDebut, tmpDateFin, tmpProg);
+                            System.out.println(tmpSprint);
+                            registreSprint.ajouterSprint(tmpSprint);
+                            System.out.println("registre sprint: " + registreSprint.getRegSprint().size());
+                            ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[2],
+                                    registreSprint, 3);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Vous avez creer le maximum de Sprint", "Trop de sprint",
+                                    JOptionPane.WARNING_MESSAGE);
+                        }
 
+                    }
                 } catch (ParseException | DoublonException ex) {
                     ex.printStackTrace();
                 }
@@ -726,14 +744,18 @@ public class FenApp extends FenParent {
         });
 
         // *** Choix du menu ***
-        miSortir.addActionListener(e -> {
+        miSortir.addActionListener(e ->
+
+        {
             int result = Utilitaire.popupOuiNon("Voulez vous vraiment Quitter?", "Quitter?");
             if (result == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
         });
 
-        miConsole.addActionListener(e -> {
+        miConsole.addActionListener(e ->
+
+        {
             if (scPaneConsole.isVisible()) {
                 scPaneConsole.setVisible(false);
                 setVisible(true);

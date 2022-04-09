@@ -1,10 +1,18 @@
 package utils;
 
+import model.Projet;
+import model.RegistreProjet;
+import model.RegistreSprint;
+import model.Sprint;
+
 import javax.swing.*;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.util.ArrayList;
 
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -40,6 +48,13 @@ public class Utilitaire {
 
     public static int calculerNombreSprint(int nbrSem, int dureeSprint){
         return nbrSem/dureeSprint;
+    }
+
+    public static boolean calculerMaxSprint(int size,int nombreSemaine ){
+        boolean flag= size <nombreSemaine;
+        System.out.println(size +"size AND nombresemaine"+nombreSemaine);
+        return flag  ;
+
     }
 
 
