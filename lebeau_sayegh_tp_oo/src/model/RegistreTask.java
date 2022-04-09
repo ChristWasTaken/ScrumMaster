@@ -32,7 +32,7 @@ public class RegistreTask extends Registre {
 
         switch (option) {
             case 0 -> {
-                System.out.println("case0");
+                // Ajoute tout les task present dans tmplist au tmpReg
                 for (Task tmp : registreTasks) {
                     for (int i : tmpList) {
                         if (tmp.getTaskID() == i) {
@@ -41,21 +41,18 @@ public class RegistreTask extends Registre {
                     }
                 }
                 for (Task emp : tmpReg) {
-                    System.out.println(emp);
                 }
                 break;
             }
             case 1 -> {
 
                 if (tmpList.size() == 0) {
-                    System.out.println("case1A");
 
                     for (Task tmp : registreTasks) {
                         tmpReg.add(tmp);
                     }
                 } else {
-                    System.out.println("case1B");
-                    System.out.println("assigned tasks: " + tmpList);
+                    // Ajoute tout les task qui ne sont pas présent dans tmpList au tmpReg
                     for (Task tmp : registreTasks) {
 
                         boolean flag = false;
@@ -66,15 +63,9 @@ public class RegistreTask extends Registre {
                         }
                         if(!flag){
                             tmpReg.add(tmp);
-                            System.out.println("ajout + " + tmp.getTaskID());
                         }
                     }
                 }
-                System.out.println("tasks restante: ");
-                for (Task emp : tmpReg) {
-                    System.out.print(emp.getTaskID() + " ");
-                }
-                System.out.println("\n");
             }
         }
 

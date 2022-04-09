@@ -68,7 +68,7 @@ public class FenParent extends JFrame {
     protected int currentCard = 1;
     protected int indexProjetEnCours, indexTaskEnCours, indexSprintEnCours;
     protected ArrayList<Integer> presentSprintTaskList;
-    protected ArrayList<Integer> assgignedTaskList;
+    protected ArrayList<Integer> assignedTaskList;
 
 
     // méthode pour remplir un JCombobox avec une liste d'un registre
@@ -319,9 +319,8 @@ public class FenParent extends JFrame {
     public void carteNouveauSprint(RegistreSprint registreSprint, RegistreTask registreTask, RegistreEmploye registreEmploye) {
 
         presentSprintTaskList = new ArrayList<>();
-        assgignedTaskList.clear();
-        assgignedTaskList = registreSprint.rechercheTasksSprint();
-        System.out.println(assgignedTaskList);
+        assignedTaskList.clear();
+        assignedTaskList = registreSprint.rechercheTasksSprint();
 
         cL.show(panCard, "6");
         panSprintCreation.add(panSprintForm, BorderLayout.NORTH);
@@ -345,14 +344,11 @@ public class FenParent extends JFrame {
         registreTask.getRegistreTasks().clear();
         ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1], registreTask, 2);
 
-        System.out.println("new sprint1");
-        ArrayList<Task> tmpTask = registreTask.chercherTaskList(assgignedTaskList, 1);
+        ArrayList<Task> tmpTask = registreTask.chercherTaskList(assignedTaskList, 1);
 
         tableModel2.setRowCount(0);
         tableModel4.setRowCount(0);
-        System.out.println("new sprint2");
         remplirTableTaskSprint(tableModel2, tmpTask, consoleTxtArea, registreEmploye );
-        System.out.println("new sprint3");
 
         setToolbarActif(5, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint, btnDeleteSprint,
                 btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
@@ -391,9 +387,8 @@ public class FenParent extends JFrame {
     public void carteModifierSprint(RegistreSprint registreSprint, RegistreTask registreTask, RegistreEmploye registreEmploye){
         presentSprintTaskList = new ArrayList<>();
         presentSprintTaskList = registreSprint.getRegSprint().get(indexSprintEnCours).getTaskID();
-        assgignedTaskList.clear();
-        assgignedTaskList = registreSprint.rechercheTasksSprint();
-        System.out.println(assgignedTaskList);
+        assignedTaskList.clear();
+        assignedTaskList = registreSprint.rechercheTasksSprint();
 
         cL.show(panCard, "7");
         panSprintCours.add(panSprintForm, BorderLayout.NORTH);
@@ -432,7 +427,7 @@ public class FenParent extends JFrame {
     }
 
     public void reinitialiserTables(RegistreTask registreTask, RegistreEmploye registreEmploye){
-        ArrayList<Task> tmpTask = registreTask.chercherTaskList(assgignedTaskList, 1);
+        ArrayList<Task> tmpTask = registreTask.chercherTaskList(assignedTaskList, 1);
         tableModel2.setRowCount(0);
         tableModel4.setRowCount(0);
         remplirTableTaskSprint(tableModel2, tmpTask, consoleTxtArea, registreEmploye );

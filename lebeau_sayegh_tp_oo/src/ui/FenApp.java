@@ -58,7 +58,7 @@ public class FenApp extends FenParent {
 
     private void setWidget() {
 
-        assgignedTaskList = new ArrayList<>();
+        assignedTaskList = new ArrayList<>();
 
         // Initialisation des labels
 
@@ -480,13 +480,13 @@ public class FenApp extends FenParent {
 
                 if (indexSelectedtask != -1) {
                     boolean flag = false;
-                    for (int i = 0; i < assgignedTaskList.size(); i++) {
-                        if (selectedTaskID == assgignedTaskList.get(i)) {
+                    for (int i = 0; i < assignedTaskList.size(); i++){
+                        if(selectedTaskID == assignedTaskList.get(i)){
                             flag = true;
                         }
                     }
-                    if (!flag) {
-                        assgignedTaskList.add(selectedTaskID);
+                    if(!flag){
+                        assignedTaskList.add(selectedTaskID);
                         presentSprintTaskList.add(selectedTaskID);
                         reinitialiserTables(registreTask, registreEmploye);
 //                        ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
@@ -503,20 +503,18 @@ public class FenApp extends FenParent {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int indexSelectedtask = tblTaskSelection.getSelectedRow();
-                System.out.println(" retirer un task - list assgined: " + assgignedTaskList);
-                int selectedTaskID = (Integer) tblTaskSelection.getValueAt(indexSelectedtask, 0);
-                System.out.println("ligne à retirer: " + indexSelectedtask + " | task à retirer: " + selectedTaskID);
-                if (selectedTaskID != -1) {
-                    for (int i = 0; i < assgignedTaskList.size(); i++) {
-                        if (selectedTaskID == assgignedTaskList.get(i)) {
-                            System.out.println(" loop: " + i + "select: " + selectedTaskID + " = " + assgignedTaskList.get(i));
-                            assgignedTaskList.remove(i);
+                int selectedTaskID = (Integer)tblTaskSelection.getValueAt(indexSelectedtask, 0);
+                if(selectedTaskID != -1){
+                    for (int i = 0; i < assignedTaskList.size(); i++){
+                        if(selectedTaskID == assignedTaskList.get(i)){
+                            assignedTaskList.remove(i);
                             presentSprintTaskList.remove(indexSelectedtask);
-                            System.out.println("assigned update: " + assgignedTaskList);
-                            reinitialiserTables(registreTask, registreEmploye);
-//                            ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
-//                            tblTaskSelection.removeAll();
-//                            remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
+                            tableModel2.setRowCount(0);
+                            tableModel4.setRowCount(0);
+                            ArrayList<Task> tmpTask = registreTask.chercherTaskList(assignedTaskList, 1);
+                            remplirTableTaskSprint(tableModel2, tmpTask, consoleTxtArea, registreEmploye);
+                            tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
+                            remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
                         }
                     }
                     consoleTxtArea.append("Tache retiré du sprint\n");
@@ -624,7 +622,6 @@ public class FenApp extends FenParent {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[2],
                                 registreSprint, 3);
                         consoleTxtArea.append("Suppression du sprint complété.\n");
-                        System.out.println("taille sprint reg:" + registreSprint.getRegSprint().size());
                     } else {
                         consoleTxtArea.append("Suppression du sprint annulée.\n");
                     }
@@ -718,17 +715,13 @@ public class FenApp extends FenParent {
                         if (calculerMaxSprint(registreSprint.getRegSprint().size(),Utilitaire.calculerNombreSprint(nbrSemaine, Integer.parseInt(txtDureeSprint.getText())))) {
                             String tmpDesc = txtDescSprint.getText();
                             Date tmpdateDebut = format.parse(ftxtDateDebutSprint.getText());
-                            System.out.println(tmpdateDebut);
                             Calendar tmpCal = Calendar.getInstance();
                             tmpCal.setTime(tmpdateDebut);
                             tmpCal.add(Calendar.WEEK_OF_MONTH, registreProjet.getRegistrePro().get(indexProjetEnCours).getDureeSprint());
                             Date tmpDateFin = tmpCal.getTime();
-                            System.out.println(tmpCal.getTime());
                             int tmpProg = jcbProgres.getSelectedIndex();
                             Sprint tmpSprint = new Sprint(presentSprintTaskList, tmpDesc, tmpdateDebut, tmpDateFin, tmpProg);
-                            System.out.println(tmpSprint);
                             registreSprint.ajouterSprint(tmpSprint);
-                            System.out.println("registre sprint: " + registreSprint.getRegSprint().size());
                             ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[2],
                                     registreSprint, 3);
                         } else {
