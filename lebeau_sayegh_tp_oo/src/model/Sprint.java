@@ -73,7 +73,7 @@ public class Sprint implements Serializable {
         this.dateFin = dateFin;
     }
 
-    public int isProgres() {
+    public int getProgres() {
         return progres;
     }
 

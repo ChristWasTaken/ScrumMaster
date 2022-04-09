@@ -66,7 +66,7 @@ public class FenParent extends JFrame {
     protected String[] nomColonnesSprint = Constante.TBL_SPRINT;
 
     protected int currentCard = 1;
-    protected int indexProjetEnCours, indexTaskEnCours;
+    protected int indexProjetEnCours, indexTaskEnCours, indexSprintEnCours;
     protected ArrayList<Integer> presentSprintTaskList;
     protected ArrayList<Integer> assgignedTaskList;
 
@@ -154,7 +154,7 @@ public class FenParent extends JFrame {
         tableModel3.setRowCount(0);
         String progres;
         for (Sprint tmp : registreSprint.getRegSprint()) {
-            if(tmp.isProgres() == 1){
+            if(tmp.getProgres() == 1){
                 progres = PROGRES_SPRINT[1];
             } else {
                 progres = PROGRES_SPRINT[0];
@@ -385,6 +385,59 @@ public class FenParent extends JFrame {
                 btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
         currentCard = 5;
         consoleTxtArea.append("Modifier la tache et appuyer sur Enregistrer\n");
+    }
+
+    //
+    public void carteModifierSprint(RegistreSprint registreSprint, RegistreTask registreTask, RegistreEmploye registreEmploye){
+        presentSprintTaskList = new ArrayList<>();
+        presentSprintTaskList = registreSprint.getRegSprint().get(indexSprintEnCours).getTaskID();
+        assgignedTaskList.clear();
+        assgignedTaskList = registreSprint.rechercheTasksSprint();
+        System.out.println(assgignedTaskList);
+
+        cL.show(panCard, "7");
+        panSprintCours.add(panSprintForm, BorderLayout.NORTH);
+        panSprintCours.add(scPaneTaskSelection, BorderLayout.EAST);
+        panSprintCours.add(scPaneTask, BorderLayout.WEST);
+        panSprintCours.add(panButtonTaskSelect, BorderLayout.CENTER);
+        panButtonTaskSelect.add(btnAjouterTaskSprint,BorderLayout.NORTH);
+        panButtonTaskSelect.add(btnRetirerTaskSprint, BorderLayout.CENTER);
+        reinitialiserFormSprint();
+
+        txtDescSprint.setText(registreSprint.getRegSprint().get(indexSprintEnCours).getDescription());
+
+        ftxtDateDebutSprint.setText(format.format(registreSprint.getRegSprint().get(indexSprintEnCours).getDateDebut()));
+        ftxtDateFinSprint.setText(format.format(registreSprint.getRegSprint().get(indexSprintEnCours).getDateFin()));
+
+        jcbProgres.removeAllItems();
+        remplirComboBox(Constante.PROGRES_SPRINT, jcbProgres, 2);
+        jcbProgres.setSelectedItem(PROGRES_SPRINT[registreSprint.getRegSprint().get(indexSprintEnCours).getProgres()]);
+
+        scPaneTaskSelection.setPreferredSize(new Dimension(425, 150));
+        setTailleColonneTable(tblTaskSelection, TAILLE_COL_4);
+
+        scPaneTask.setPreferredSize(new Dimension(425, 150));
+        setTailleColonneTable(tblTask, Constante.TAILLE_COL_4);
+        //populer le tableau des Tasks du projet
+        registreTask.getRegistreTasks().clear();
+
+        ManipulationFichier.lire(REPERTOIRE_PROJET + txtNomProjet.getText() + Constante.nomFichier[1], registreTask, 2);
+
+        reinitialiserTables(registreTask, registreEmploye);
+
+        setToolbarActif(5, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint, btnDeleteSprint,
+                btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
+        currentCard = 7;
+        consoleTxtArea.append("Remplir le formulaire de sprint et appuyer sur enregistrer\n");
+    }
+
+    public void reinitialiserTables(RegistreTask registreTask, RegistreEmploye registreEmploye){
+        ArrayList<Task> tmpTask = registreTask.chercherTaskList(assgignedTaskList, 1);
+        tableModel2.setRowCount(0);
+        tableModel4.setRowCount(0);
+        remplirTableTaskSprint(tableModel2, tmpTask, consoleTxtArea, registreEmploye );
+        tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
+        remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
     }
 
     // Méthodes pour reinitialiser les champs des formulaires

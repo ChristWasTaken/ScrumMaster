@@ -361,7 +361,7 @@ public class FenApp extends FenParent {
         panCard.add(panTaskCreation, "4");
         panCard.add(panTaskCours, "5");
         panCard.add(panSprintCreation, "6");
-        //  panCard.add(panSprintCours, "7");
+        panCard.add(panSprintCours, "7");
         // *** Entete ***
         lblProjet = new JLabel("Selection des projets");
         lblProjet.setFont(Constante.F2);
@@ -410,7 +410,7 @@ public class FenApp extends FenParent {
                     if (currentCard == 2 || currentCard == 3) {
                         consoleTxtArea.append("Retour à la selection de projet.\n");
                         carteSelectionProjet(registreProjet, registreEmploye);
-                    } else if (currentCard == 4 || currentCard == 5 || currentCard == 6) {
+                    } else if (currentCard == 4 || currentCard == 5 || currentCard == 6 || currentCard == 7) {
                         consoleTxtArea.append("Retour à la gestion de projet.\n");
                         carteProjetEnCours(registreProjet, registreTask, registreEmploye, registreSprint);
                     }
@@ -477,10 +477,11 @@ public class FenApp extends FenParent {
                     if(!flag){
                         assgignedTaskList.add(selectedTaskID);
                         presentSprintTaskList.add(selectedTaskID);
-                        ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
-
-                        tblTaskSelection.removeAll();
-                        remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
+                        reinitialiserTables(registreTask, registreEmploye);
+//                        ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
+//
+//                        tblTaskSelection.removeAll();
+//                        remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
                         consoleTxtArea.append("Tache ajouté au sprint\n");
                     }
                 }
@@ -501,9 +502,10 @@ public class FenApp extends FenParent {
                             assgignedTaskList.remove(i);
                             presentSprintTaskList.remove(indexSelectedtask);
                             System.out.println("assigned update: " + assgignedTaskList);
-                            ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
-                            tblTaskSelection.removeAll();
-                            remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
+                            reinitialiserTables(registreTask, registreEmploye);
+//                            ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
+//                            tblTaskSelection.removeAll();
+//                            remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
                         }
                     }
                     consoleTxtArea.append("Tache retiré du sprint\n");
@@ -536,6 +538,19 @@ public class FenApp extends FenParent {
             } else {
                 consoleTxtArea.append("La ligne de la tache doit être correctement selectionné pour pouvoir la " +
                         "modifier.\n");
+            }
+        });
+        // Modifier un sprint
+        btnModifierSprint.addActionListener(e -> {
+            // Enregistre l'index registre du sprint sélectionné
+            indexSprintEnCours = tblSprint.getSelectedRow();
+            //valide la selection d'un sprint
+            if(indexSprintEnCours != -1){
+                carteModifierSprint(registreSprint, registreTask, registreEmploye);
+                consoleTxtArea.append("Chargement du sprint complété avec succès. \n");
+            } else {
+                JOptionPane.showMessageDialog(null, "La ligne du sprint doit être correctement selectionné pour " +
+                        "pouvoir le charger.\n");
             }
         });
         // Supprimer un projet
@@ -595,6 +610,8 @@ public class FenApp extends FenParent {
                     if(result == JOptionPane.YES_OPTION) {
                         registreSprint.supprimerSprint(i);
                         tableModel3.removeRow(i);
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[2],
+                                registreSprint, 3);
                         consoleTxtArea.append("Suppression du sprint complété.\n");
                         System.out.println("taille sprint reg:" + registreSprint.getRegSprint().size());
                     }else{
@@ -684,7 +701,7 @@ public class FenApp extends FenParent {
 
 
                 try {
-                    if(currentCard == 6){
+                    if(currentCard == 6 || currentCard == 7){
                         String tmpDesc = txtDescSprint.getText();
                         Date tmpdateDebut = format.parse(ftxtDateDebutSprint.getText());
                         System.out.println(tmpdateDebut);

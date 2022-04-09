@@ -14,8 +14,9 @@ public class RegistreSprint extends Registre {
     }
 
     public void ajouterSprint(Sprint sprint) throws DoublonException {
-        if (this.verifierDoublon(sprint)) {
-            throw new DoublonException("Doublon trouvé!!", sprint,3);
+        int index = verifierDoublon(sprint);
+        if ( index != -1) {
+            this.regSprint.set(index, sprint);
         } else {
             this.regSprint.add(sprint);
         }
@@ -25,18 +26,13 @@ public class RegistreSprint extends Registre {
         regSprint.remove(index);
     }
 
-    public boolean verifierDoublon(Sprint sprint) {
-        Iterator<Sprint> var2 = this.regSprint.iterator();
-
-        Sprint tmp;
-        do {
-            if (!var2.hasNext()) {
-                return false;
+    public int verifierDoublon(Sprint sprint) {
+        for(Sprint tmp : regSprint) {
+            if (sprint.getDateDebut().equals(tmp.getDateDebut())){
+                return getRegSprint().indexOf(tmp);
             }
-            tmp = (Sprint) var2.next();
-        } while (!sprint.equals(tmp));
-
-        return true;
+        }
+        return -1;
     }
 
     public ArrayList<Integer> rechercheTasksSprint(){

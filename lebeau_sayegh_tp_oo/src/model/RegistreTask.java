@@ -69,20 +69,6 @@ public class RegistreTask extends Registre {
                             System.out.println("ajout + " + tmp.getTaskID());
                         }
                     }
-//                    for (int i : tmpList) {
-//                        System.out.println("case1B");
-//                        for (Task tmp : registreTasks) {
-//                            if (tmp.getTaskID() != i) {
-//                                System.out.println(i);
-//                                System.out.println(tmp.getTaskID());
-//                                System.out.println("ajout + " + tmp.getTaskID());
-//                                tmpReg.add(tmp);
-//                            } else {
-//                                System.out.println(tmp.getTaskID() + " est trouvé");
-//                            }
-//                        }
-//                    }
-
                 }
                 System.out.println("tasks restante: ");
                 for (Task emp : tmpReg) {
