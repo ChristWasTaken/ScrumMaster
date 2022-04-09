@@ -21,6 +21,10 @@ public class RegistreSprint extends Registre {
         }
     }
 
+    public void supprimerSprint(int index){
+        regSprint.remove(index);
+    }
+
     public boolean verifierDoublon(Sprint sprint) {
         Iterator<Sprint> var2 = this.regSprint.iterator();
 

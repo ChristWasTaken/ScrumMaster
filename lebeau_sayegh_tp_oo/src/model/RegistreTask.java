@@ -34,7 +34,7 @@ public class RegistreTask extends Registre {
             case 0 -> {
                 System.out.println("case0");
                 for (Task tmp : registreTasks) {
-                    for (Integer i : tmpList) {
+                    for (int i : tmpList) {
                         if (tmp.getTaskID() == i) {
                             tmpReg.add(tmp);
                         }
@@ -49,28 +49,46 @@ public class RegistreTask extends Registre {
 
                 if (tmpList.size() == 0) {
                     System.out.println("case1A");
+
                     for (Task tmp : registreTasks) {
                         tmpReg.add(tmp);
                     }
                 } else {
-                    for (Integer i : tmpList) {
-                        System.out.println("case1B");
-                        for (Task tmp : registreTasks) {
-                            if (tmp.getTaskID() != i) {
-                                System.out.println(i);
-                                System.out.println(tmp.getTaskID());
-                                System.out.println("ajout + " + tmp.getTaskID());
-                                tmpReg.add(tmp);
-                            } else {
-                                System.out.println(tmp.getTaskID() + " est trouvé");
+                    System.out.println("case1B");
+                    System.out.println("assigned tasks: " + tmpList);
+                    for (Task tmp : registreTasks) {
+
+                        boolean flag = false;
+                        for (int i : tmpList) {
+                            if(tmp.getTaskID() == i){
+                                flag = true;
                             }
                         }
+                        if(!flag){
+                            tmpReg.add(tmp);
+                            System.out.println("ajout + " + tmp.getTaskID());
+                        }
                     }
+//                    for (int i : tmpList) {
+//                        System.out.println("case1B");
+//                        for (Task tmp : registreTasks) {
+//                            if (tmp.getTaskID() != i) {
+//                                System.out.println(i);
+//                                System.out.println(tmp.getTaskID());
+//                                System.out.println("ajout + " + tmp.getTaskID());
+//                                tmpReg.add(tmp);
+//                            } else {
+//                                System.out.println(tmp.getTaskID() + " est trouvé");
+//                            }
+//                        }
+//                    }
 
                 }
+                System.out.println("tasks restante: ");
                 for (Task emp : tmpReg) {
-                    System.out.println(emp.getTaskID());
+                    System.out.print(emp.getTaskID() + " ");
                 }
+                System.out.println("\n");
             }
         }
 

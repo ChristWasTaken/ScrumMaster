@@ -13,15 +13,15 @@ public class Sprint implements Serializable {
     private String description;
     private Date dateDebut;
     private Date dateFin;
-    private boolean progres;
+    private int progres;
 
     public Sprint() {
     }
 
-    public Sprint(ArrayList<Integer> taskID, String description, Date dateFin, boolean progres) {
+    public Sprint(ArrayList<Integer> taskID, String description,Date dateDebut, Date dateFin, int progres) {
         this.taskID = taskID;
         this.description = description;
-        this.dateDebut = Utilitaire.getTodayDate();
+        this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.progres = progres;
     }
@@ -73,21 +73,22 @@ public class Sprint implements Serializable {
         this.dateFin = dateFin;
     }
 
-    public boolean isProgres() {
+    public int isProgres() {
         return progres;
     }
 
-    public void setProgres(boolean progres) {
+    public void setProgres(int progres) {
         this.progres = progres;
     }
 
     @Override
     public String toString() {
-        return "Sprint: " + description +
-                "dateDebut= " + dateDebut +
-                ", dateFin= " + dateFin +
-                ", progres= " + progres
-
-               ;
+        return "Sprint{" +
+                "taskID=" + taskID +
+                ", description='" + description + '\'' +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", progres=" + progres +
+                '}';
     }
 }

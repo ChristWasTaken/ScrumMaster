@@ -45,8 +45,8 @@ public class FenParent extends JFrame {
     protected ImageIcon iconNew, iconCharger, iconDelete, iconRetour, iconTaskSave, iconSprintSave, iconSave,
             iconAjouterTask, iconModifierTask, iconDeleteTask, iconAjouterSprint, iconModifierSprint, iconDeleteSprint,
             iconRemoveTask, iconAddTask;
-    protected JButton btnNouveauProjet, btnRetour, btnChargerProjet, btnDelete, btnEnregistrerProjet, btnEnregistrerSprint,
-            btnEnregistrerTask, btnAjouterTask, btnModifierTask, btnDeleteTask, btnAjouterSprint, btnModifierSprint,
+    protected JButton btnNouveauProjet, btnRetour, btnChargerProjet, btnDeleteProjet, btnEnregistrerProjet, btnEnregistrerSprint,
+            btnEnregistrerTask, btnNouveauTask, btnModifierTask, btnDeleteTask, btnNouveauSprint, btnModifierSprint,
             btnDeleteSprint, btnRetirerTaskSprint, btnAjouterTaskSprint;
 
     protected CardLayout cL;
@@ -154,7 +154,7 @@ public class FenParent extends JFrame {
         tableModel3.setRowCount(0);
         String progres;
         for (Sprint tmp : registreSprint.getRegSprint()) {
-            if(tmp.isProgres()){
+            if(tmp.isProgres() == 1){
                 progres = PROGRES_SPRINT[1];
             } else {
                 progres = PROGRES_SPRINT[0];
@@ -201,8 +201,8 @@ public class FenParent extends JFrame {
         remplirTableProjet(tableModel, registreProjet, registreEmploye, consoleTxtArea);
 
         cL.show(panCard, "1");
-        setToolbarActif(1, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint,
-                btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
+        setToolbarActif(1, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint, btnDeleteSprint,
+                btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
 
         currentCard = 1;
     }
@@ -229,7 +229,7 @@ public class FenParent extends JFrame {
         setTailleColonneTable(tblTask, Constante.TAILLE_COL_2);
 
         // Ajout du projet en cours au textFields
-        reinitialiserFormProjet(txtNomProjet, txtDescProjet, txtScrumId, ftxtDateDebut, ftxtDateFin, txtDureeSprint);
+        reinitialiserFormProjet();
         txtNomProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getNomProjet());
         txtNomProjet.setEnabled(false);
         txtDescProjet.setText(registreProjet.getRegistrePro().get(indexProjetEnCours).getDescription());
@@ -271,8 +271,8 @@ public class FenParent extends JFrame {
         panDonneeSprint.add(lblNbrSemaine);
 
         cL.show(panCard, "3");
-        setToolbarActif(3, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint,
-                btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
+        setToolbarActif(3, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint, btnDeleteSprint,
+                btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
         currentCard = 3;
     }
 
@@ -284,7 +284,7 @@ public class FenParent extends JFrame {
         panProjetForm.setBorder(BorderFactory.createEmptyBorder(10, 50, 250, 150));
 
         cL.show(panCard, "2");
-        reinitialiserFormProjet(txtNomProjet, txtDescProjet, txtScrumId, ftxtDateDebut, ftxtDateFin, txtDureeSprint);
+        reinitialiserFormProjet();
         txtNomProjet.setEnabled(true);
 //         Créer un régistre des employées de niveau ScrumMaster
         RegistreEmploye regScrumMaster = registreEmploye.listeEmployeParPoste(registreEmploye, 0);
@@ -292,8 +292,8 @@ public class FenParent extends JFrame {
         jcbEmploye.removeAllItems();
         remplirComboBox(regScrumMaster, jcbEmploye, 1);
 
-        setToolbarActif(2, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint,
-                btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
+        setToolbarActif(2, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint, btnDeleteSprint,
+                btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
         currentCard = 2;
         consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
@@ -304,13 +304,13 @@ public class FenParent extends JFrame {
 
         cL.show(panCard, "4");
         txtDescTask.setEnabled(true);
-        reinitialiserFormTask(txtDescTask);
+        reinitialiserFormTask();
         remplirComboBox(PRIORITY, jcbTask, 3);
         remplirComboBox(registreEmploye, jcbEmploye2, 1);
         Employe tmp = registreEmploye.getRegistreEmp().get(indexProjetEnCours);
         jcbEmploye2.setSelectedItem(tmp);
-        setToolbarActif(4, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint,
-                btnDeleteSprint, btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
+        setToolbarActif(4, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint,
+                btnDeleteSprint, btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
         currentCard = 4;
         consoleTxtArea.append("Remplir le formulaire et appuyer sur enregistrer.\n");
     }
@@ -321,6 +321,7 @@ public class FenParent extends JFrame {
         presentSprintTaskList = new ArrayList<>();
         assgignedTaskList.clear();
         assgignedTaskList = registreSprint.rechercheTasksSprint();
+        System.out.println(assgignedTaskList);
 
         cL.show(panCard, "6");
         panSprintCreation.add(panSprintForm, BorderLayout.NORTH);
@@ -329,6 +330,7 @@ public class FenParent extends JFrame {
         panSprintCreation.add(panButtonTaskSelect, BorderLayout.CENTER);
         panButtonTaskSelect.add(btnAjouterTaskSprint,BorderLayout.NORTH);
         panButtonTaskSelect.add(btnRetirerTaskSprint, BorderLayout.CENTER);
+        reinitialiserFormSprint();
 
         scPaneTaskSelection.setPreferredSize(new Dimension(425, 150));
         setTailleColonneTable(tblTaskSelection, TAILLE_COL_4);
@@ -352,6 +354,8 @@ public class FenParent extends JFrame {
         remplirTableTaskSprint(tableModel2, tmpTask, consoleTxtArea, registreEmploye );
         System.out.println("new sprint3");
 
+        setToolbarActif(5, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint, btnDeleteSprint,
+                btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
         currentCard = 6;
         consoleTxtArea.append("Remplir le formulaire de sprint et appuyer sur enregistrer\n");
     }
@@ -368,7 +372,7 @@ public class FenParent extends JFrame {
         panTaskForm.setBorder((BorderFactory.createEmptyBorder(10, 50, 300, 150)));
         cL.show(panCard, "5");
         //ajout du task en cours
-        reinitialiserFormTask(txtDescTask);
+        reinitialiserFormTask();
         txtDescTask.setEnabled(false);
         remplirComboBox(PRIORITY, jcbTask, 3);
         jcbTask.setSelectedItem(registreTask.getRegistreTasks().get(indexProjetEnCours).getTaskPriority());
@@ -377,22 +381,26 @@ public class FenParent extends JFrame {
         remplirComboBox(registreEmploye, jcbEmploye2, 1);
         Employe tmp = registreEmploye.getRegistreEmp().get(registreTask.getRegistreTasks().get(indexTaskEnCours).getEmployeID());
         jcbEmploye2.setSelectedItem(tmp);
-        setToolbarActif(4, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint,
-                btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
+        setToolbarActif(4, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint, btnDeleteSprint,
+                btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
         currentCard = 5;
         consoleTxtArea.append("Modifier la tache et appuyer sur Enregistrer\n");
     }
 
     // Méthodes pour reinitialiser les champs des formulaires
-    public void reinitialiserFormTask(JTextField txtDescTask) {
+    public void reinitialiserFormTask() {
         jcbTask.removeAllItems();
         txtDescTask.setText("");
         jcbEmploye2.removeAllItems();
     }
 
-    public void reinitialiserFormProjet(JTextField txtNomProjet, JTextField txtDescProjet, JTextField txtScrumId,
-                                        JFormattedTextField ftxtDateDebut, JFormattedTextField ftxtDateFin,
-                                        JTextField txtDureeSprint) {
+    public void reinitialiserFormSprint() {
+        txtDescSprint.setText("");
+        ftxtDateDebutSprint.setText("");
+        ftxtDateFinSprint.setText("");
+    }
+
+    public void reinitialiserFormProjet() {
         txtNomProjet.setText("");
         txtDescProjet.setText("");
         txtScrumId.setText("");
@@ -443,6 +451,17 @@ public class FenParent extends JFrame {
                 btnCharger.setEnabled(false);
                 btnDelete.setEnabled(false);
                 btnAjouterSprint.setEnabled(false);
+                btnDeleteSprint.setEnabled(false);
+                btnModifierSprint.setEnabled(false);
+                btnAjouterTask.setEnabled(true);
+                btnModifierTask.setEnabled(true);
+                btnDeleteTask.setEnabled(true);
+            }
+            case 5 -> {
+                btnNew.setEnabled(false);
+                btnCharger.setEnabled(false);
+                btnDelete.setEnabled(false);
+                btnAjouterSprint.setEnabled(true);
                 btnDeleteSprint.setEnabled(false);
                 btnModifierSprint.setEnabled(false);
                 btnAjouterTask.setEnabled(true);

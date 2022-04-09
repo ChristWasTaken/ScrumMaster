@@ -1,15 +1,5 @@
 /*
 
-
-        Gérer la réinitialisation de task/sprint après modif
-
-     Code pour btnAjouterSprint
-     Code pour btnModifierSprint
-     Code pour btnDeleteSprint
-
-     //Should-Have:
-     Exception générique pour les doublons au lieu de 4 différentes.
-
      //Could-Have:
      Méthode générique pour remplir les 3 tables.
      Traiter les notes
@@ -34,6 +24,8 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import static utils.Constante.*;
 import static utils.Utilitaire.verifierStringVide;
@@ -179,16 +171,16 @@ public class FenApp extends FenParent {
         btnNouveauProjet.setToolTipText("Nouveau Projet..");
         btnChargerProjet = new JButton(iconCharger);
         btnChargerProjet.setToolTipText("Charger le Projet Sélectionné..");
-        btnDelete = new JButton(iconDelete);
-        btnDelete.setToolTipText("Supprimer le Projet Sélectionné..");
-        btnAjouterTask = new JButton(iconAjouterTask);
-        btnAjouterTask.setToolTipText("Ajouter une tache..");
+        btnDeleteProjet = new JButton(iconDelete);
+        btnDeleteProjet.setToolTipText("Supprimer le Projet Sélectionné..");
+        btnNouveauTask = new JButton(iconAjouterTask);
+        btnNouveauTask.setToolTipText("Ajouter une tache..");
         btnModifierTask = new JButton(iconModifierTask);
         btnModifierTask.setToolTipText("Modifier une tache..");
         btnDeleteTask = new JButton(iconDeleteTask);
         btnDeleteTask.setToolTipText("Supprimer une tache..");
-        btnAjouterSprint = new JButton(iconAjouterSprint);
-        btnAjouterSprint.setToolTipText("Ajouter un sprint..");
+        btnNouveauSprint = new JButton(iconAjouterSprint);
+        btnNouveauSprint.setToolTipText("Ajouter un sprint..");
         btnModifierSprint = new JButton(iconModifierSprint);
         btnModifierSprint.setToolTipText("Modifier un sprint..");
         btnDeleteSprint = new JButton(iconDeleteSprint);
@@ -207,15 +199,15 @@ public class FenApp extends FenParent {
         tbMenu.add(lblSepProjet);
         tbMenu.add(btnNouveauProjet);
         tbMenu.add(btnChargerProjet);
-        tbMenu.add(btnDelete);
+        tbMenu.add(btnDeleteProjet);
         tbMenu.addSeparator();
         tbMenu.add(lblSepTask);
-        tbMenu.add(btnAjouterTask);
+        tbMenu.add(btnNouveauTask);
         tbMenu.add(btnModifierTask);
         tbMenu.add(btnDeleteTask);
         tbMenu.addSeparator();
         tbMenu.add(lblSepSprint);
-        tbMenu.add(btnAjouterSprint);
+        tbMenu.add(btnNouveauSprint);
         tbMenu.add(btnModifierSprint);
         tbMenu.add(btnDeleteSprint);
         tbMenu.addSeparator();
@@ -399,8 +391,8 @@ public class FenApp extends FenParent {
         panGlobal.add(panCard, BorderLayout.CENTER);
         panGlobal.add(panBasDePage, BorderLayout.SOUTH);
         // Configuration du panneau par defaut
-        setToolbarActif(1, btnNouveauProjet, btnChargerProjet, btnDelete, btnAjouterSprint, btnDeleteSprint,
-                btnModifierSprint, btnAjouterTask, btnModifierTask, btnDeleteTask);
+        setToolbarActif(1, btnNouveauProjet, btnChargerProjet, btnDeleteProjet, btnNouveauSprint, btnDeleteSprint,
+                btnModifierSprint, btnNouveauTask, btnModifierTask, btnDeleteTask);
         // Fonction pour remplir la table par le model
         remplirTableProjet(tableModel, registreProjet, registreEmploye, consoleTxtArea);
         //
@@ -440,8 +432,8 @@ public class FenApp extends FenParent {
                 }
             }
         });
-        // Créer un Nouveau Task
-        btnAjouterTask.addActionListener(e -> {
+        // Créer un Nouveau Task - formulaire
+        btnNouveauTask.addActionListener(e -> {
             if (currentCard != 4) {
                 carteNouvelleTask(registreEmploye);
             } else {
@@ -452,9 +444,10 @@ public class FenApp extends FenParent {
                 }
             }
         });
-        // Créer un Nouveau Sprint
-        btnAjouterSprint.addActionListener(e -> {
+        // Créer un Nouveau Sprint - formulaire
+        btnNouveauSprint.addActionListener(e -> {
             if (currentCard != 6) {
+                reinitialiserFormSprint();
                 carteNouveauSprint(registreSprint, registreTask, registreEmploye);
             } else {
                 int result = JOptionPane.showConfirmDialog(null, "Les données non sauvegardées seront perdues.",
@@ -462,52 +455,59 @@ public class FenApp extends FenParent {
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
+                    reinitialiserFormSprint();
                     carteNouveauSprint(registreSprint, registreTask, registreEmploye);
                 }
             }
         });
-
+        //ajouter un task au sprint courant
         btnAjouterTaskSprint.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int indexSelectedtask = tblTask.getSelectedRow();
                 int selectedTaskID = (Integer)tblTask.getValueAt(indexSelectedtask, 0);
 
-                boolean flag = false;
-                for (int i = 0; i < assgignedTaskList.size(); i++){
-                    if(selectedTaskID == assgignedTaskList.get(i)){
-                        flag = true;
+                if(indexSelectedtask != -1){
+                    boolean flag = false;
+                    for (int i = 0; i < assgignedTaskList.size(); i++){
+                        if(selectedTaskID == assgignedTaskList.get(i)){
+                            flag = true;
+                        }
                     }
-                }
-                if(!flag){
-                    assgignedTaskList.add(selectedTaskID);
-                    presentSprintTaskList.add(selectedTaskID);
-                    ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
+                    if(!flag){
+                        assgignedTaskList.add(selectedTaskID);
+                        presentSprintTaskList.add(selectedTaskID);
+                        ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
 
-                    tblTaskSelection.removeAll();
-                    remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
-                    consoleTxtArea.append("Tache ajouté au sprint\n");
+                        tblTaskSelection.removeAll();
+                        remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
+                        consoleTxtArea.append("Tache ajouté au sprint\n");
+                    }
                 }
             }
         });
-
+        //retirer un task du sprint courant
         btnRetirerTaskSprint.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int indexSelectedtask = tblTaskSelection.getSelectedRow();
+                System.out.println( " retirer un task - list assgined: " + assgignedTaskList);
                 int selectedTaskID = (Integer)tblTaskSelection.getValueAt(indexSelectedtask, 0);
-
-                for (int i = 0; i < assgignedTaskList.size(); i++){
-                    if(selectedTaskID == assgignedTaskList.get(i)){
-                        assgignedTaskList.remove(i);
-                        presentSprintTaskList.remove(i);
-
-                        ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
-                        tblTaskSelection.removeAll();
-                        remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
+                System.out.println("ligne à retirer: " + indexSelectedtask + " | task à retirer: " + selectedTaskID);
+                if(selectedTaskID != -1){
+                    for (int i = 0; i < assgignedTaskList.size(); i++){
+                        if(selectedTaskID == assgignedTaskList.get(i)){
+                            System.out.println(" loop: " + i + "select: " + selectedTaskID + " = " + assgignedTaskList.get(i));
+                            assgignedTaskList.remove(i);
+                            presentSprintTaskList.remove(indexSelectedtask);
+                            System.out.println("assigned update: " + assgignedTaskList);
+                            ArrayList<Task> tmpTask = registreTask.chercherTaskList(presentSprintTaskList, 0);
+                            tblTaskSelection.removeAll();
+                            remplirTableTaskSprint(tableModel4, tmpTask, consoleTxtArea, registreEmploye);
+                        }
                     }
+                    consoleTxtArea.append("Tache retiré du sprint\n");
                 }
-                consoleTxtArea.append("Tache retiré du sprint\n");
             }
         });
 
@@ -539,7 +539,7 @@ public class FenApp extends FenParent {
             }
         });
         // Supprimer un projet
-        btnDelete.addActionListener(e -> {
+        btnDeleteProjet.addActionListener(e -> {
             int index = tblProjet.getSelectedRow();
             if (index != -1) {
                 int result = Utilitaire.popupOuiNon("La suppression des projets est final. Êtes-vous sur?",
@@ -583,14 +583,29 @@ public class FenApp extends FenParent {
                         " pouvoir le supprimer.\n");
             }
         });
+        // Supprimer un projet
+        btnDeleteSprint.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = tblProjet.getSelectedRow();
 
-
-        // Modifier un Sprint
-        //   *** Code pour btnModifierSprint
-
-        // Supprimer Sprint
-        //   *** Code pour btnDeleteSprint
-
+                if(i != -1){
+                    int result = Utilitaire.popupOuiNon("La suppression d'un sprint est final. Êtes-vous sur?",
+                            "Suppression de sprint");
+                    if(result == JOptionPane.YES_OPTION) {
+                        registreSprint.supprimerSprint(i);
+                        tableModel3.removeRow(i);
+                        consoleTxtArea.append("Suppression du sprint complété.\n");
+                        System.out.println("taille sprint reg:" + registreSprint.getRegSprint().size());
+                    }else{
+                        consoleTxtArea.append("Suppression du sprint annulée.\n");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "La ligne du sprint doit être correctement" +
+                            " selectionné pour pouvoir le supprimer.\n");
+                }
+            }
+        });
 
         //***** Enregistrement de formulaire *****
 
@@ -631,7 +646,7 @@ public class FenApp extends FenParent {
 
             afficherDonneeSprint();
         });
-        //sauvegarder le formulaire Task
+        // Sauvegarder le formulaire Task
         btnEnregistrerTask.addActionListener(e -> {
 
             try {
@@ -662,11 +677,36 @@ public class FenApp extends FenParent {
                 ex1.printStackTrace();
             }
         });
+        // Sauvegarder un projet
+        btnEnregistrerSprint.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
 
-        //Sauvegarder Formulaire Sprint
-        //   *** Code pour btnEnregistrerSprint
+                try {
+                    if(currentCard == 6){
+                        String tmpDesc = txtDescSprint.getText();
+                        Date tmpdateDebut = format.parse(ftxtDateDebutSprint.getText());
+                        System.out.println(tmpdateDebut);
+                        Calendar tmpCal = Calendar.getInstance();
+                        tmpCal.setTime(tmpdateDebut);
+                        tmpCal.add(Calendar.WEEK_OF_MONTH, registreProjet.getRegistrePro().get(indexProjetEnCours).getDureeSprint());
+                        Date tmpDateFin = tmpCal.getTime();
+                        System.out.println(tmpCal.getTime());
+                        int tmpProg = jcbProgres.getSelectedIndex();
+                        Sprint tmpSprint = new Sprint(presentSprintTaskList, tmpDesc, tmpdateDebut, tmpDateFin, tmpProg);
+                        System.out.println(tmpSprint);
+                        registreSprint.ajouterSprint(tmpSprint);
+                        System.out.println("registre sprint: " + registreSprint.getRegSprint().size());
+                        ManipulationFichier.ecrire(REPERTOIRE_PROJET + txtNomProjet.getText() + nomFichier[2],
+                                registreSprint, 3);
+                    }
 
+                } catch (ParseException | DoublonException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
         // *** Choix du menu ***
         miSortir.addActionListener(e -> {
