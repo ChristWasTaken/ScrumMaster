@@ -51,9 +51,7 @@ public class Utilitaire {
     }
 
     public static boolean calculerMaxSprint(int size,int nombreSemaine ){
-
         return size <nombreSemaine;
-
     }
 
 
