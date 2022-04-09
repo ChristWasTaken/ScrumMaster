@@ -51,9 +51,8 @@ public class Utilitaire {
     }
 
     public static boolean calculerMaxSprint(int size,int nombreSemaine ){
-        boolean flag= size <nombreSemaine;
-        System.out.println(size +"size AND nombresemaine"+nombreSemaine);
-        return flag  ;
+
+        return size <nombreSemaine;
 
     }
 
