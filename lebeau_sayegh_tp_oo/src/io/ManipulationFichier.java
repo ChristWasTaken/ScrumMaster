@@ -72,7 +72,7 @@ public class ManipulationFichier{
                 }
 
             }
-        } catch (IOException | ClassNotFoundException | EmployeDejaPresentException | ProjetDejaPresentException | TaskDejaExistException | SprintDejaPresentException e) {
+        } catch (IOException | ClassNotFoundException | DoublonException e) {
             e.printStackTrace();
         } finally {
             if (ois != null) {

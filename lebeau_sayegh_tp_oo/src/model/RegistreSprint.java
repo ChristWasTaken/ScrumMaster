@@ -1,7 +1,7 @@
 package model;
 
 
-import utils.SprintDejaPresentException;
+import utils.DoublonException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,9 +13,9 @@ public class RegistreSprint extends Registre {
         this.regSprint = new ArrayList<>();
     }
 
-    public void ajouterSprint(Sprint sprint) throws SprintDejaPresentException {
+    public void ajouterSprint(Sprint sprint) throws DoublonException {
         if (this.verifierDoublon(sprint)) {
-            throw new SprintDejaPresentException("Doublon trouvé!!", sprint);
+            throw new DoublonException("Doublon trouvé!!", sprint,3);
         } else {
             this.regSprint.add(sprint);
         }

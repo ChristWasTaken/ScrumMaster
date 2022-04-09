@@ -5,8 +5,6 @@ import io.ManipulationFichier;
 import model.*;
 import ui.FenApp;
 import utils.Constante;
-import utils.ProjetDejaPresentException;
-import utils.SprintDejaPresentException;
 import utils.Utilitaire;
 
 import javax.swing.*;

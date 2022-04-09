@@ -95,7 +95,7 @@ public class FenApp extends FenParent {
         lblSepProjet = new JLabel("Projet");
         lblSepProjet.setFont(Constante.F4);
         lblSepProjet.setForeground(new Color(204, 123, 31));
-        lblSepTask = new JLabel("Task");
+        lblSepTask = new JLabel("Tache");
         lblSepTask.setFont(Constante.F4);
         lblSepTask.setForeground(new Color(95, 185, 85));
         lblSepSprint = new JLabel("Sprint");
@@ -622,7 +622,7 @@ public class FenApp extends FenParent {
                         ManipulationFichier.ecrire(REPERTOIRE_PROJET + nomFichier[0], registreProjet, 1);
                     }
                 }
-            } catch (ParseException | ProjetDejaPresentException ex) {
+            } catch (ParseException | DoublonException ex) {
                 ex.printStackTrace();
             } catch (SaisieInvalideException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur de saisie.", JOptionPane.ERROR_MESSAGE);
@@ -654,7 +654,7 @@ public class FenApp extends FenParent {
                         consoleTxtArea.append("Tache enregistrer dans le registre avec succès.\n");
                     }
                 }
-            } catch (TaskDejaExistException ex) {
+            } catch (DoublonException ex) {
                 consoleTxtArea.append("Erreur, doublons présent\n");
                 ex.printStackTrace();
             } catch (SaisieInvalideException ex1) {

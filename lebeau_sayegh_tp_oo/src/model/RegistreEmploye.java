@@ -2,7 +2,7 @@ package model;
 
 
 import utils.Constante;
-import utils.EmployeDejaPresentException;
+import utils.DoublonException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,9 +14,9 @@ public class RegistreEmploye extends Registre {
     public RegistreEmploye() { this.registreEmp = new ArrayList<>(); }
 
 
-    public void ajouterEmp(Employe emp) throws EmployeDejaPresentException {
+    public void ajouterEmp(Employe emp) throws DoublonException {
         if (this.verifierDoublon(emp)) {
-            throw new EmployeDejaPresentException("Doublon trouvé!!", emp);
+            throw new DoublonException("Doublon trouvé!!", emp,0);
         } else {
             this.registreEmp.add(emp);
         }
@@ -45,7 +45,7 @@ public class RegistreEmploye extends Registre {
             if(tmp.getPoste().equals(Constante.POSTES[posteId])){
                 try {
                     tmpReg.ajouterEmp(tmp);
-                } catch (EmployeDejaPresentException e) {
+                } catch (DoublonException e) {
                     e.printStackTrace();
                 }
             }

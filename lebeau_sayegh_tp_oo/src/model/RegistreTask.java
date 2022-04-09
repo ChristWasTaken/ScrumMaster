@@ -1,7 +1,7 @@
 package model;
 
 
-import utils.TaskDejaExistException;
+import utils.DoublonException;
 
 import java.util.ArrayList;
 
@@ -14,11 +14,11 @@ public class RegistreTask extends Registre {
     }
 
     //ajouter Task au registre
-    public int ajouterTask(Task t, int operation) throws TaskDejaExistException {
+    public int ajouterTask(Task t, int operation) throws DoublonException {
         int index = verifierDoublons(t);
 
         if (index!=-1 && operation==0) {
-            throw new TaskDejaExistException("Doublons trouvé", t);
+            throw new DoublonException("Doublons trouvé", t,2);
         }else if(index!=-1 &&operation ==1){
             registreTasks.set(index,t);
         } else {

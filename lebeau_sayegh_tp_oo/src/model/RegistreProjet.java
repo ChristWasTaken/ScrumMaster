@@ -1,7 +1,7 @@
 package model;
 
 
-import utils.ProjetDejaPresentException;
+import utils.DoublonException;
 
 import java.util.ArrayList;
 
@@ -13,10 +13,10 @@ public class RegistreProjet extends Registre {
     }
 
     //ajouter Projet au registre
-    public int ajouterProjet(Projet projet, int operation) throws ProjetDejaPresentException {
+    public int ajouterProjet(Projet projet, int operation) throws DoublonException {
         int index = verifierDoublons(projet);
         if (index != -1 && operation == 0) {
-            throw new ProjetDejaPresentException("Doublons trouvé", projet);
+            throw new DoublonException("Doublons trouvé", projet,1);
         } else if (index != -1  && operation == 1){
             registreProjet.set(index, projet);
         } else {
